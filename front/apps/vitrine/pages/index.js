@@ -1,4 +1,5 @@
 import styles from './index.module.scss';
+import { Button, ButtonGroup } from '@chakra-ui/react'
 export function Index() {
   /*
    * Replace the elements below with your own.
@@ -14,6 +15,7 @@ export function Index() {
               <span> Hello there, </span>
               Welcome vitrine 👋
             </h1>
+            <Button colorScheme='blue'>Button from Chakra UI</Button>
           </div>
 
           <div id="hero" className="rounded">
