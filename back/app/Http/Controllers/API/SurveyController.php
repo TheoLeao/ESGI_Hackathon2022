@@ -22,6 +22,7 @@ class SurveyController extends Controller
         $attr = $request->validate([
             'product_id' => 'required',
         ]);
+
         $file = $request->file('survey');
 
         if (false === $file) {
@@ -53,12 +54,15 @@ class SurveyController extends Controller
             }
             $i++;
         }
+
         foreach ($output as $key => $value) {
-            $question = new Question(['question' => $value['question'], 'product_id' => $attr['product_id']]);
-            $question->store();
+            $question = new Question(['question' => $value['question']]);
+            $question->product()->associate($attr['product_id']);
+            $question->save();
             foreach ($value['response'] as $key => $value) {
                 $response = new Response(['response' => $key, 'value' => $value]);
-                $response->store();
+                $response->question()->associate($question->id);
+                $response->save();
             }
         }
         fclose($file_csv);

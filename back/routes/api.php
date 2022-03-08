@@ -114,3 +114,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::apiResource("products", ProductController::class);
 Route::apiResource("categories", CategoryController::class);
 
+
+Route::post('/upload-survey', [SurveyController::class, 'store']);

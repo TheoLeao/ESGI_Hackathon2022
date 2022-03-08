@@ -9,6 +9,11 @@ class Response extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'response',
+        'value',
+    ];
+
     /**
      * Get the question for the response
      */
