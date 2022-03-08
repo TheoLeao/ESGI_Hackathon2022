@@ -31,6 +31,7 @@ import {
   FiMenu,
   FiBell,
   FiChevronDown,
+  FiBook
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
@@ -38,11 +39,11 @@ import Logo from '../Logo/Logo';
 import theme from '../../theme/theme';
 
 const LinkItems = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Favourites', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
+  { name: 'Accueil', icon: FiHome, href: '/dashboard/' },
+  { name: 'Les campagnes', icon: FiBook, href: '/dashboard/campain/' },
+  { name: 'Explore', icon: FiCompass, href: '#' },
+  { name: 'Favourites', icon: FiStar, href: '#' },
+  { name: 'Settings', icon: FiSettings, href: '#' },
 ];
 
 export default function SidebarWithHeader({
@@ -94,17 +95,18 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} href={link.href}>
           {link.name}
         </NavItem>
+
       ))}
     </Box>
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, children,href, ...rest }) => {
   return (
-    <Link href="#" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+    <Link href={href} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
       <Flex
         align="center"
         p="4"

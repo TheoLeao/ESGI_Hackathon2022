@@ -1,0 +1,23 @@
+.table {
+    background-color: white;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+.containerComponent {
+    background-color: white;
+    border-radius: 15px;
+    margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    .descriptionSection {
+        width: 100%;
+    }
+}
+.section{
+    margin-top: 25px;
+}
