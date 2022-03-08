@@ -4,6 +4,11 @@ import CallToActionWithVideo from '../src/components/CallToActionWithVideo/CallT
 import Navbar from '../src/components/Navbar/Navbar';
 import styles from './index.module.scss';
 import Features from '../src/components/Features/Features';
+import Story from '../src/components/Story/Story';
+import Beliefs from '../src/components/Beliefs/Beliefs';
+import Footer from '../src/components/Footer/Footer';
+import ButtonBottom from '../src/components/ButtonBottom/ButtonBottom';
+import SimpleThreeColumns from '../src/components/SimpleThreeColumns/SimpleThreeColumns';
 import CallToActionWithAnnotation from '../src/components/CallToActionWithAnnotation/CallToActionWithAnnotation';
 import { Container } from '@chakra-ui/react';
 
@@ -21,6 +26,21 @@ export default function Home() {
             </Container>
             <Container maxW={'5xl'}>
                 <Features></Features>
+            </Container>
+            <Container maxW={'5xl'}>
+                <Story></Story>
+            </Container>
+            <Container maxW={'5xl'}>
+                <Beliefs></Beliefs>
+            </Container>
+            <Container maxW={'5xl'}>
+                <SimpleThreeColumns></SimpleThreeColumns>
+            </Container>
+            <Container maxW={'5xl'}>
+                <ButtonBottom></ButtonBottom>
+            </Container>
+            <Container maxW={'5xl'}>
+                <Footer></Footer>
             </Container>
 
         </div>
