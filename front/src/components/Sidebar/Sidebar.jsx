@@ -40,7 +40,7 @@ import theme from '../../theme/theme';
 
 const LinkItems = [
   { name: 'Accueil', icon: FiHome, href: '/dashboard/' },
-  { name: 'Les campagnes', icon: FiBook, href: '/dashboard/campain/' },
+  { name: 'Les campagnes', icon: FiBook, href: '/dashboard/campaign/' },
   { name: 'Explore', icon: FiCompass, href: '#' },
   { name: 'Favourites', icon: FiStar, href: '#' },
   { name: 'Settings', icon: FiSettings, href: '#' },
