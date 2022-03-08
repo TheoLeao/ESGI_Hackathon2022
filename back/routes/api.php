@@ -10,7 +10,7 @@ use App\Http\Controllers\API\ResponseController;
 use App\Http\Controllers\API\QuestionController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\CategoryController;
-use App\Http\Controllers\API\AnswerController;
+use App\Http\Controllers\API\UserResponseController;
 use App\Http\Controllers\API\AddressController;
 
 /*
@@ -104,5 +104,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //   .catch(error => console.log('error', error));
 
     Route::apiResource("users", UserController::class); // Les routes "users.*" de l'API
-
+    Route::apiResource("sessions", SessionController::class);
+    Route::apiResource("responses", ResponseController::class);
+    Route::apiResource("questions", QuestionController::class);
+    Route::apiResource("userResponses", UserResponseController::class);
+    Route::apiResource("addresses", AddressController::class);
 });
+
+Route::apiResource("products", ProductController::class);
+Route::apiResource("categories", CategoryController::class);
+
