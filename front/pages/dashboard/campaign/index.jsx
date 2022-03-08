@@ -5,30 +5,71 @@ import { Container } from '@chakra-ui/react';
 import { Heading } from '@chakra-ui/react';
 import Link from 'next/link';
 import React from 'react';
-
-
 import DashboardLayout from '../../../src/layouts/DashboardLayout/DashboardLayout';
 import {
-    Table, Thead, Tbody, Tfoot, Tr,Th,Td,TableCaption,
-    Stack,
+    Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption,
+    Stack, Text, Box, VStack,
     Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,
-    FormControl, FormLabel,Input, Button, Textarea
+    FormControl, FormLabel, Input, Button, Textarea, FormErrorMessage
 } from '@chakra-ui/react';
-
 import { FiPlusCircle } from 'react-icons/fi';
+import { useDisclosure } from '@chakra-ui/react';
+import { useFormik, Formik } from 'formik';
+import theme from '../../../src/theme/theme';
+import * as Yup from "yup";
+// const Form_CreateCampaign = ({ initialRef }) => {
+//     const formik = useFormik({
+//         initialValues: {
+//             campaign_name: '',
+//             campaign_description: '',
+//         },
+//         validate,
+//         onSubmit: values => {
+//             alert(JSON.stringify(values, null, 2));
+//         },
+//     });
 
-import { useDisclosure } from '@chakra-ui/react'
+//     return <>
+
+//     </>
+// }
+// const validate = values => {
+//     console.log(values);
+//     const errors = {};
+//     if (!values.campaign_name) {
+//         errors.campaign_name = 'Ce champ est requis';
+//     }
+//     if (!values.campaign_description) {
+//         errors.campaign_description = 'Ce champ est requis';
+//     }
+//     return errors;
+// };
 
 const Modal_CreateCampaign = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const initialRef = React.useRef()
+    const initialValues = {
+        campaign_name: "",
+        campaign_description: "",
+    };
+    const validationSchema = Yup.object({
+        campaign_name: Yup.string().required('Le nom de la compagne est requis'),
+        campaign_description: Yup.string().required('La description de la campagne est requise')
+    });
+    const formik = useFormik({
+        initialValues: initialValues,
+        validationSchema:  validationSchema,
+        onSubmit: (values) => {
+            alert(JSON.stringify(values, null, 2));
+        },
+    })
 
+
+   
     return (
         <>
             <Button onClick={onOpen}>Open Modal</Button>
-   
-
             <Modal
                 initialFocusRef={initialRef}
                 isOpen={isOpen}
@@ -38,24 +79,29 @@ const Modal_CreateCampaign = () => {
                 <ModalContent>
                     <ModalHeader>Créer une campagne</ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody pb={6}>
-                        <FormControl>
-                            <FormLabel>Nom de la campagne</FormLabel>
-                            <Input id="campaign_name" ref={initialRef} placeholder='Nom de la campagne' />
-                        </FormControl>
+                    <VStack as="form" onSubmit={formik.handleSubmit}>
+                        <ModalBody pb={6} w="100%">
+                            <FormControl>
+                                <FormLabel>Nom de la campagne</FormLabel>
+                                <Input id="campaign_name" name="campaign_name" onChange={formik.handleChange} value={formik.values.campaign_name} ref={initialRef} placeholder='Nom de la campagne' />
+                                {formik.errors.campaign_name ? <Text fontSize='sm' color={theme.colors.danger.normal}>{formik.errors.campaign_name}</Text> : null}
+                            </FormControl>
+                            <FormControl mt={4}>
+                                <FormLabel>Description de la campagne</FormLabel>
+                                <Textarea id="campaign_description" name="campaign_description" onChange={formik.handleChange} value={formik.values.campaign_description} placeholder='Description de la campagne' />
+                                {formik.errors.campaign_description ? <Text fontSize='sm' color={theme.colors.danger.normal}>{formik.errors.campaign_description}</Text> : null}
+                            </FormControl>
+                        </ModalBody>
 
-                        <FormControl mt={4}>
-                            <FormLabel>Description de la campagne</FormLabel>
-                            <Textarea id="campaign_description" placeholder='Description de la campagne' />
-                        </FormControl>
-                    </ModalBody>
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3} type='submit'>
+                                Créer
+                            </Button>
+                            <Button onClick={onClose}>Annuler</Button>
+                        </ModalFooter>
+                    </VStack>
 
-                    <ModalFooter>
-                        <Button colorScheme='blue' mr={3}>
-                            Créer
-                        </Button>
-                        <Button onClick={onClose}>Annuler</Button>
-                    </ModalFooter>
+
                 </ModalContent>
             </Modal>
         </>
