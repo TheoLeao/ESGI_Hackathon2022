@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Question;
 use App\Models\Response;
 use App\Models\User;
+use App\Models\UserResponse;
 use Illuminate\Http\Request;
 
 class SurveyController extends Controller
@@ -113,11 +114,11 @@ class SurveyController extends Controller
 
             $response = $question->responses()->where('value', '=', $value)->first();
 
-            $anwser = new Answer();
-            $anwser->user()->associate($user);
-            $anwser->response()->associate($response);
-            $anwser->question()->associate($question);
-            $anwser->save();
+            $userResponse = new UserResponse();
+            $userResponse->user()->associate($user);
+            $userResponse->response()->associate($response);
+            $userResponse->question()->associate($question);
+            $userResponse->save();
         }
 
         return $this->show($request, Product::find($attr['product_id']));
