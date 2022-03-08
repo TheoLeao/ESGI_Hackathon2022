@@ -12,6 +12,8 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\UserResponseController;
 use App\Http\Controllers\API\AddressController;
+use App\Http\Controllers\API\CampaignController;
+use App\Http\Controllers\API\UsersSessionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,8 +109,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("sessions", SessionController::class);
     Route::apiResource("responses", ResponseController::class);
     Route::apiResource("questions", QuestionController::class);
-    Route::apiResource("userResponses", UserResponseController::class);
+    Route::apiResource("user-responses", UserResponseController::class);
     Route::apiResource("addresses", AddressController::class);
+    Route::apiResource("users-sessions", UsersSessionsController::class);
+    Route::apiResource("campaign", CampaignController::class);
 
     Route::get('/survey/{product}', [SurveyController::class, 'show']);
     Route::post('/upload-survey', [SurveyController::class, 'store']);
