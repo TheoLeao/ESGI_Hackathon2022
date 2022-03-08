@@ -103,5 +103,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 //   .catch(error => console.log('error', error));
 
     Route::apiResource("users", UserController::class); // Les routes "users.*" de l'API
-    
+    Route::apiResource("sessions", SessionController::class);
+    Route::apiResource("responses", ResponseController::class);
+    Route::apiResource("questions", QuestionController::class);
+    Route::apiResource("answers", AnswerController::class);
+    Route::apiResource("addresses", AddressController::class);
 });
+
+Route::apiResource("products", ProductController::class);
+Route::apiResource("categories", CategoryController::class);
