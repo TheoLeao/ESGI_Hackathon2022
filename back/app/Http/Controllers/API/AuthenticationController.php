@@ -37,7 +37,9 @@ class AuthenticationController extends Controller
         ]);
 
         if (!Auth::attempt($attr)) {
-            return $this->error('Credentials not match', 401);
+            return response()->json([
+                'message' => 'Credentials not match'
+            ], 401);
         }
 
         /** @var User $user */

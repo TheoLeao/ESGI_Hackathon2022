@@ -109,10 +109,47 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("questions", QuestionController::class);
     Route::apiResource("userResponses", UserResponseController::class);
     Route::apiResource("addresses", AddressController::class);
+
+    Route::get('/survey/{product}', [SurveyController::class, 'show']);
+    Route::post('/upload-survey', [SurveyController::class, 'store']);
+    Route::post('/answer', [SurveyController::class, 'answer']);
 });
+
 
 Route::apiResource("products", ProductController::class);
 Route::apiResource("categories", CategoryController::class);
 
 
-Route::post('/upload-survey', [SurveyController::class, 'store']);
+    // var myHeaders = new Headers();
+    // myHeaders.append("Authorization", "Bearer 3|CKHql4fj1xPHuvmggN8hHC8FQrK2LXXVI4dwv4JH");
+
+    // var formdata = new FormData();
+    // formdata.append("survey", fileInput.files[0], "DataSBS-TuboVivoV4_vsv.xlsx - Questions - DataSBS-TuboVivoV4_vsv.xlsx - Questions.csv");
+    // formdata.append("product_id", "1");
+
+    // var requestOptions = {
+    //   method: 'POST',
+    //   headers: myHeaders,
+    //   body: formdata,
+    //   redirect: 'follow'
+    // };
+
+    // fetch("http://127.0.0.1:8000/api/upload-survey", requestOptions)
+    //   .then(response => response.text())
+    //   .then(result => console.log(result))
+    //   .catch(error => console.log('error', error));
+
+
+    // var myHeaders = new Headers();
+    // myHeaders.append("Authorization", "Bearer 3|CKHql4fj1xPHuvmggN8hHC8FQrK2LXXVI4dwv4JH");
+
+    // var requestOptions = {
+    //   method: 'GET',
+    //   headers: myHeaders,
+    //   redirect: 'follow'
+    // };
+
+    // fetch("http://127.0.0.1:8000/api/survey/1", requestOptions)
+    //   .then(response => response.text())
+    //   .then(result => console.log(result))
+    //   .catch(error => console.log('error', error));
