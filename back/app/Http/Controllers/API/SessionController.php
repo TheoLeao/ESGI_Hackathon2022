@@ -32,16 +32,16 @@ class SessionController extends Controller
     {
         // La validation de données
         $this->validate($request, [
-            'user_id' => 'required',
-            'product_id' => 'required',
+            'name' => 'required|string|max:100',
+            'campaign_id' => 'required',
             'start' => 'date',
             'end' => 'date',
         ]);
 
         // On crée un nouvelle session
         $session = Session::create([
-            'user_id' => $request->user_id,
-            'product_id' => $request->product_id,
+            'name' => $request->name,
+            'campaign_id' => $request->campaign_id,
             'start' => $request->start,
             'end' => $request->end,
         ]);
@@ -73,16 +73,16 @@ class SessionController extends Controller
     {
         // La validation de données
         $this->validate($request, [
-            'user_id' => 'required',
-            'product_id' => 'required',
+            'name' => 'required|string|max:100',
+            'campaign_id' => 'required',
             'start' => 'date',
             'end' => 'date',
         ]);
 
         // On modifie les informations de la session
         $session->update([
-            'user_id' => $request->user_id,
-            'product_id' => $request->product_id,
+            'name' => $request->name,
+            'campaign_id' => $request->campaign_id,
             'start' => $request->start,
             'end' => $request->end,
         ]);

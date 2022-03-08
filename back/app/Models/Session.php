@@ -12,8 +12,16 @@ class Session extends Model
     /**
      * Get all users for the session
      */
-    public function users()
+    public function usersSessions()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(UsersSessions::class);
+    }
+
+    /**
+     * Get campaign for the session
+     */
+    public function campaign()
+    {
+        return $this->belongsTo(Compaign::class);
     }
 }

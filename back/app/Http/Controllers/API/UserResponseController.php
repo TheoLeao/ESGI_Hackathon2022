@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Answer;
+use App\Models\UserResponse;
 use Illuminate\Http\Request;
 
-class AnswerController extends Controller
+class UserResponseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class AnswerController extends Controller
     public function index()
     {
         // On récupère toutes les réponses utilisateurs
-        $answers = Answer::all();
+        $userResponse = UserResponse::all();
 
         // On retourne les informations des réponses utilisateurs en JSON
-        return response()->json($answers);
+        return response()->json($userResponse);
     }
 
     /**
@@ -38,36 +38,36 @@ class AnswerController extends Controller
         ]);
 
         // On crée un nouvelle réponse utilisateur
-        $answer = Answer::create([
+        $userResponse = UserResponse::create([
             'response_id' => $request->response_id,
             'question_id' => $request->question_id,
             'user_id' => $request->user_id,
         ]);
 
         // On retourne les informations de la nouvelle réponse utilisateur en JSON
-        return response()->json($answer, 201);
+        return response()->json($userResponse, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Answer  $answer
+     * @param  \App\Models\UserResponse  $userResponse
      * @return \Illuminate\Http\Response
      */
-    public function show(Answer $answer)
+    public function show(UserResponse $userResponse)
     {
         // On retourne les informations de la réponse utilisateur en JSON
-        return response()->json($answer);
+        return response()->json($userResponse);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Answer  $answer
+     * @param  \App\Models\UserResponse  $userResponse
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Answer $answer)
+    public function update(Request $request, UserResponse $userResponse)
     {
         // La validation de données
         $this->validate($request, [
@@ -77,7 +77,7 @@ class AnswerController extends Controller
         ]);
 
         // On modifie les informations de la réponse utilisateur
-        $user->update([
+        $userResponse->update([
             'response_id' => $request->response_id,
             'question_id' => $request->question_id,
             'user_id' => $request->user_id,
@@ -90,13 +90,13 @@ class AnswerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Answer  $answer
+     * @param  \App\Models\UserResponse  $userResponse
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Answer $answer)
+    public function destroy(UserResponse $userResponse)
     {
         // On supprime la réponse utilisateur
-        $answer->delete();
+        $userResponse->delete();
 
         // On retourne la réponse JSON
         return response()->json();

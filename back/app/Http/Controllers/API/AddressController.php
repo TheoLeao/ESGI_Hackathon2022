@@ -86,7 +86,7 @@ class AddressController extends Controller
         ]);
 
         // On modifie les informations de l'adresse
-        $user->update([
+        $address->update([
             'street' => $request->street,
             'city' => $request->city,
             'zipcode' => $request->zipcode,

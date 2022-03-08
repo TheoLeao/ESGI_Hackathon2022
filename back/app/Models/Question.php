@@ -20,9 +20,9 @@ class Question extends Model
     /**
      * Get anwser for the question
      */
-    public function answers()
+    public function userResponses()
     {
-        return $this->belongsToMany(Answer::class);
+        return $this->belongsToMany(UserResponse::class);
     }
 
     /**
