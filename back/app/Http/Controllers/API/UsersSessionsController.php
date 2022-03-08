@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\UsersSessions;
+use App\Models\UserSession;
 use Illuminate\Http\Request;
 
-class UsersSessionsController extends Controller
+class UserSessionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class UsersSessionsController extends Controller
     public function index()
     {
         // On récupère toutes les users sessions
-        $usersSessions = UsersSessions::all();
+        $userSession = UserSession::all();
 
         // On retourne les informations des users sessions en JSON
-        return response()->json($usersSessions);
+        return response()->json($userSession);
     }
 
     /**
@@ -36,36 +36,36 @@ class UsersSessionsController extends Controller
             'session_id' => 'required',
         ]);
 
-        // On crée une nouvelle usersSessions
-        $usersSessions = UsersSessions::create([
+        // On crée une nouvelle userSession
+        $userSession = UserSession::create([
             'user_id' => $request->user_id,
             'session_id' => $request->session_id,
         ]);
 
-        // On retourne les informations de la nouvelle usersSessions en JSON
-        return response()->json($usersSessions, 201);
+        // On retourne les informations de la nouvelle userSession en JSON
+        return response()->json($userSession, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\UsersSessions  $usersSessions
+     * @param  \App\Models\UserSession  $userSession
      * @return \Illuminate\Http\Response
      */
-    public function show(UsersSessions $usersSessions)
+    public function show(UserSession $userSession)
     {
-        // On retourne les informations de la usersSessions en JSON
-        return response()->json($usersSessions);
+        // On retourne les informations de la userSession en JSON
+        return response()->json($userSession);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UsersSessions  $usersSessions
+     * @param  \App\Models\UserSession  $userSession
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UsersSessions $usersSessions)
+    public function update(Request $request, UserSession $userSession)
     {
         // La validation de données
         $this->validate($request, [
@@ -74,7 +74,7 @@ class UsersSessionsController extends Controller
         ]);
 
         // On modifie les informations de la réponse utilisateur
-        $usersSessions->update([
+        $userSession->update([
             'user_id' => $request->user_id,
             'session_id' => $request->session_id,
         ]);
@@ -86,13 +86,13 @@ class UsersSessionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UsersSessions  $usersSessions
+     * @param  \App\Models\UserSession  $userSession
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UsersSessions $usersSessions)
+    public function destroy(UserSession $userSession)
     {
-        // On supprime la usersSessions
-        $usersSessions->delete();
+        // On supprime la userSession
+        $userSession->delete();
 
         // On retourne la réponse JSON
         return response()->json();
