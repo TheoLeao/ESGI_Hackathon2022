@@ -74,7 +74,7 @@ class ResponseController extends Controller
         ]);
 
         // On modifie les informations de la réponser
-        $category->update([
+        $response->update([
             'response' => $request->response,
             'question_id' => $request->question_id
         ]);
