@@ -10,7 +10,7 @@ class Product extends Model
     use HasFactory;
 
     /**
-     * Get all users for the category
+     * Get all users for the product
      */
     public function users()
     {
@@ -23,13 +23,5 @@ class Product extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
-    }
-
-    /**
-     * Get all categories for the product
-     */
-    public function categories()
-    {
-        return $this->hasMany(Category::class);
     }
 }

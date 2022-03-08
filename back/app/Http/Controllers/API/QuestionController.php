@@ -74,7 +74,7 @@ class QuestionController extends Controller
         ]);
 
         // On modifie les informations de la question
-        $category->update([
+        $question->update([
             'name' => $request->name,
             'product_id' => $request->product_id
         ]);

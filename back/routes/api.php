@@ -9,7 +9,6 @@ use App\Http\Controllers\API\SessionController;
 use App\Http\Controllers\API\ResponseController;
 use App\Http\Controllers\API\QuestionController;
 use App\Http\Controllers\API\ProductController;
-use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\UserResponseController;
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\CampaignController;
@@ -121,7 +120,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
 Route::apiResource("products", ProductController::class);
-Route::apiResource("categories", CategoryController::class);
 
 
     // var myHeaders = new Headers();
