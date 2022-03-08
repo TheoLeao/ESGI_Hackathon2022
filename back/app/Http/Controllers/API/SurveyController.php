@@ -9,6 +9,7 @@ use App\Models\Question;
 use App\Models\Response;
 use App\Models\User;
 use App\Models\UserResponse;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class SurveyController extends Controller
@@ -85,8 +86,8 @@ class SurveyController extends Controller
         $questions = $product->questions()->get();
         $res = [];
         foreach ($questions as $question) {
-            $res[] = $question->with('responses')->get();
-            $res[] = $user->answers()->where('question_id', '=', $question->id)->first();
+            $res[$question->id] = $question->with('responses')->first();
+            $res[$question->id]['userResponse'] = $user->userResponses()->where('question_id', '=', $question->id)->first();
         }
         return response()->json($res);
     }
@@ -118,7 +119,14 @@ class SurveyController extends Controller
             $userResponse->user()->associate($user);
             $userResponse->response()->associate($response);
             $userResponse->question()->associate($question);
-            $userResponse->save();
+            try {
+                $userResponse->save();
+            } catch (QueryException $e) {
+                /** @var UserResponse $userResponse */
+                $userResponse = UserResponse::where('user_id', '=', $user->id)->where('question_id', '=', $question->id)->first();
+                $userResponse->response()->associate($response);
+                $userResponse->save();
+            }
         }
 
         return $this->show($request, Product::find($attr['product_id']));
