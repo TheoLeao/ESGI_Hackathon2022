@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersSessionsTable extends Migration
+class CreateCampaignRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateUsersSessionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_sessions', function (Blueprint $table) {
+        Schema::create('campaign_requests', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('session_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('campaign_id')->constrained();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateUsersSessionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_sessions');
+        Schema::dropIfExists('campaign_requests');
     }
 }

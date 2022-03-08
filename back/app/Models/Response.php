@@ -14,17 +14,11 @@ class Response extends Model
         'value',
     ];
 
-    /**
-     * Get the question for the response
-     */
     public function question()
     {
         return $this->belongsTo(Question::class);
     }
 
-    /**
-     * Get the userResponse for the response
-     */
     public function userResponses()
     {
         return $this->belongsToMany(UserResponse::class);

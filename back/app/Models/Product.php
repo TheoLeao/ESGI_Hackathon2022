@@ -9,19 +9,17 @@ class Product extends Model
 {
     use HasFactory;
 
-    /**
-     * Get all users for the product
-     */
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
+    protected $fillable = [
+        'name',
+        'description',
+        'brand',
+        'code_product',
+        'category',
+        'picture',
+    ];
 
-    /**
-     * Get all questions for the product
-     */
-    public function questions()
+    public function campaigns()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Campaign::class);
     }
 }

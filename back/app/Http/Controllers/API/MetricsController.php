@@ -10,6 +10,6 @@ class MetricsController extends Controller
 {
     public function getSessionMetrics(Session $session)
     {
-        $countUsers = $session->usersSessions()->count();
+        $countUsers = $session->userSession()->count();
     }
 }

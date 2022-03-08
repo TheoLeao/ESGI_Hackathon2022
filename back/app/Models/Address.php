@@ -9,11 +9,17 @@ class Address extends Model
 {
     use HasFactory;
 
-    /**
-     * Get the users for the address
-     */
+    protected $fillable = [
+        'street',
+        'city',
+        'zipcode',
+        'country',
+        'latitude',
+        'longitude',
+    ];
+
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
     }
 }

@@ -9,19 +9,24 @@ class Campaign extends Model
 {
     use HasFactory;
 
-    /**
-     * Get all sessions for the session
-     */
+    protected $fillable = [
+        'name',
+        'state',
+        'description',
+    ];
+
     public function sessions()
     {
         return $this->hasMany(Session::class);
     }
 
-    /**
-     * Get product for the session
-     */
     public function product()
     {
-        return $this->hasOne(Product::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function requests()
+    {
+        return $this->belongsToMany(CampaignRequest::class);
     }
 }

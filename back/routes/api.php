@@ -13,7 +13,7 @@ use App\Http\Controllers\API\UserResponseController;
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\CampaignController;
 use App\Http\Controllers\API\MetricsController;
-use App\Http\Controllers\API\UsersSessionsController;
+use App\Http\Controllers\API\UserSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,7 +111,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("questions", QuestionController::class);
     Route::apiResource("user-responses", UserResponseController::class);
     Route::apiResource("addresses", AddressController::class);
-    Route::apiResource("users-sessions", UsersSessionsController::class);
+    Route::apiResource("users-sessions", UserSessionController::class);
     Route::apiResource("campaign", CampaignController::class);
 
     Route::get('/survey/{product}', [SurveyController::class, 'show']);

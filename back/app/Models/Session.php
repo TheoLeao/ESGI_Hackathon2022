@@ -9,19 +9,19 @@ class Session extends Model
 {
     use HasFactory;
 
-    /**
-     * Get all users for the session
-     */
-    public function usersSessions()
+    protected $fillable = [
+        'name',
+        'start',
+        'end'
+    ];
+
+    public function userSession()
     {
-        return $this->hasMany(UsersSessions::class);
+        return $this->belongsToMany(UserSession::class);
     }
 
-    /**
-     * Get campaign for the session
-     */
     public function campaign()
     {
-        return $this->belongsTo(Compaign::class);
+        return $this->belongsTo(Campaign::class);
     }
 }

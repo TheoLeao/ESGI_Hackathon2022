@@ -17,12 +17,11 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
+            $table->text('description');
             $table->string('brand');
             $table->string('code_product')->nullable();
             $table->string('category')->nullable();
-            $table->string('state')->nullable();
-            $table->date('start')->nullable();
-            $table->date('end')->nullable();
+            $table->text('picture')->nullable();
         });
     }
 
