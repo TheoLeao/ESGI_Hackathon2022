@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Answer extends Model
+class UserResponse extends Model
 {
     use HasFactory;
 
     /**
-     * Get all users for the answer
+     * Get all users for the userResponse
      */
     public function users()
     {
@@ -18,7 +18,7 @@ class Answer extends Model
     }
 
     /**
-     * Get the question for the answer
+     * Get the question for the userResponse
      */
     public function question()
     {
@@ -26,7 +26,7 @@ class Answer extends Model
     }
 
     /**
-     * Get the response for the answer
+     * Get the response for the userResponse
      */
     public function response()
     {

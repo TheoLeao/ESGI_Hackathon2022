@@ -23,10 +23,10 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->string('phone', 20)->nullable();
             $table->integer('age')->nullable();
-            $table->float('size')->nullable();
+            $table->integer('size')->nullable();
             $table->float('weight')->nullable();
+            $table->boolean('is_admin')->nullable();
             $table->foreignId('address_id')->nullable()->constrained();
-            $table->foreignId('category_id')->nullable()->constrained();
         });
     }
 
