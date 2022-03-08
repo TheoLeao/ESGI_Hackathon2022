@@ -12,6 +12,7 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\UserResponseController;
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\CampaignController;
+use App\Http\Controllers\API\MetricsController;
 use App\Http\Controllers\API\UsersSessionsController;
 
 /*
@@ -116,6 +117,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/survey/{product}', [SurveyController::class, 'show']);
     Route::post('/upload-survey', [SurveyController::class, 'store']);
     Route::post('/answer', [SurveyController::class, 'answer']);
+
+    Route::get('/metrics/{session}', [MetricsController::class, 'getSessionMetrics']);
 });
 
 
