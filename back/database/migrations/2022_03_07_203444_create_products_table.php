@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('brand');
-            $table->string('code_product');
+            $table->string('code_product')->nullable();
             $table->string('state')->nullable();
             $table->date('start')->nullable();
             $table->date('end')->nullable();
