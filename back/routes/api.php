@@ -4,7 +4,14 @@ use App\Http\Controllers\API\AuthenticationController;
 use App\Http\Controllers\API\SurveyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\SessionController;
+use App\Http\Controllers\API\ResponseController;
+use App\Http\Controllers\API\QuestionController;
+use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\AnswerController;
+use App\Http\Controllers\API\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +102,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //   .then(response => response.text())
     //   .then(result => console.log(result))
     //   .catch(error => console.log('error', error));
-});
 
-Route::post('/upload-survey', [SurveyController::class, 'store']);
+    Route::apiResource("users", UserController::class); // Les routes "users.*" de l'API
+
+});
