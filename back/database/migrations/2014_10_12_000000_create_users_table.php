@@ -27,7 +27,6 @@ class CreateUsersTable extends Migration
             $table->float('weight')->nullable();
             $table->boolean('is_admin')->nullable();
             $table->foreignId('address_id')->nullable()->constrained();
-            $table->string('role')->nullable();
         });
     }
 

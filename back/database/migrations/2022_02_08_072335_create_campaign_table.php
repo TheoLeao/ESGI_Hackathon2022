@@ -17,8 +17,10 @@ class CreateCampaignTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
+            $table->boolean('state');
             $table->date('start');
             $table->date('end');
+            $table->foreignId('product_id')->constrained();
         });
     }
 

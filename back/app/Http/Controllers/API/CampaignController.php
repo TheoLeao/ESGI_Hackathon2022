@@ -33,11 +33,15 @@ class CampaignController extends Controller
         // La validation de données
         $this->validate($request, [
             'name' => 'required|string|max:100',
+            'state' => 'boolean',
+            'product_id' => 'required'
         ]);
 
         // On crée un nouvelle campagne
         $campaign = Campaign::create([
             'name' => $request->name,
+            'state' => $request->state,
+            'product_id' => $request->product_id
         ]);
 
         // On retourne les informations de la nouvelle campagne en JSON
@@ -68,11 +72,15 @@ class CampaignController extends Controller
         // La validation de données
         $this->validate($request, [
             'name' => 'required|string|max:100',
+            'state' => 'boolean',
+            'product_id' => 'required'
         ]);
 
         // On modifie les informations de la campagne
         $campaign->update([
             'name' => $request->name,
+            'state' => $request->state,
+            'product_id' => $request->product_id
         ]);
 
         // On retourne la réponse JSON

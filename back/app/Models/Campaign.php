@@ -16,4 +16,12 @@ class Campaign extends Model
     {
         return $this->hasMany(Session::class);
     }
+
+    /**
+     * Get product for the session
+     */
+    public function product()
+    {
+        return $this->hasOne(Product::class);
+    }
 }
