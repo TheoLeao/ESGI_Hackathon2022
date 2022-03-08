@@ -59,18 +59,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all sessions for the user
+     * Get all users for the session
      */
-    public function sessions()
+    public function usersSessions()
     {
-        return $this->hasMany(Session::class);
+        return $this->hasMany(UsersSessions::class);
     }
 
     /**
-     * Get all answers for the user
+     * Get all userResponses for the user
      */
-    public function answers()
+    public function userResponses()
     {
-        return $this->hasMany(Answer::class);
+        return $this->hasMany(UserResponse::class);
     }
 }

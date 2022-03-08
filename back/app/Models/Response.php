@@ -18,10 +18,10 @@ class Response extends Model
     }
 
     /**
-     * Get the answer for the response
+     * Get the userResponse for the response
      */
-    public function answers()
+    public function userResponses()
     {
-        return $this->belongsToMany(Answer::class);
+        return $this->belongsToMany(UserResponse::class);
     }
 }
