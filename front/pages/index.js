@@ -2,11 +2,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import CallToActionWithVideo from '../src/components/CallToActionWithVideo/CallToActionWithVideo'
 import Navbar from '../src/components/Navbar/Navbar';
-import styles from './index.module.scss';
+import styles from '../styles/pages/index.module.scss';
 import Features from '../src/components/Features/Features';
 import CallToActionWithAnnotation from '../src/components/CallToActionWithAnnotation/CallToActionWithAnnotation';
 import { Container } from '@chakra-ui/react';
-
 export default function Home() {
     return (
         <div className={styles.container}>
