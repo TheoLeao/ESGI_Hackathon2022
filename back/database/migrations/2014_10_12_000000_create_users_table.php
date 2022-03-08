@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->float('size')->nullable();
             $table->float('weight')->nullable();
             $table->foreignId('address_id')->nullable()->constrained();
+            $table->foreignId('category_id')->nullable()->constrained();
         });
     }
 
