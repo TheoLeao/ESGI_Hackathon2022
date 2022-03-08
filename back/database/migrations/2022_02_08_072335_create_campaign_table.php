@@ -13,7 +13,7 @@ class CreateCampaignTable extends Migration
      */
     public function up()
     {
-        Schema::create('campaign', function (Blueprint $table) {
+        Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('name');
@@ -29,6 +29,6 @@ class CreateCampaignTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('campaign');
+        Schema::dropIfExists('campaigns');
     }
 }

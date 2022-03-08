@@ -13,8 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $this->call(UserSeeder::class);
         }
+        $this->call(ProductSeeder::class);
     }
 }

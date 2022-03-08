@@ -12,9 +12,9 @@ class UserResponse extends Model
     /**
      * Get all users for the userResponse
      */
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -22,7 +22,7 @@ class UserResponse extends Model
      */
     public function question()
     {
-        return $this->hasOne(Question::class);
+        return $this->belongsTo(Question::class);
     }
 
     /**
@@ -30,6 +30,6 @@ class UserResponse extends Model
      */
     public function response()
     {
-        return $this->hasOne(Response::class);
+        return $this->belongsTo(Response::class);
     }
 }

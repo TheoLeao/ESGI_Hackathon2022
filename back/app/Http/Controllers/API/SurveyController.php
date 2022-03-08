@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Product;
 use App\Models\Question;
 use App\Models\Response;
+use App\Models\User;
+use App\Models\UserResponse;
 use Illuminate\Http\Request;
 
 class SurveyController extends Controller
@@ -22,6 +25,7 @@ class SurveyController extends Controller
         $attr = $request->validate([
             'product_id' => 'required',
         ]);
+
         $file = $request->file('survey');
 
         if (false === $file) {
@@ -53,12 +57,15 @@ class SurveyController extends Controller
             }
             $i++;
         }
+
         foreach ($output as $key => $value) {
-            $question = new Question(['question' => $value['question'], 'product_id' => $attr['product_id']]);
-            $question->store();
+            $question = new Question(['question' => $value['question']]);
+            $question->product()->associate($attr['product_id']);
+            $question->save();
             foreach ($value['response'] as $key => $value) {
                 $response = new Response(['response' => $key, 'value' => $value]);
-                $response->store();
+                $response->question()->associate($question->id);
+                $response->save();
             }
         }
         fclose($file_csv);
@@ -71,8 +78,49 @@ class SurveyController extends Controller
      * @param  Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Request $request, Product $product)
     {
-        $product->questions()->get();
+        /** @var User $user */
+        $user = auth()->user();
+        $questions = $product->questions()->get();
+        $res = [];
+        foreach ($questions as $question) {
+            $res[] = $question->with('responses')->get();
+            $res[] = $user->answers()->where('question_id', '=', $question->id)->first();
+        }
+        return response()->json($res);
+    }
+
+
+    public function answer(Request $request)
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $attr = $request->validate([
+            'product_id' => 'required',
+        ]);
+
+        foreach ($request->all() as $key => $value) {
+            if (false === str_contains($key, 'question_')) {
+                continue;
+            }
+
+            $question_id = ltrim($key, 'question_');
+
+            /** @var Question $question */
+            $question = Question::find($question_id);
+
+
+            $response = $question->responses()->where('value', '=', $value)->first();
+
+            $userResponse = new UserResponse();
+            $userResponse->user()->associate($user);
+            $userResponse->response()->associate($response);
+            $userResponse->question()->associate($question);
+            $userResponse->save();
+        }
+
+        return $this->show($request, Product::find($attr['product_id']));
     }
 }
