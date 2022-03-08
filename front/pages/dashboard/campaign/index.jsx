@@ -17,36 +17,9 @@ import { useDisclosure } from '@chakra-ui/react';
 import { useFormik, Formik } from 'formik';
 import theme from '../../../src/theme/theme';
 import * as Yup from "yup";
-// const Form_CreateCampaign = ({ initialRef }) => {
-//     const formik = useFormik({
-//         initialValues: {
-//             campaign_name: '',
-//             campaign_description: '',
-//         },
-//         validate,
-//         onSubmit: values => {
-//             alert(JSON.stringify(values, null, 2));
-//         },
-//     });
-
-//     return <>
-
-//     </>
-// }
-// const validate = values => {
-//     console.log(values);
-//     const errors = {};
-//     if (!values.campaign_name) {
-//         errors.campaign_name = 'Ce champ est requis';
-//     }
-//     if (!values.campaign_description) {
-//         errors.campaign_description = 'Ce champ est requis';
-//     }
-//     return errors;
-// };
 
 const Modal_CreateCampaign = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const initialRef = React.useRef()
     const initialValues = {
@@ -69,7 +42,7 @@ const Modal_CreateCampaign = () => {
    
     return (
         <>
-            <Button onClick={onOpen}>Open Modal</Button>
+            <Button onClick={onOpen} colorScheme='teal' size='sm' leftIcon={<FiPlusCircle />}>Créer une campagne</Button>
             <Modal
                 initialFocusRef={initialRef}
                 isOpen={isOpen}
@@ -131,10 +104,10 @@ const Campaign = ({ Component, pageProps }) => {
     }];
     return (
         <>
-            <Modal_CreateCampaign></Modal_CreateCampaign>
+            
             <div className={styles.heading}>
                 <Heading as='h3' size='lg'>Les campagnes</Heading>
-                <Button colorScheme='teal' size='sm' leftIcon={<FiPlusCircle />}>Créer une campagne</Button>
+                <Modal_CreateCampaign></Modal_CreateCampaign>
             </div>
 
             <Table variant='simple' className={styles.table}>
