@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import {
   IoAnalyticsSharp,
-  IoLogoBitcoin,
+  IoBarcodeOutline,
   IoSearchSharp,
 } from 'react-icons/io5';
 import { ReactElement } from 'react';
@@ -38,7 +38,7 @@ const Feature = ({ text, icon, iconBg }) => {
 
 const SplitWithImage = () => {
   return (
-    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt={20}>
       <Stack spacing={4}>
         <Text
           textTransform={'uppercase'}
@@ -49,12 +49,11 @@ const SplitWithImage = () => {
           p={2}
           alignSelf={'flex-start'}
           rounded={'md'}>
-          Our Story
+          What we do
         </Text>
-        <Heading>A digital Product design agency</Heading>
+        <Heading>Wired beauty</Heading>
         <Text color={'gray.500'} fontSize={'lg'}>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore
+        Your skin deserves special monitoring
         </Text>
         <Stack
           spacing={4}
@@ -71,7 +70,7 @@ const SplitWithImage = () => {
             text={'WE RELY ON DATA & TECHNOLOGY'}
           />
           <Feature
-            icon={<Icon as={IoLogoBitcoin} color={'green.500'} w={5} h={5} />}
+            icon={<Icon as={IoBarcodeOutline} color={'green.500'} w={5} h={5} />}
             iconBg={useColorModeValue('green.100', 'green.900')}
             text={'WE MEASURE SKIN VITALITY RESPONSE & CONSUMER PERCEPTION SIMULTANOUSLY'}
           />

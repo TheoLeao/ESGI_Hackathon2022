@@ -11,29 +11,15 @@ import {
     createIcon,
 } from '@chakra-ui/react';
 import theme from '../../theme/theme';
-import styles from './CallToActionWithAnnotation.module.scss';
+import styles from './ButtonBottom.module.scss';
 export default function CallToActionWithAnnotation() {
     return (
                 <Stack
                     as={Box}
                     textAlign={'center'}
                     spacing={{ base: 8, md: 14 }}
-                    py={{ base: 20, md: 28 }}
+                    py={{ base: 20, md: 10 }}
                     className={styles.container}>
-                    
-                    <Heading
-                        fontWeight={600}
-                        fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-                        lineHeight={'110%'}>
-                        Become a free tester <br />
-                        <Text as={'span'} color={theme.colors.primary.normal}>
-                            and benefit advantages
-                        </Text>
-                    </Heading>
-                    <Text color={'gray.500'}>
-                    Skin care product testing often resembles the protocols of medicament testing.
-                        It is a long sequencial process which aims to protect the voluntary testers, measure performance, record side-effects.
-                    </Text>
                     <Stack
                         direction={'column'}
                         spacing={3}
@@ -44,34 +30,12 @@ export default function CallToActionWithAnnotation() {
                             colorScheme={'green'}
                             bg={theme.colors.primary.normal}
                             rounded={'full'}
-                            px={6}
+                            px={28}
                             _hover={{
                                 bg: theme.colors.primary.hover,
                             }}>
                             Become a tester
                         </Button>
-                        <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-                            I want to order a study
-                        </Button>
-                        <Box>
-                            <Icon
-                                as={Arrow}
-                                color={useColorModeValue('gray.800', 'gray.300')}
-                                w={71}
-                                position={'absolute'}
-                                right={-71}
-                                top={'10px'}
-                            />
-                            <Text
-                                fontSize={'lg'}
-                                fontFamily={'Caveat'}
-                                position={'absolute'}
-                                right={'-125px'}
-                                top={'-15px'}
-                                transform={'rotate(10deg)'}>
-                                registration is free
-                            </Text>
-                        </Box>
                     </Stack>
                 </Stack>
     );
