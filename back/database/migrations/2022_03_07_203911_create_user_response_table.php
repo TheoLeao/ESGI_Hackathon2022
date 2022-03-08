@@ -13,7 +13,7 @@ class CreateUserResponseTable extends Migration
      */
     public function up()
     {
-        Schema::create('User_responses', function (Blueprint $table) {
+        Schema::create('user_responses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId('response_id')->constrained();
@@ -29,6 +29,6 @@ class CreateUserResponseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('User_responses');
+        Schema::dropIfExists('user_responses');
     }
 }
