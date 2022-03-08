@@ -17,6 +17,7 @@ class CreateResponsesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('response');
+            $table->string('value');
             $table->foreignId('question_id')->constrained();
         });
     }

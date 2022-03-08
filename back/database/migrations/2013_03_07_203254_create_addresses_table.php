@@ -18,10 +18,10 @@ class CreateAddressesTable extends Migration
             $table->timestamps();
             $table->string('street', 300)->nullable();
             $table->string('city', 300)->nullable();
-            $table->string('zipcode', 300)->nullable();
-            $table->string('country', 300)->nullable();
+            $table->string('zipcode', 10)->nullable();
+            $table->string('country', 120)->nullable();
             $table->float('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('longitude')->nullable();
         });
     }
 
