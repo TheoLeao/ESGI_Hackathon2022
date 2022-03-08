@@ -19,6 +19,7 @@ class CreateUserResponseTable extends Migration
             $table->foreignId('response_id')->constrained();
             $table->foreignId('question_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->unique(['user_id', 'question_id', 'response_id'], 'unique_response_peer_user');
         });
     }
 
