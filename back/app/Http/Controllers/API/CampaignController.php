@@ -57,15 +57,7 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        $product = $campaign->product()->get();
-        $sessions = $campaign->sessions()->get();
-        $res = [];
-        $res['id'] = $campaign->id;
-        $res['name'] = $campaign->name;
-        $res['description'] = $campaign->description;
-        $res['product'] = $product;
-        $res['sessions'] = $sessions;
-        return response()->json($res);
+        return response()->json(Campaign::with('product', 'sessions')->where('id', '=', $campaign->id)->first());
     }
 
     /**
