@@ -68,7 +68,8 @@ class UserController extends Controller
     public function show(User $user)
     {
         // On retourne les informations de l'utilisateur en JSON
-        return response()->json($user);
+
+        return response()->json(User::with('address')->where('id', '=', $user->id)->first());
     }
 
     /**
