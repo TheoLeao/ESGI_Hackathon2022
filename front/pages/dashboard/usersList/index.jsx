@@ -45,7 +45,7 @@ const UsersList = ({ Component, pageProps }) => {
                 
                <>
         
-                <Heading mb={10}>Testers List</Heading>
+                <Heading mb={10}>Liste des testeurs</Heading>
                 <Table variant='simple' className={styles.table}>
                 <Thead>
                     <Tr>
