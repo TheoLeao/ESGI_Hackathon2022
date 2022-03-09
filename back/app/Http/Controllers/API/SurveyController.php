@@ -113,7 +113,7 @@ class SurveyController extends Controller
             $question = Question::find($question_id);
 
 
-            $response = $question->responses()->where('value', '=', $value)->first();
+            $response = Response::find($value);
 
             $userResponse = new UserResponse();
             $userResponse->user()->associate($user);
