@@ -17,7 +17,8 @@ import { useDisclosure } from '@chakra-ui/react';
 import { useFormik, Formik } from 'formik';
 import theme from '../../../src/theme/theme';
 import * as Yup from "yup";
-
+import { useSelector, useDispatch } from 'react-redux';
+import { addCampaign, removeCampaign, test } from '../../../src/store/features/campaign/campaignSlice';
 const Modal_CreateCampaign = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -30,16 +31,17 @@ const Modal_CreateCampaign = () => {
         campaign_name: Yup.string().required('Le nom de la compagne est requis'),
         campaign_description: Yup.string().required('La description de la campagne est requise')
     });
+    const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema:  validationSchema,
         onSubmit: (values) => {
             alert(JSON.stringify(values, null, 2));
+            dispatch(addCampaign({id: 1, name: values.campaign_name, description: values.campaign_description}));
+            dispatch(removeCampaign({id: 1}));
+
         },
     })
-
-
-   
     return (
         <>
             <Button onClick={onOpen} colorScheme='teal' size='sm' leftIcon={<FiPlusCircle />}>Créer une campagne</Button>
