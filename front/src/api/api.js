@@ -178,6 +178,10 @@ export function survey(sessionId) {
 }
 
 export function createSession(data) {
+    const token = sessionStorage.getItem("token");
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+
     // TODO complete
     const formdata = new FormData();
     formdata.append("name", data.name);
@@ -198,6 +202,10 @@ export function createSession(data) {
 }
 
 export function deleteCampaign(campaignId) {
+    const token = sessionStorage.getItem("token");
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+
     console.log("TODO DELETE", campaignId);
     // TODO complete
     const formdata = new FormData();
