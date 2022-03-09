@@ -25,7 +25,8 @@ class AuthenticationController extends Controller
         ]);
 
         return response()->json([
-            'token' => $user->createToken('tokens')->plainTextToken
+            'token' => $user->createToken('tokens')->plainTextToken,
+            'role' => $user->role
         ]);
     }
 
@@ -47,7 +48,7 @@ class AuthenticationController extends Controller
 
         return response()->json([
             'token' => $user->createToken('API Token')->plainTextToken,
-            'role' => $user->role()
+            'role' => $user->role
         ]);
     }
 
