@@ -30,18 +30,13 @@ class CampaignController extends Controller
      */
     public function store(Request $request)
     {
-        // La validation de données
-        $this->validate($request, [
-            'name' => 'required|string|max:100',
-            'state' => 'boolean',
-            'product_id' => 'required'
-        ]);
 
         // On crée un nouvelle campagne
         $campaign = Campaign::create([
             'name' => $request->name,
             'state' => $request->state,
-            'product_id' => $request->product_id
+            'description' => $request->description,
+            'product_id' => $request->product_id,
         ]);
 
         // On retourne les informations de la nouvelle campagne en JSON
@@ -100,5 +95,32 @@ class CampaignController extends Controller
 
         // On retourne la réponse JSON
         return response()->json();
+    }
+
+    public function getAllCampaigns() {
+        $res = [];
+        foreach (Campaign::all() as $campaign) {
+            $product = $campaign->product()->get();
+            $sessions = $campaign->sessions()->get();
+            $res['id-' . $campaign->id] = $campaign->id;
+            $res['name-' . $campaign->id] = $campaign->name;
+            $res['description-' . $campaign->id] = $campaign->description;
+            $res['product-' . $campaign->id] = $product;
+            $res['sessions-' . $campaign->id] = $sessions;
+        }
+        
+        return response()->json($res);
+    }
+
+    public function getCampaignById(Campaign $campaign) {
+        $product = $campaign->product()->get();
+        $sessions = $campaign->sessions()->get();
+        $res = [];
+        $res['id'] = $campaign->id;
+        $res['name'] = $campaign->name;
+        $res['description'] = $campaign->description;
+        $res['product'] = $product;
+        $res['sessions'] = $sessions;
+        return response()->json($res);
     }
 }

@@ -13,6 +13,7 @@ class Campaign extends Model
         'name',
         'state',
         'description',
+        'product_id'
     ];
 
     public function sessions()

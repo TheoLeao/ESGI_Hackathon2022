@@ -30,14 +30,6 @@ class SessionController extends Controller
      */
     public function store(Request $request)
     {
-        // La validation de données
-        $this->validate($request, [
-            'name' => 'required|string|max:100',
-            'campaign_id' => 'required',
-            'start' => 'date',
-            'end' => 'date',
-        ]);
-
         // On crée un nouvelle session
         $session = Session::create([
             'name' => $request->name,
