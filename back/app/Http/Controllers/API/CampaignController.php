@@ -16,18 +16,7 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $res = [];
-        foreach (Campaign::all() as $campaign) {
-            $product = $campaign->product()->get();
-            $sessions = $campaign->sessions()->get();
-            $res['id-' . $campaign->id] = $campaign->id;
-            $res['name-' . $campaign->id] = $campaign->name;
-            $res['description-' . $campaign->id] = $campaign->description;
-            $res['product-' . $campaign->id] = $product;
-            $res['sessions-' . $campaign->id] = $sessions;
-        }
-
-        return response()->json($res);
+        return response()->json(Campaign::with('product', 'sessions')->get());
     }
 
     /**
