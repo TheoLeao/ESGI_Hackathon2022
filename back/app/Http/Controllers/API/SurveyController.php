@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Answer;
 use App\Models\Product;
 use App\Models\Question;
 use App\Models\Response;

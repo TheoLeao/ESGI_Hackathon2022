@@ -41,7 +41,7 @@ class User extends Authenticatable
 
     public function userSession()
     {
-        return $this->belongsToMany(UserSession::class);
+        return $this->hasMany(UserSession::class);
     }
 
     public function userResponses()
