@@ -4,13 +4,13 @@ const DEV = true;
 const TOKEN = "3|3WAPauiyEbeYGr4FRpZg1hHtagkj1KmsIs4Q81ow";
 
 export async function login(email, password) {
-    const formdata = new FormData();
-    formdata.append("password", password);
-    formdata.append("email", email);
+    const body = new FormData();
+    body.append("password", password);
+    body.append("email", email);
 
     const requestOptions = {
         method: "POST",
-        body: formdata,
+        body,
         redirect: "follow",
     };
 
@@ -24,15 +24,15 @@ export async function login(email, password) {
 
 export async function register(data) {
     // TODO complete
-    const formdata = new FormData();
-    formdata.append("name", data.name);
-    formdata.append("password", data.password);
-    formdata.append("email", data.email);
-    formdata.append("password_confirmation", data.passwordConfirmation);
+    const body = new FormData();
+    body.append("name", data.name);
+    body.append("password", data.password);
+    body.append("email", data.email);
+    body.append("password_confirmation", data.passwordConfirmation);
 
     const requestOptions = {
         method: "POST",
-        body: formdata,
+        body,
         redirect: "follow",
     };
 
@@ -125,20 +125,20 @@ export async function createCampaign(data) {
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     // TODO complete
-    const formdata = new FormData();
-    formdata.append("product_name", data.product_name);
-    formdata.append("product_brand", data.product_brand);
-    formdata.append("product_code", data.product_code);
-    formdata.append("product_category", data.product_category);
-    formdata.append("product_picture", data.product_picture);
-    formdata.append("product_description", data.product_description);
-    formdata.append("name", data.campaign_name);
-    formdata.append("state", data.campaign_state);
-    formdata.append("description", data.campaign_description);
+    const body = new FormData();
+    body.append("product_name", data.product_name);
+    body.append("product_brand", data.product_brand);
+    body.append("product_code", data.product_code);
+    body.append("product_category", data.product_category);
+    body.append("product_picture", data.product_picture);
+    body.append("product_description", data.product_description);
+    body.append("name", data.campaign_name);
+    body.append("state", data.campaign_state);
+    body.append("description", data.campaign_description);
 
     const requestOptions = {
         method: "POST",
-        body: formdata,
+        body,
         headers,
         redirect: "follow",
     };
@@ -182,15 +182,15 @@ export function answer(sessionId, data) {
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
-    const formdata = new FormData();
-    formdata.append("session_id", sessionId);
+    const body = new FormData();
+    body.append("session_id", sessionId);
     for (const [key, value] of Object.entries(data)) {
-        formdata.append(key, value);
+        body.append(key, value);
     }
 
     const requestOptions = {
         method: "POST",
-        body: formdata,
+        body,
         redirect: "follow",
         headers,
     };
@@ -205,16 +205,16 @@ export function createSession(data) {
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     // TODO complete
-    const formdata = new FormData();
-    formdata.append("name", data.name);
-    formdata.append("description", data.description);
-    formdata.append("campaign_id", data.campaign_id);
-    formdata.append("start", data.date_start);
-    formdata.append("end", data.date_end);
+    const body = new FormData();
+    body.append("name", data.name);
+    body.append("description", data.description);
+    body.append("campaign_id", data.campaign_id);
+    body.append("start", data.date_start);
+    body.append("end", data.date_end);
 
     const requestOptions = {
         method: "POST",
-        body: formdata,
+        body,
         redirect: "follow",
         headers,
     };
@@ -231,16 +231,16 @@ export function deleteCampaign(campaignId) {
 
     console.log("TODO DELETE", campaignId);
     // TODO complete
-    const formdata = new FormData();
-    formdata.append("name", data.name);
-    formdata.append("description", data.description);
-    formdata.append("campaign_id", data.campaign_id);
-    formdata.append("start", data.date_start);
-    formdata.append("end", data.date_end);
+    const body = new FormData();
+    body.append("name", data.name);
+    body.append("description", data.description);
+    body.append("campaign_id", data.campaign_id);
+    body.append("start", data.date_start);
+    body.append("end", data.date_end);
 
     const requestOptions = {
         method: "POST",
-        body: formdata,
+        body,
         redirect: "follow",
         headers,
     };
