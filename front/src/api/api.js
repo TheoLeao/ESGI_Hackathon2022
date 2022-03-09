@@ -8,7 +8,7 @@ export async function login(email, password) {
     formdata.append("password", password);
     formdata.append("email", email);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "POST",
         body: formdata,
         redirect: "follow",
@@ -17,7 +17,7 @@ export async function login(email, password) {
     const req = await fetch(`${BASE_URL}login`, requestOptions);
     const rep = await req.json();
 
-    token = rep["token"];
+    const token = rep["token"];
     sessionStorage.setItem("token", token);
     return rep;
 }
@@ -30,7 +30,7 @@ export async function register(data) {
     formdata.append("email", data.email);
     formdata.append("password_confirmation", data.passwordConfirmation);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "POST",
         body: formdata,
         redirect: "follow",
@@ -39,17 +39,17 @@ export async function register(data) {
     const req = await fetch(`${BASE_URL}create-account`, requestOptions);
     const rep = await req.json();
 
-    token = rep["token"];
+    const token = rep["token"];
     sessionStorage.setItem("token", token);
     return rep;
 }
 
 export async function user(userId) {
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "GET",
         headers,
         redirect: "follow",
@@ -61,10 +61,10 @@ export async function user(userId) {
 
 export async function users() {
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "GET",
         headers,
         redirect: "follow",
@@ -76,10 +76,10 @@ export async function users() {
 
 export async function me() {
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "GET",
         headers,
         redirect: "follow",
@@ -91,10 +91,10 @@ export async function me() {
 
 export async function campaigns() {
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "GET",
         headers,
         redirect: "follow",
@@ -106,10 +106,10 @@ export async function campaigns() {
 
 export async function campaign(campaignId) {
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "GET",
         headers,
         redirect: "follow",
@@ -121,7 +121,7 @@ export async function campaign(campaignId) {
 
 export async function createCampaign(data) {
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     // TODO complete
@@ -136,7 +136,7 @@ export async function createCampaign(data) {
     formdata.append("state", data.campaign_state);
     formdata.append("description", data.campaign_description);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "POST",
         body: formdata,
         headers,
@@ -149,10 +149,10 @@ export async function createCampaign(data) {
 
 export function metricsSession(sessionId) {
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "GET",
         headers,
         redirect: "follow",
@@ -164,10 +164,10 @@ export function metricsSession(sessionId) {
 
 export function survey(sessionId) {
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "GET",
         headers,
         redirect: "follow",
@@ -177,9 +177,31 @@ export function survey(sessionId) {
     return await req.json();
 }
 
+export function answer(sessionId, data) {
+    const token = sessionStorage.getItem("token");
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+
+    const formdata = new FormData();
+    formdata.append("session_id", sessionId);
+    for (const [key, value] of Object.entries(data)) {
+        formdata.append(key, value);
+    }
+
+    const requestOptions = {
+        method: "POST",
+        body: formdata,
+        redirect: "follow",
+        headers,
+    };
+
+    const req = fetch(`${BASE_URL}answer`, requestOptions);
+    return await req.json();
+}
+
 export function createSession(data) {
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     // TODO complete
@@ -190,7 +212,7 @@ export function createSession(data) {
     formdata.append("start", data.date_start);
     formdata.append("end", data.date_end);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "POST",
         body: formdata,
         redirect: "follow",
@@ -202,8 +224,9 @@ export function createSession(data) {
 }
 
 export function deleteCampaign(campaignId) {
+    //TODO
     const token = sessionStorage.getItem("token");
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     console.log("TODO DELETE", campaignId);
@@ -215,7 +238,7 @@ export function deleteCampaign(campaignId) {
     formdata.append("start", data.date_start);
     formdata.append("end", data.date_end);
 
-    var requestOptions = {
+    const requestOptions = {
         method: "POST",
         body: formdata,
         redirect: "follow",
