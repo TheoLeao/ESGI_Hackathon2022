@@ -43,12 +43,12 @@ export async function register(data) {
 
 export async function user(userId) {
     const token = sessionStorage.getItem("token");
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
 
     var requestOptions = {
         method: "GET",
-        headers: myHeaders,
+        headers,
         redirect: "follow",
     };
 
@@ -58,12 +58,12 @@ export async function user(userId) {
 
 export async function users() {
     const token = sessionStorage.getItem("token");
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
 
     var requestOptions = {
         method: "GET",
-        headers: myHeaders,
+        headers,
         redirect: "follow",
     };
 
@@ -73,12 +73,12 @@ export async function users() {
 
 export async function me() {
     const token = sessionStorage.getItem("token");
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
 
     var requestOptions = {
         method: "GET",
-        headers: myHeaders,
+        headers,
         redirect: "follow",
     };
 
@@ -88,12 +88,12 @@ export async function me() {
 
 export async function campaigns() {
     const token = sessionStorage.getItem("token");
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
 
     var requestOptions = {
         method: "GET",
-        headers: myHeaders,
+        headers,
         redirect: "follow",
     };
 
@@ -103,12 +103,12 @@ export async function campaigns() {
 
 export async function campaign(campaignId) {
     const token = sessionStorage.getItem("token");
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
 
     var requestOptions = {
         method: "GET",
-        headers: myHeaders,
+        headers,
         redirect: "follow",
     };
 
@@ -117,6 +117,10 @@ export async function campaign(campaignId) {
 }
 
 export async function createCampaign(data) {
+    const token = sessionStorage.getItem("token");
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
+
     // TODO complete
     const formdata = new FormData();
     formdata.append("product_name", data.product_name);
@@ -132,7 +136,79 @@ export async function createCampaign(data) {
     var requestOptions = {
         method: "POST",
         body: formdata,
+        headers,
         redirect: "follow",
+    };
+
+    const req = fetch(`${BASE_URL}campaigns`, requestOptions);
+    return await req.json();
+}
+
+export function metricsSession(sessionId) {
+    const token = sessionStorage.getItem("token");
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
+
+    var requestOptions = {
+        method: "GET",
+        headers,
+        redirect: "follow",
+    };
+
+    const req = fetch(`${BASE_URL}metrics/${sessionId}`, requestOptions);
+    return await req.json();
+}
+
+export function survey(sessionId) {
+    const token = sessionStorage.getItem("token");
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
+
+    var requestOptions = {
+        method: "GET",
+        headers,
+        redirect: "follow",
+    };
+
+    const req = fetch(`${BASE_URL}metrics/${sessionId}`, requestOptions);
+    return await req.json();
+}
+
+export function createSession(data) {
+    // TODO complete
+    const formdata = new FormData();
+    formdata.append("name", data.name);
+    formdata.append("description", data.description);
+    formdata.append("campaign_id", data.campaign_id);
+    formdata.append("start", data.date_start);
+    formdata.append("end", data.date_end);
+
+    var requestOptions = {
+        method: "POST",
+        body: formdata,
+        redirect: "follow",
+        headers,
+    };
+
+    const req = fetch(`${BASE_URL}campaigns`, requestOptions);
+    return await req.json();
+}
+
+export function deleteCampaign(campaignId) {
+    console.log("TODO DELETE", campaignId);
+    // TODO complete
+    const formdata = new FormData();
+    formdata.append("name", data.name);
+    formdata.append("description", data.description);
+    formdata.append("campaign_id", data.campaign_id);
+    formdata.append("start", data.date_start);
+    formdata.append("end", data.date_end);
+
+    var requestOptions = {
+        method: "POST",
+        body: formdata,
+        redirect: "follow",
+        headers,
     };
 
     const req = fetch(`${BASE_URL}campaigns`, requestOptions);
