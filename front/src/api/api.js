@@ -1,5 +1,8 @@
 const BASE_URL = "http://hackathon.alexis-guay.fr/api/";
 
+const DEV = true;
+const TOKEN = "3|3WAPauiyEbeYGr4FRpZg1hHtagkj1KmsIs4Q81ow";
+
 export async function login(email, password) {
     const formdata = new FormData();
     formdata.append("password", password);
@@ -44,7 +47,7 @@ export async function register(data) {
 export async function user(userId) {
     const token = sessionStorage.getItem("token");
     let headers = new Headers();
-    headers.append("Authorization", `Bearer ${token}`);
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     var requestOptions = {
         method: "GET",
@@ -59,7 +62,7 @@ export async function user(userId) {
 export async function users() {
     const token = sessionStorage.getItem("token");
     let headers = new Headers();
-    headers.append("Authorization", `Bearer ${token}`);
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     var requestOptions = {
         method: "GET",
@@ -74,7 +77,7 @@ export async function users() {
 export async function me() {
     const token = sessionStorage.getItem("token");
     let headers = new Headers();
-    headers.append("Authorization", `Bearer ${token}`);
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     var requestOptions = {
         method: "GET",
@@ -89,7 +92,7 @@ export async function me() {
 export async function campaigns() {
     const token = sessionStorage.getItem("token");
     let headers = new Headers();
-    headers.append("Authorization", `Bearer ${token}`);
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     var requestOptions = {
         method: "GET",
@@ -104,7 +107,7 @@ export async function campaigns() {
 export async function campaign(campaignId) {
     const token = sessionStorage.getItem("token");
     let headers = new Headers();
-    headers.append("Authorization", `Bearer ${token}`);
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     var requestOptions = {
         method: "GET",
@@ -119,7 +122,7 @@ export async function campaign(campaignId) {
 export async function createCampaign(data) {
     const token = sessionStorage.getItem("token");
     let headers = new Headers();
-    headers.append("Authorization", `Bearer ${token}`);
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     // TODO complete
     const formdata = new FormData();
@@ -147,7 +150,7 @@ export async function createCampaign(data) {
 export function metricsSession(sessionId) {
     const token = sessionStorage.getItem("token");
     let headers = new Headers();
-    headers.append("Authorization", `Bearer ${token}`);
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     var requestOptions = {
         method: "GET",
@@ -162,7 +165,7 @@ export function metricsSession(sessionId) {
 export function survey(sessionId) {
     const token = sessionStorage.getItem("token");
     let headers = new Headers();
-    headers.append("Authorization", `Bearer ${token}`);
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
     var requestOptions = {
         method: "GET",
