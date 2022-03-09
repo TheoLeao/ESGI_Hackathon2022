@@ -13,9 +13,9 @@ class Question extends Model
         'question',
     ];
 
-    public function product()
+    public function session()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Session::class);
     }
 
     public function userResponses()

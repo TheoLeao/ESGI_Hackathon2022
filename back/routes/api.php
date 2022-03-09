@@ -44,7 +44,7 @@ Route::post('/create-account', [AuthenticationController::class, 'createAccount'
 //   redirect: 'follow'
 // };
 
-// fetch("http://127.0.0.1:8000/api/create-account", requestOptions)
+// fetch("http://hackathon.alexis-guay.fr/api/create-account", requestOptions)
 //   .then(response => response.text())
 //   .then(result => console.log(result))
 //   .catch(error => console.log('error', error));
@@ -64,7 +64,7 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 //   redirect: 'follow'
 // };
 
-// fetch("http://127.0.0.1:8000/api/login", requestOptions)
+// fetch("http://hackathon.alexis-guay.fr/api/login", requestOptions)
 //   .then(response => response.text())
 //   .then(result => console.log(result))
 //   .catch(error => console.log('error', error));
@@ -83,7 +83,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //   redirect: 'follow'
     // };
 
-    // fetch("http://127.0.0.1:8000/api/user", requestOptions)
+    // fetch("http://hackathon.alexis-guay.fr/api/user", requestOptions)
     //   .then(response => response.text())
     //   .then(result => console.log(result))
     //   .catch(error => console.log('error', error));
@@ -100,7 +100,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //   redirect: 'follow'
     // };
 
-    // fetch("http://127.0.0.1:8000/api/logout", requestOptions)
+    // fetch("http://hackathon.alexis-guay.fr/api/logout", requestOptions)
     //   .then(response => response.text())
     //   .then(result => console.log(result))
     //   .catch(error => console.log('error', error));
@@ -114,7 +114,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("users-sessions", UserSessionController::class);
     Route::apiResource("campaign", CampaignController::class);
 
-    Route::get('/survey/{product}', [SurveyController::class, 'show']);
+    Route::get('/survey/{session}', [SurveyController::class, 'show']);
     Route::post('/upload-survey', [SurveyController::class, 'store']);
     Route::post('/answer', [SurveyController::class, 'answer']);
 
@@ -139,7 +139,7 @@ Route::apiResource("products", ProductController::class);
     //   redirect: 'follow'
     // };
 
-    // fetch("http://127.0.0.1:8000/api/upload-survey", requestOptions)
+    // fetch("http://hackathon.alexis-guay.fr/api/upload-survey", requestOptions)
     //   .then(response => response.text())
     //   .then(result => console.log(result))
     //   .catch(error => console.log('error', error));
@@ -154,7 +154,7 @@ Route::apiResource("products", ProductController::class);
     //   redirect: 'follow'
     // };
 
-    // fetch("http://127.0.0.1:8000/api/survey/1", requestOptions)
+    // fetch("http://hackathon.alexis-guay.fr/api/survey/1", requestOptions)
     //   .then(response => response.text())
     //   .then(result => console.log(result))
     //   .catch(error => console.log('error', error));

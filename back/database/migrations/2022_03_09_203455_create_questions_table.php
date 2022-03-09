@@ -17,7 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('question');
-            $table->foreignId('product_id')->nullable()->constrained();
+            $table->foreignId('session_id')->nullable()->constrained();
         });
     }
 

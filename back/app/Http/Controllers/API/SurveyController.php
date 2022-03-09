@@ -7,6 +7,7 @@ use App\Models\Answer;
 use App\Models\Product;
 use App\Models\Question;
 use App\Models\Response;
+use App\Models\Session;
 use App\Models\User;
 use App\Models\UserResponse;
 use Illuminate\Database\QueryException;
@@ -24,7 +25,7 @@ class SurveyController extends Controller
     public function store(Request $request)
     {
         $attr = $request->validate([
-            'product_id' => 'required',
+            'session_id' => 'required',
         ]);
 
         $file = $request->file('survey');
@@ -61,7 +62,7 @@ class SurveyController extends Controller
 
         foreach ($output as $key => $value) {
             $question = new Question(['question' => $value['question']]);
-            $question->product()->associate($attr['product_id']);
+            $question->session()->associate($attr['session_id']);
             $question->save();
             foreach ($value['response'] as $key => $value) {
                 $response = new Response(['response' => $key, 'value' => $value]);
@@ -79,11 +80,11 @@ class SurveyController extends Controller
      * @param  Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Product $product)
+    public function show(Request $request, Session $session)
     {
         /** @var User $user */
         $user = auth()->user();
-        $questions = $product->questions()->get();
+        $questions = $session->questions()->get();
         $res = [];
         foreach ($questions as $question) {
             $res[$question->id] = $question->with('responses')->first();
@@ -99,7 +100,7 @@ class SurveyController extends Controller
         $user = auth()->user();
 
         $attr = $request->validate([
-            'product_id' => 'required',
+            'session_id' => 'required',
         ]);
 
         foreach ($request->all() as $key => $value) {
@@ -129,6 +130,6 @@ class SurveyController extends Controller
             }
         }
 
-        return $this->show($request, Product::find($attr['product_id']));
+        return $this->show($request, Session::find($attr['session_id']));
     }
 }

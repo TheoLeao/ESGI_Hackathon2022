@@ -24,4 +24,9 @@ class Session extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }
