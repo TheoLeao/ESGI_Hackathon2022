@@ -3,6 +3,6 @@ import campaignReducer from '../store/features/campaign/campaignSlice';
 
 export const store = configureStore({
   reducer: {
-    campaign: campaignReducer
+    campaigns: campaignReducer
   },
 })
