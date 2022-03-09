@@ -4,7 +4,7 @@ import styles from './index.module.scss';
 import { Container } from '@chakra-ui/react';
 import { Heading } from '@chakra-ui/react';
 import Link from 'next/link';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DashboardLayout from '../../../src/layouts/DashboardLayout/DashboardLayout';
 import {
     Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption,
@@ -18,9 +18,10 @@ import { useFormik, Formik } from 'formik';
 import theme from '../../../src/theme/theme';
 import * as Yup from "yup";
 import { useSelector, useDispatch } from 'react-redux';
-import { addCampaign, createSessionCampaign, removeCampaign } from '../../../src/store/features/campaign/campaignSlice';
+import { addCampaign, createSessionCampaign, removeCampaign, initCampaigns } from '../../../src/store/features/campaign/campaignSlice';
 import Lottie from 'react-lottie';
 import loader from '../../../src/lotties/loader.json';
+import { getCampaigns } from '../../../src/api/api';
 
 const Modal_CreateCampaign = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -146,7 +147,13 @@ const Modal_CreateSession = ({ campaignId }) => {
 }
 
 const Campaign = ({ Component, pageProps }) => {
+    const dispatch = useDispatch();
+    useEffect(async () => {
+        let campaingns_data = await getCampaigns();
+        dispatch(initCampaigns(campaingns_data));
+    })
     const campaigns = useSelector((state) => state.campaigns);
+
     return (
         <>
             {/* { <Lottie
