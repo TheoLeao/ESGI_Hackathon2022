@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -15,11 +16,18 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        // On récupère toutes les campagnes
-        $campaigns = Campaign::all();
+        $res = [];
+        foreach (Campaign::all() as $campaign) {
+            $product = $campaign->product()->get();
+            $sessions = $campaign->sessions()->get();
+            $res['id-' . $campaign->id] = $campaign->id;
+            $res['name-' . $campaign->id] = $campaign->name;
+            $res['description-' . $campaign->id] = $campaign->description;
+            $res['product-' . $campaign->id] = $product;
+            $res['sessions-' . $campaign->id] = $sessions;
+        }
 
-        // On retourne les informations des campagnes en JSON
-        return response()->json($campaigns);
+        return response()->json($res);
     }
 
     /**
@@ -31,16 +39,25 @@ class CampaignController extends Controller
     public function store(Request $request)
     {
 
+        $product = Product::create([
+            'name' => $request->product_name,
+            'brand' => $request->product_brand,
+            'code_product' => $request->product_code,
+            'category' => $request->product_category,
+            'picture' => $request->product_picture,
+            'description' => $request->product_description
+        ]);
+
         // On crée un nouvelle campagne
         $campaign = Campaign::create([
             'name' => $request->name,
             'state' => $request->state,
             'description' => $request->description,
-            'product_id' => $request->product_id,
+            'product_id' => $product->id,
         ]);
 
         // On retourne les informations de la nouvelle campagne en JSON
-        return response()->json($campaign, 201);
+        return $this->show($campaign);
     }
 
     /**
@@ -51,8 +68,15 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        // On retourne les informations de la catégorie en JSON
-        return response()->json($campaign);
+        $product = $campaign->product()->get();
+        $sessions = $campaign->sessions()->get();
+        $res = [];
+        $res['id'] = $campaign->id;
+        $res['name'] = $campaign->name;
+        $res['description'] = $campaign->description;
+        $res['product'] = $product;
+        $res['sessions'] = $sessions;
+        return response()->json($res);
     }
 
     /**
@@ -95,32 +119,5 @@ class CampaignController extends Controller
 
         // On retourne la réponse JSON
         return response()->json();
-    }
-
-    public function getAllCampaigns() {
-        $res = [];
-        foreach (Campaign::all() as $campaign) {
-            $product = $campaign->product()->get();
-            $sessions = $campaign->sessions()->get();
-            $res['id-' . $campaign->id] = $campaign->id;
-            $res['name-' . $campaign->id] = $campaign->name;
-            $res['description-' . $campaign->id] = $campaign->description;
-            $res['product-' . $campaign->id] = $product;
-            $res['sessions-' . $campaign->id] = $sessions;
-        }
-        
-        return response()->json($res);
-    }
-
-    public function getCampaignById(Campaign $campaign) {
-        $product = $campaign->product()->get();
-        $sessions = $campaign->sessions()->get();
-        $res = [];
-        $res['id'] = $campaign->id;
-        $res['name'] = $campaign->name;
-        $res['description'] = $campaign->description;
-        $res['product'] = $product;
-        $res['sessions'] = $sessions;
-        return response()->json($res);
     }
 }

@@ -5,7 +5,7 @@ import Head from 'next/head';
 const DashboardLayout = ({ children }) => {
   return <>
     <Head>
-    
+
     </Head>
     <div className={styles.container}>
       <Sidebar>

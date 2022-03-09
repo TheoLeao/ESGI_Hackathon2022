@@ -21,6 +21,6 @@ class Response extends Model
 
     public function userResponses()
     {
-        return $this->belongsToMany(UserResponse::class);
+        return $this->hasMany(UserResponse::class);
     }
 }
