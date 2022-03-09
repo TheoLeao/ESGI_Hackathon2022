@@ -15,29 +15,22 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getCampaignById } from '../../../src/api/api';
 import useQuery from '../../../src/hooks/useQuery';
 
 
 const Campain = ({ Component, pageProps }) => {
     const query = useQuery();
-    useEffect( async () => {
+    const [campaign, setCampaigns] = useState([]);
+    useEffect(async () => {
         if (!query) {
             return;
-          }
+        }
         const { pid } = query;
         let campaign_data = await getCampaignById(pid);
+        setCampaigns(campaign_data);
     }, []);
-   let campaign = "";
-
-
-
-
-    //const campaigns = useSelector((state) => state.campaigns);
-
-    //const campaign = useSelector((state) => state.campaigns.find((campaign) => campaign.id == pid));
-    //const sessions = useSelector((state) => state.campaigns.find((campaign) => campaign.id == pid)?.sessions);
     return (
         <>
             <Heading as='h3' size='lg'>Détail de la campagne  {campaign?.state ? <Badge colorScheme='green'>Ouverte</Badge> : <Badge colorScheme='red'>Fermé</Badge>}</Heading>
