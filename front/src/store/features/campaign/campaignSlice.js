@@ -1,24 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [];
 
 export const campaignSlice = createSlice({
-    name: 'campaign',
+    name: "campaign",
     initialState,
     reducers: {
         addCampaign: (state, action) => {
-            console.log('add');
             state.push(action.payload);
         },
         removeCampaign: (state, action) => {
-            // state.push(action.payload);
-            // state = ['fuck'];
-            //  state.campaign = state.campaign.filter(item => {console.log(item.id, action.payload.id,item.id !== action.payload.id );return item.id !== action.payload.id});
-        }
+            state.splice(
+                state.findIndex((item) => {
+                    return item.id === action.payload.id;
+                }),
+                1
+            );
+        },
     },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { addCampaign, removeCampaign} = campaignSlice.actions
+export const { addCampaign, removeCampaign } = campaignSlice.actions;
 
-export default campaignSlice.reducer
+export default campaignSlice.reducer;
