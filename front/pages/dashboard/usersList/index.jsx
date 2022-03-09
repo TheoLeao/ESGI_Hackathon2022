@@ -1,5 +1,6 @@
 
 import {Heading } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import {
     Table,
@@ -16,41 +17,54 @@ import DashboardLayout from '../../../src/layouts/DashboardLayout/DashboardLayou
 
 const UsersList = ({ Component, pageProps }) => {
 
-    let usersList = [{
-        "id": 8,
-        "firstname": "Laveche",
-        "lastname": "Pierre",
-        "tel": "+33767679722",
-        "mail": "pierre@laveche.fr",
-        "age": 12, //int (year)
-        "size": 179, //int (cm)
-        "weight": 69,//int (kg)
-        "isAdmin": 0 //boolean
-        }];
 
+    const [usersList, setUsersList] = useState([]);
+        // function userApi(){
+
+        useEffect(() => {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer 2|4xJWQQi9RfNvZLU9s732d5CyATO2YZKxlbdQsDUc");
+    
+            var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+            };
+    
+            fetch("http://hackathon.alexis-guay.fr/api/users", requestOptions)
+            .then(response => response.text())
+            .then(function(result){
+                console.log(result)
+               setUsersList(JSON.parse(result));
+          })
+            .catch(error => console.log('error', error));
+        // }
+        }, [])
+ 
             return (
+                
                <>
+        
                 <Heading mb={10}>Testers List</Heading>
                 <Table variant='simple' className={styles.table}>
                 <Thead>
                     <Tr>
                         <Th>id</Th>
-                        <Th>firstname</Th>
-                        <Th>lastname</Th>
+                        <Th>name</Th>
                         <Th>tel</Th>
                         <Th>mail</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
                     {usersList.map((user) => {
-                        return <Tr>
+                        return <Tr key={user}>
                             <Td>{user.id}</Td>
-                            <Td>{user.firstname}</Td>
-                            <Td>{user.lastname}</Td>
-                            <Td>{user.tel}</Td>
-                            <Td>{user.mail}</Td>
+                            <Td>{user.name}</Td>
+                            <Td>{user.phone}</Td>
+                            <Td>{user.email}</Td>
                         </Tr>
                     })}
+            
                 </Tbody>
             </Table>
 </>

@@ -1,5 +1,6 @@
 
 import {Heading } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import {
     Table,
@@ -16,50 +17,51 @@ import DashboardLayout from '../../../src/layouts/DashboardLayout/DashboardLayou
 
 const User = ({ Component, pageProps }) => {
 
-    let user = {
-        "id": 8,
-        "firstname": "Laveche",
-        "lastname": "Pierre",
-        "tel": "+33767679722",
-        "mail": "pierre@laveche.fr",
-        "age": 12, //int (year)
-        "size": 179, //int (cm)
-        "weight": 69,//int (kg)
-        "isAdmin": 0, //boolean
-        "address": {
-            "id": 1,
-            "street": "53 Cr Albert Thomas",
-            "city": "Lyon",
-            "postal_code": "69003",
-            "country": "France",
-        }
-        };
 
+        const [user, setUsersList] = useState([]);
+ 
+        useEffect(() => {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer 2|4xJWQQi9RfNvZLU9s732d5CyATO2YZKxlbdQsDUc");
+            myHeaders.append("Cookie", "XSRF-TOKEN=eyJpdiI6IjZGR1hDazljNXBRTms0T1h0MXBnTlE9PSIsInZhbHVlIjoiTXBHUm43RHZZa2NSaUx5MGsydVN0dXhhUVQvOEdnRXI3ZVhQd01QUWRMUDRyc3BqWnZ3RGRSdXd3enZHM1FSeTJWZFBQZDVHZkZmMEVDMk8rVnFlazc0Z0h1VXJJVEdiU2hzMlJVb0MyWEl4K0tGVm0rZWF0YjNlUjFISTc4TzIiLCJtYWMiOiJkOTdlYWNhZDU2MGRiNjU3NjIyYzQxNjZmYmRmN2FiYzJlODc2MGUzOGMxNjE2MTliZTkxYjY2YzdlZmFiN2IxIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6IjJ0ZHdNbHQ1QkdaZjY1Z0xtV2RCdWc9PSIsInZhbHVlIjoidkRtQTlndEJ3VUFKd3U3bUd4WkJGZXZWK1NsOE9qc0VUTnlHOHVEV2xWVzNqeHBTczVPU0ZCbjk1eStEU3AyUlJxQkp5L2psQmJuRXdGeGVDMjlkVzkxZmcwMzU5MXdubS9rTHYyZUVkdWhPN0J3a2VKRTdkUlZFL09ReXVxWmgiLCJtYWMiOiJlM2E5NGMwNmQ0NjgxZWMyNGZiMDBmMTNmNzg2NjBhZmJjOGU3NjFiNmJjMDhmMzM3OWEwMzc0Zjk5YjljNWM3IiwidGFnIjoiIn0%3D");
+
+            var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+            };
+
+            fetch("http://hackathon.alexis-guay.fr/api/users/2", requestOptions)
+            .then(response => response.text())
+            .then(function(result){
+                console.log(result)
+               setUsersList(JSON.parse(result));
+             })
+            .catch(error => console.log('error', error));
+        
+        }, [])
+     
             return (
                <>
                <div className={`${styles.info} `}>
-                <Heading mb={10}> {user.firstname} Profile</Heading>
+                <Heading mb={10}> {user.name} Profile</Heading>
                 <Table variant='simple' className={styles.table}>
                 <Tbody>
                     <Tr>
-                        <Td>firstname</Td>
-                        <Td>{user.firstname}</Td>
+                        <Td>name</Td>
+                        <Td>{user.name}</Td>
                     </Tr>
                     <Tr>
-                        <Td>lastname</Td>
-                        <Td>{user.lastname}</Td>
+                        <Td>phone</Td>
+                        <Td>{user.phone}</Td>
                     </Tr>
                     <Tr>
-                        <Td>tel</Td>
-                        <Td>{user.tel}</Td>
+                        <Td>email</Td>
+                        <Td>{user.email}</Td>
                     </Tr>
                     <Tr>
-                        <Td>mail</Td>
-                        <Td>{user.mail}</Td>
-                    </Tr>
-                    <Tr>
-                        <Td>age</Td>
-                        <Td>{user.age}</Td>
+                        <Td>birth</Td>
+                        <Td>{user.birth}</Td>
                     </Tr>
                     <Tr>
                         <Td>size</Td>
@@ -73,8 +75,7 @@ const User = ({ Component, pageProps }) => {
             </Table>
             </div>
 
-
-            <div className={`${styles.address} `}>
+             <div className={`${styles.address} `}>
                 <Heading mb={10} mt={28}> Address</Heading>
                 <Table variant='simple' className={styles.table}>
                 <Tbody>
@@ -87,8 +88,8 @@ const User = ({ Component, pageProps }) => {
                         <Td>{user.address.city}</Td>
                     </Tr>
                     <Tr>
-                        <Td>postal code</Td>
-                        <Td>{user.address.postal_code}</Td>
+                        <Td>zipcode</Td>
+                        <Td>{user.address.zipcode}</Td>
                     </Tr>
                     <Tr>
                         <Td>country</Td>
