@@ -55,7 +55,7 @@ export async function user(userId) {
         redirect: "follow",
     };
 
-    const req = fetch(`${BASE_URL}users/${userId}`, requestOptions);
+    const req = await fetch(`${BASE_URL}users/${userId}`, requestOptions);
     return await req.json();
 }
 
@@ -70,7 +70,7 @@ export async function users() {
         redirect: "follow",
     };
 
-    const req = fetch(`${BASE_URL}users`, requestOptions);
+    const req = await fetch(`${BASE_URL}users`, requestOptions);
     return await req.json();
 }
 
@@ -85,7 +85,7 @@ export async function me() {
         redirect: "follow",
     };
 
-    const req = fetch(`${BASE_URL}user`, requestOptions);
+    const req = await fetch(`${BASE_URL}user`, requestOptions);
     return await req.json();
 }
 
@@ -100,7 +100,7 @@ export async function campaigns() {
         redirect: "follow",
     };
 
-    const req = fetch(`${BASE_URL}campaigns`, requestOptions);
+    const req = await fetch(`${BASE_URL}campaigns`, requestOptions);
     return await req.json();
 }
 
@@ -115,7 +115,7 @@ export async function campaign(campaignId) {
         redirect: "follow",
     };
 
-    const req = fetch(`${BASE_URL}campaigns/${campaignId}`, requestOptions);
+    const req = await fetch(`${BASE_URL}campaigns/${campaignId}`, requestOptions);
     return await req.json();
 }
 
@@ -143,11 +143,11 @@ export async function createCampaign(data) {
         redirect: "follow",
     };
 
-    const req = fetch(`${BASE_URL}campaigns`, requestOptions);
+    const req = await fetch(`${BASE_URL}campaigns`, requestOptions);
     return await req.json();
 }
 
-export function metricsSession(sessionId) {
+export async function metricsSession(sessionId) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -158,11 +158,11 @@ export function metricsSession(sessionId) {
         redirect: "follow",
     };
 
-    const req = fetch(`${BASE_URL}metrics/${sessionId}`, requestOptions);
+    const req = await fetch(`${BASE_URL}metrics/${sessionId}`, requestOptions);
     return await req.json();
 }
 
-export function survey(sessionId) {
+export async function survey(sessionId) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -173,11 +173,11 @@ export function survey(sessionId) {
         redirect: "follow",
     };
 
-    const req = fetch(`${BASE_URL}metrics/${sessionId}`, requestOptions);
+    const req = await fetch(`${BASE_URL}survey/${sessionId}`, requestOptions);
     return await req.json();
 }
 
-export function answer(sessionId, data) {
+export async function answer(sessionId, data) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -195,11 +195,11 @@ export function answer(sessionId, data) {
         headers,
     };
 
-    const req = fetch(`${BASE_URL}answer`, requestOptions);
+    const req = await fetch(`${BASE_URL}answer`, requestOptions);
     return await req.json();
 }
 
-export function createSession(data) {
+export async function createSession(data) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -219,11 +219,11 @@ export function createSession(data) {
         headers,
     };
 
-    const req = fetch(`${BASE_URL}campaigns`, requestOptions);
+    const req = await fetch(`${BASE_URL}campaigns`, requestOptions);
     return await req.json();
 }
 
-export function deleteCampaign(campaignId) {
+export async function deleteCampaign(campaignId) {
     //TODO
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
@@ -245,6 +245,6 @@ export function deleteCampaign(campaignId) {
         headers,
     };
 
-    const req = fetch(`${BASE_URL}campaigns`, requestOptions);
+    const req = await fetch(`${BASE_URL}campaigns`, requestOptions);
     return await req.json();
 }
