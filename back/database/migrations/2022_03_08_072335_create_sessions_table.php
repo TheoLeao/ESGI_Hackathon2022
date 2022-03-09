@@ -17,6 +17,7 @@ class CreateSessionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
+            $table->string('description');
             $table->foreignId('campaign_id')->nullable()->constrained();
             $table->date('start');
             $table->date('end');

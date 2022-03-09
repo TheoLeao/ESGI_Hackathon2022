@@ -18,7 +18,7 @@ class Session extends Model
 
     public function userSession()
     {
-        return $this->belongsToMany(UserSession::class);
+        return $this->hasMany(UserSession::class);
     }
 
     public function campaign()

@@ -114,8 +114,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("users-sessions", UserSessionController::class);
     Route::apiResource("campaign", CampaignController::class);
 
+    Route::get('/get-sessions-users', [SessionController::class, 'getSessionsWithUsers']);
+    Route::get('/get-session-user/{session}', [SessionController::class, 'getSessionsWithUsersById']);
+
     Route::get('/get-all-campaigns', [CampaignController::class, 'getAllCampaigns']);
     Route::get('/get-campaign/{campaign}', [CampaignController::class, 'getCampaignById']);
+
     Route::get('/survey/{product}', [SurveyController::class, 'show']);
     Route::get('/survey/{session}', [SurveyController::class, 'show']);
     Route::post('/upload-survey', [SurveyController::class, 'store']);

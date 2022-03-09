@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Session;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SessionController extends Controller
 {
@@ -33,6 +35,7 @@ class SessionController extends Controller
         // On crée un nouvelle session
         $session = Session::create([
             'name' => $request->name,
+            'description' => $request->description,
             'campaign_id' => $request->campaign_id,
             'start' => $request->start,
             'end' => $request->end,
@@ -63,17 +66,10 @@ class SessionController extends Controller
      */
     public function update(Request $request, Session $session)
     {
-        // La validation de données
-        $this->validate($request, [
-            'name' => 'required|string|max:100',
-            'campaign_id' => 'required',
-            'start' => 'date',
-            'end' => 'date',
-        ]);
-
         // On modifie les informations de la session
         $session->update([
             'name' => $request->name,
+            'description' => $request->description,
             'campaign_id' => $request->campaign_id,
             'start' => $request->start,
             'end' => $request->end,
@@ -96,5 +92,52 @@ class SessionController extends Controller
 
         // On retourne la réponse JSON
         return response()->json();
+    }
+
+    public function getSessionsWithUsers() {
+        $res = [];
+        foreach (Session::all() as $session) {
+            $campaign = $session->campaign()->first();
+            $usersSessions = $session->userSession()->get();
+            
+            $res['id-' . $session->id] = $session->id;
+            $res['campaign-' . $session->id] = $campaign->id;
+            $res['name-' . $session->id] = $session->name;
+            $res['description-' . $session->id] = $session->description;
+
+            foreach($usersSessions as $userSession) {
+                if($userSession->session_id == $session->id) {
+                    foreach(User::all() as $user) {
+                        if($userSession->user_id == $user->id) {
+                            $res['users-' . $session->id]['user-'. $user->id] = $user;
+                        }
+                    }
+                }
+            }
+        }
+        return response()->json($res);
+    }
+
+    public function getSessionsWithUsersById(Session $session) {
+        $res = [];
+        $campaign = $session->campaign()->first();
+        $usersSessions = $session->userSession()->get();
+        
+        $res['id'] = $session->id;
+        $res['campaign'] = $campaign->id;
+        $res['name'] = $session->name;
+        $res['description'] = $session->description;
+
+        foreach($usersSessions as $userSession) {
+            if($userSession->session_id == $session->id) {
+                foreach(User::all() as $user) {
+                    if($userSession->user_id == $user->id) {
+                        $res['users']['user-'. $user->id] = $user;
+                    }
+                }
+            }
+        }
+        
+        return response()->json($res);
     }
 }
