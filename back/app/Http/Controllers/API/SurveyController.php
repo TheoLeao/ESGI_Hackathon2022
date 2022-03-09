@@ -79,14 +79,14 @@ class SurveyController extends Controller
      * @param  Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Session $session)
+    public function show(Session $session)
     {
         /** @var User $user */
         $user = auth()->user();
         $questions = $session->questions()->get();
         $res = [];
         foreach ($questions as $question) {
-            $res[$question->id] = $question->with('responses')->first();
+            $res[$question->id] = Question::with('responses')->where('id', '=', $question->id)->first();
             $res[$question->id]['userResponse'] = $user->userResponses()->where('question_id', '=', $question->id)->first();
         }
         return response()->json($res);
@@ -129,6 +129,6 @@ class SurveyController extends Controller
             }
         }
 
-        return $this->show($request, Session::find($attr['session_id']));
+        return $this->show(Session::find($attr['session_id']));
     }
 }
