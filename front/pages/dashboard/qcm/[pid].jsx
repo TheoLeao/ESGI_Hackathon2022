@@ -6,12 +6,30 @@ import DashboardLayout from "../../../src/layouts/DashboardLayout/DashboardLayou
 import { Stack, VStack, FormControl, FormLabel, Button } from "@chakra-ui/react";
 import { answer, survey as getSurvey } from "../../../src/api/api";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const Survey = ({ Component, pageProps }) => {
     const [survey, setSurvey] = useState([]);
+    const [initialValues, setInitialesValues] = useState([]);
+    const [validationSchema, setValidationSchema] = useState([]);
+    // const [formik, setFormik] = useState(undefined);
 
     useEffect(async () => {
-        setSurvey(await getSurvey(1));
+        const survey = await getSurvey(1);
+        let initialValues = {};
+        const validationSchema = Yup.object({});
+
+        for (const [index, value] of Object.entries(survey)) {
+            initialValues["question_" + value.id] = value.userResponse?.response_id;
+            const newValidationSchema = Yup.object({
+                ["question_" + value.id]: Yup.string().required("La réponse est obligatoire"),
+            });
+            validationSchema.concat(newValidationSchema);
+        }
+
+        setInitialesValues(initialValues);
+        setValidationSchema(validationSchema);
+        setSurvey(survey);
     }, []);
 
     const handleSubmit = async () => {
@@ -21,28 +39,8 @@ const Survey = ({ Component, pageProps }) => {
             data[c.name] = c.value;
         }
         console.log(data);
-        // await answer(1, data);
+        await answer(1, data);
     };
-
-    const handleResponseChange = (event) => {
-        console.log(event);
-        const b = document.querySelector(`input[value="${event}"]`);
-        b.checked = true;
-        console.log(b.checked);
-    };
-
-    let initialValues = {};
-    Object.keys(survey).map((y) => {
-        initialValues = Object.assign(initialValues, { [y]: y.userResponse?.response_id });
-    });
-
-    const formik = useFormik({
-        initialValues: initialValues,
-        onSubmit: (values) => {
-            handleSubmit();
-            alert(JSON.stringify(values, null, 2));
-        },
-    });
 
     return (
         <>
