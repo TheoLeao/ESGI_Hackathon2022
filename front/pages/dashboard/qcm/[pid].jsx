@@ -14,14 +14,14 @@ const Survey = ({ Component, pageProps }) => {
         setSurvey(await getSurvey(1));
     }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         const checkboxes = document.querySelectorAll("input:checked");
         const data = {};
         for (const c of checkboxes) {
             data[c.name] = c.value;
         }
-        await answer(1, data);
+        console.log(data);
+        // await answer(1, data);
     };
 
     const handleResponseChange = (event) => {
@@ -31,19 +31,18 @@ const Survey = ({ Component, pageProps }) => {
         console.log(b.checked);
     };
 
-
     let initialValues = {};
     Object.keys(survey).map((y) => {
-        initialValues = Object.assign(initialValues, { [y]: "" });
-    })
+        initialValues = Object.assign(initialValues, { [y]: y.userResponse?.response_id });
+    });
 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
+            handleSubmit();
             alert(JSON.stringify(values, null, 2));
         },
-    
-    })
+    });
 
     return (
         <>
@@ -53,39 +52,31 @@ const Survey = ({ Component, pageProps }) => {
                 </Heading>
             </div>
             <div className={styles.table}>
-                <VStack as="form" onSubmit={handleSubmit}>
-                    {survey &&
-                        Object.keys(survey).map((i, index) => {
-                            const question = survey[i];
-                            return (
-                                <FormControl id={i}>
-                                    <FormLabel>{question.question}</FormLabel>
-                                    <RadioGroup
-                                        onChange={formik.handleChange}
-                                        name={i}
-                                        id={i}
-                                        value={formik.values[i]}
-                                    >
-                                        <Stack spacing={5} direction="row">
-                                            {question.responses &&
-                                                question.responses.map((response) => {
-                                                    console.log(response)
-                                                    return (
-                                                        <Radio name={i} value={response.value}>
-                                                            {response.response}
-                                                        </Radio>
-                                                    );
-                                                })}
-                                        </Stack>
-                                    </RadioGroup>
-                                </FormControl>
-                            );
-                        })}
+                {survey &&
+                    Object.keys(survey).map((i, index) => {
+                        const question = survey[i];
+                        const name = "question_" + question.id;
+                        return (
+                            <FormControl>
+                                <FormLabel>{question.question}</FormLabel>
+                                <RadioGroup name={name} defaultValue={question.userResponse?.response_id.toString()}>
+                                    {question.responses &&
+                                        question.responses.map((response) => {
+                                            console.log(response);
+                                            return (
+                                                <Radio colorScheme="red" value={response.id.toString()}>
+                                                    {response.response}
+                                                </Radio>
+                                            );
+                                        })}
+                                </RadioGroup>
+                            </FormControl>
+                        );
+                    })}
 
-                    <Button colorScheme="blue" mr={3} type="submit">
-                        Répondre
-                    </Button>
-                </VStack>
+                <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                    Répondre
+                </Button>
             </div>
         </>
     );
