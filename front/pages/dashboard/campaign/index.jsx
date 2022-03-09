@@ -39,7 +39,6 @@ const Modal_CreateCampaign = () => {
             alert(JSON.stringify(values, null, 2));
             dispatch(addCampaign({id: 1, name: values.campaign_name, description: values.campaign_description}));
             dispatch(removeCampaign({id: 1}));
-
         },
     })
     return (
@@ -82,6 +81,69 @@ const Modal_CreateCampaign = () => {
         </>
     )
 }
+const Modal_CreateSession= ({campaignId}) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const initialRef = React.useRef()
+    const initialValues = {
+        campaign_name: "",
+        campaign_description: "",
+    };
+    const validationSchema = Yup.object({
+        campaign_name: Yup.string().required('Le nom de la compagne est requis'),
+        campaign_description: Yup.string().required('La description de la campagne est requise')
+    });
+    const dispatch = useDispatch();
+    const formik = useFormik({
+        initialValues: initialValues,
+        validationSchema:  validationSchema,
+        onSubmit: (values) => {
+            alert(JSON.stringify(values, null, 2));
+            dispatch(addCampaign({id: 1, name: values.campaign_name, description: values.campaign_description}));
+            dispatch(removeCampaign({id: 1}));
+        },
+    })
+    return (
+        <>
+            <Button onClick={onOpen} colorScheme='teal' size='sm' leftIcon={<FiPlusCircle />}>Créer une campagne</Button>
+            <Modal
+                initialFocusRef={initialRef}
+                isOpen={isOpen}
+                onClose={onClose}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Créer une campagne</ModalHeader>
+                    <ModalCloseButton />
+                    <VStack as="form" onSubmit={formik.handleSubmit}>
+                        <ModalBody pb={6} w="100%">
+                            <FormControl>
+                                <FormLabel>Nom de la campagne</FormLabel>
+                                <Input id="campaign_name" name="campaign_name" onChange={formik.handleChange} value={formik.values.campaign_name} ref={initialRef} placeholder='Nom de la campagne' />
+                                {formik.errors.campaign_name ? <Text fontSize='sm' color={theme.colors.danger.normal}>{formik.errors.campaign_name}</Text> : null}
+                            </FormControl>
+                            <FormControl mt={4}>
+                                <FormLabel>Description de la campagne</FormLabel>
+                                <Textarea id="campaign_description" name="campaign_description" onChange={formik.handleChange} value={formik.values.campaign_description} placeholder='Description de la campagne' />
+                                {formik.errors.campaign_description ? <Text fontSize='sm' color={theme.colors.danger.normal}>{formik.errors.campaign_description}</Text> : null}
+                            </FormControl>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3} type='submit'>
+                                Créer
+                            </Button>
+                            <Button onClick={onClose}>Annuler</Button>
+                        </ModalFooter>
+                    </VStack>
+
+
+                </ModalContent>
+            </Modal>
+        </>
+    )
+}
+
 const Campaign = ({ Component, pageProps }) => {
     let campaigns = [{
         "id": 1,
@@ -105,13 +167,11 @@ const Campaign = ({ Component, pageProps }) => {
         ]
     }];
     return (
-        <>
-            
+        <> 
             <div className={styles.heading}>
                 <Heading as='h3' size='lg'>Les campagnes</Heading>
                 <Modal_CreateCampaign></Modal_CreateCampaign>
             </div>
-
             <Table variant='simple' className={styles.table}>
                 <Thead>
                     <Tr>
@@ -120,7 +180,6 @@ const Campaign = ({ Component, pageProps }) => {
                     </Tr>
                 </Thead>
                 <Tbody>
-
                     {campaigns.map((campaign) => {
                         return <Tr>
                             <Td>{campaign.name}</Td>
@@ -130,6 +189,7 @@ const Campaign = ({ Component, pageProps }) => {
                                     <Link href={'/dashboard/campaign/' + campaign.id}>
                                         <Button colorScheme='teal' size='sm'>Voir</Button>
                                     </Link>
+                                    <Button colorScheme='teal' size='sm'>Créer une session</Button>
                                 </Stack>
                             </Td>
                         </Tr>
