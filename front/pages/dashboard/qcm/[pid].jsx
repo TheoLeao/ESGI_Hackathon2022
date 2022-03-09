@@ -31,6 +31,20 @@ const Survey = ({ Component, pageProps }) => {
         console.log(b.checked);
     };
 
+
+    let initialValues = {};
+    Object.keys(survey).map((y) => {
+        initialValues = Object.assign(initialValues, { [y]: "" });
+    })
+
+    const formik = useFormik({
+        initialValues: initialValues,
+        onSubmit: (values) => {
+            alert(JSON.stringify(values, null, 2));
+        },
+    
+    })
+
     return (
         <>
             <div className={styles.heading}>
@@ -41,20 +55,23 @@ const Survey = ({ Component, pageProps }) => {
             <div className={styles.table}>
                 <VStack as="form" onSubmit={handleSubmit}>
                     {survey &&
-                        Object.keys(survey).map((i) => {
+                        Object.keys(survey).map((i, index) => {
                             const question = survey[i];
                             return (
-                                <FormControl>
+                                <FormControl id={i}>
                                     <FormLabel>{question.question}</FormLabel>
                                     <RadioGroup
-                                        onChange={handleResponseChange}
-                                        defaultValue={question.userResponse?.response_id}
+                                        onChange={formik.handleChange}
+                                        name={i}
+                                        id={i}
+                                        value={formik.values[i]}
                                     >
                                         <Stack spacing={5} direction="row">
                                             {question.responses &&
                                                 question.responses.map((response) => {
+                                                    console.log(response)
                                                     return (
-                                                        <Radio name={"question_" + question.id} value={response.id}>
+                                                        <Radio name={i} value={response.value}>
                                                             {response.response}
                                                         </Radio>
                                                     );
