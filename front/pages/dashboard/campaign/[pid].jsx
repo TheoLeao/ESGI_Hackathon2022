@@ -1,4 +1,4 @@
-import { Badge, Button, Container, Heading, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Badge, Button, Container, Heading, Table, Tbody, Td, Th, Thead, Tr, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Lottie from "react-lottie";
@@ -73,7 +73,7 @@ const Campain = ({ Component, pageProps }) => {
                                             <Td>{campaign?.product?.brand}</Td>
                                             <Td>{campaign?.product?.code_product}</Td>
                                             <Td>{campaign?.product?.category}</Td>
-                                            <Td><img style={{maxHeight: '200px'}}src={campaign?.product?.picture}></img></Td>
+                                            <Td><img style={{ maxHeight: '200px' }} src={campaign?.product?.picture}></img></Td>
                                         </Tr>
                                     </Tbody>
                                 </Table>
@@ -94,22 +94,25 @@ const Campain = ({ Component, pageProps }) => {
                                                 <Th>Action</Th>
                                             </Tr>
                                         </Thead>
-                                        <Tbody>
-                                            {campaign?.sessions?.map((session) => {
-                                                return <Tr>
-                                                    <Td>{session.name}</Td>
-                                                    <Td>{session.description}</Td>
-                                                    <Td>
-                                                        <Link href={'/dashboard/resultQcm/' + session.id}>
-                                                            <Button colorScheme='teal' size='sm'>Statistiques</Button>
-                                                        </Link>
-                                                        <Link href={'/dashboard/userSession/' + session.id}>
-                                                            <Button ml={5} colorScheme='teal' size='sm'>Testeurs</Button>
-                                                        </Link>
-                                                    </Td>
-                                                </Tr>
-                                            })}
-                                        </Tbody>
+                                        {campaign.sessions.length > 0 ?
+                                            <Tbody>
+                                                {campaign?.sessions?.map((session) => {
+                                                    return <Tr>
+                                                        <Td>{session.name}</Td>
+                                                        <Td>{session.description}</Td>
+                                                        <Td>
+                                                            <Link href={'/dashboard/resultQcm/' + session.id}>
+                                                                <Button colorScheme='teal' size='sm'>Statistiques</Button>
+                                                            </Link>
+                                                            <Link href={'/dashboard/userSession/' + session.id}>
+                                                                <Button ml={5} colorScheme='teal' size='sm'>Testeurs</Button>
+                                                            </Link>
+                                                        </Td>
+                                                    </Tr>
+                                                })}
+                                            </Tbody>
+                                            : <div className={styles.message}>Aucune session pour cette campagne 😅</div>}
+
                                     </Table>
                                 </Container>
                             </div>
@@ -121,7 +124,7 @@ const Campain = ({ Component, pageProps }) => {
                             </Link>
                         }
 
-             
+
                     </div>
 
 
