@@ -106,7 +106,6 @@ class CampaignController extends Controller
 
     public function requests(Campaign $campaign)
     {
-        // return response()->json($campaign->requests()->get()->toArray());
         $users = array_map(function ($req) {
             return User::find($req['user_id']);
         }, $campaign->requests()->get()->toArray());
