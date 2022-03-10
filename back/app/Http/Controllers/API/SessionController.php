@@ -157,6 +157,7 @@ class SessionController extends Controller
             $userSession->save();
         } catch (QueryException $e) {
             $userSession = UserSession::where('user_id', $attr['user_id'])->where('session_id', $session->id)->first();
+            return response()->json(array('userSession' => $userSession, 'alreadyExist' => true));
         }
 
         return response()->json($userSession);

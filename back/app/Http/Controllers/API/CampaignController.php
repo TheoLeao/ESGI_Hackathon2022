@@ -125,6 +125,7 @@ class CampaignController extends Controller
             $request->save();
         } catch (QueryException $e) {
             $request = Request::where('user_id', $user->id)->where('campaign_id', $campaign->id)->first();
+            return response()->json(array('request' => $request, 'alreadyExist' => true));
         }
 
 
