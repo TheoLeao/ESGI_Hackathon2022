@@ -1,3 +1,5 @@
+@import '../../../styles/utils/animations.module.scss';
+
 .table {
     background-color: white;
     border-radius: 15px;
@@ -25,4 +27,12 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+.loader{
+    position: absolute;
+    top: 50%; right: 50%;
+    transform: translate(50%,-50%);
+}
+.fadeinContent{
+    animation: fadeIn linear 1s;
 }

@@ -7,8 +7,12 @@ import { FormControl, FormLabel, Button } from "@chakra-ui/react";
 import { answer, survey as getSurvey } from "../../../src/api/api";
 import { useRouter } from "next/router";
 import { FiArrowLeft } from "react-icons/fi";
+import Lottie from "react-lottie";
+import loader from "../../../src/lotties/loader.json";
 
 const Survey = ({ Component, pageProps }) => {
+    const [isDataLoading, setIsDataLoading] = useState(true);
+
     const [survey, setSurvey] = useState([]);
     const router = useRouter();
 
@@ -18,6 +22,7 @@ const Survey = ({ Component, pageProps }) => {
         }
         const { pid } = router.query;
         setSurvey(await getSurvey(pid));
+        setIsDataLoading(false)
     }, [router.isReady]);
 
     const handleSubmit = async () => {
@@ -30,41 +35,60 @@ const Survey = ({ Component, pageProps }) => {
     };
 
     return (
-        <>
-            <Button style={{ marginBottom: '10px' }} leftIcon={<FiArrowLeft />} colorScheme='grey' variant='outline' size='xs' onClick={() => router.back()}>
-                Retour
-            </Button>
-            <div className={styles.heading}>
-                <Heading as="h3" size="lg">
-                    Formulaire
-                </Heading>
-            </div>
-            <div className={styles.table}>
-                {survey &&
-                    Object.keys(survey).map((i, index) => {
-                        const question = survey[i];
-                        const name = "question_" + question.id;
-                        return (
-                            <FormControl>
-                                <FormLabel>{question.question}</FormLabel>
-                                <RadioGroup name={name} defaultValue={question.userResponse?.response_id.toString()}>
-                                    {question.responses &&
-                                        question.responses.map((response) => {
-                                            return (
-                                                <Radio colorScheme="red" value={response.id.toString()}>
-                                                    {response.response}
-                                                </Radio>
-                                            );
-                                        })}
-                                </RadioGroup>
-                            </FormControl>
-                        );
-                    })}
+        <><div className={styles.container}>
 
-                <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-                    Répondre
+            {isDataLoading ? <div className={styles.loader}>
+                <Lottie
+                    options={{
+                        loop: true,
+                        autoplay: true,
+                        animationData: loader,
+                        rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                        }
+                    }}
+                    height={200}
+                    width={200}
+
+                />
+            </div> : <div className={styles.fadeinContent}>
+                <Button style={{ marginBottom: '10px' }} leftIcon={<FiArrowLeft />} colorScheme='grey' variant='outline' size='xs' onClick={() => router.back()}>
+                    Retour
                 </Button>
-            </div>
+                <div className={styles.heading}>
+                    <Heading as="h3" size="lg">
+                        Formulaire
+                    </Heading>
+                </div>
+                <div className={styles.table}>
+                    {survey &&
+                        Object.keys(survey).map((i, index) => {
+                            const question = survey[i];
+                            const name = "question_" + question.id;
+                            return (
+                                <FormControl>
+                                    <FormLabel>{question.question}</FormLabel>
+                                    <RadioGroup name={name} defaultValue={question.userResponse?.response_id.toString()}>
+                                        {question.responses &&
+                                            question.responses.map((response) => {
+                                                return (
+                                                    <Radio colorScheme="red" value={response.id.toString()}>
+                                                        {response.response}
+                                                    </Radio>
+                                                );
+                                            })}
+                                    </RadioGroup>
+                                </FormControl>
+                            );
+                        })}
+
+                    <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                        Répondre
+                    </Button>
+                </div>
+            </div>}
+        </div>
+
         </>
     );
 };
