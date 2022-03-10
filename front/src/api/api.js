@@ -33,12 +33,10 @@ export async function register(data) {
     body.append("name", data.name);
     body.append("password", data.password);
     body.append("email", data.email);
-    body.append("password_confirmation", data.passwordConfirmation),
-    body.append("phone", data.phone);
+    body.append("password_confirmation", data.passwordConfirmation), body.append("phone", data.phone);
     body.append("birth", data.birth);
     body.append("size", data.size);
     body.append("weight", data.weight);
-
 
     const requestOptions = {
         method: "POST",
@@ -261,7 +259,7 @@ export async function deleteCampaign(campaignId) {
     return await req.json();
 }
 
-export async function request(campaignId) {
+export async function requests(campaignId) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -276,7 +274,7 @@ export async function request(campaignId) {
     return await req.json();
 }
 
-export async function requests(campaignId) {
+export async function request(campaignId) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -288,5 +286,24 @@ export async function requests(campaignId) {
     };
 
     const req = await fetch(`${BASE_URL}campaigns/${campaignId}/request`, requestOptions);
+    return await req.json();
+}
+
+export async function acceptUserIntoSession(sessionId, userId) {
+    const token = sessionStorage.getItem("token");
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+
+    const body = new FormData();
+    body.append("user_id", userId);
+
+    var requestOptions = {
+        method: "POST",
+        headers,
+        redirect: "follow",
+        body,
+    };
+
+    const req = await fetch(`${BASE_URL}sessions/${sessionId}/accept-user`, requestOptions);
     return await req.json();
 }
