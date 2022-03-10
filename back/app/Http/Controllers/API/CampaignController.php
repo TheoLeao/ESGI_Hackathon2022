@@ -8,6 +8,7 @@ use App\Models\CampaignRequest;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Throwable;
 
 class CampaignController extends Controller
 {
@@ -120,7 +121,12 @@ class CampaignController extends Controller
         $request = new CampaignRequest();
         $request->user()->associate($user);
         $request->campaign()->associate($campaign);
-        $request->save();
+        try {
+            $request->save();
+        } catch (Throwable $th) {
+            $request = Request::where('user_id', $user->id)->where('campaign_id', $campaign->id)->first();
+        }
+
 
         return response()->json($request);
     }

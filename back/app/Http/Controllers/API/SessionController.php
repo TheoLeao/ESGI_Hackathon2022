@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\UserSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class SessionController extends Controller
 {
@@ -154,6 +155,11 @@ class SessionController extends Controller
         $userSession->session()->associate($session);
         $userSession->user()->associate(User::find($attr['user_id']));
         $userSession->save();
+        try {
+            $userSession->save();
+        } catch (Throwable $th) {
+            $userSession = UserSession::where('user_id', $attr['user_id'])->where('session_id', $session->id)->first();
+        }
 
         return response()->json($userSession);
     }
