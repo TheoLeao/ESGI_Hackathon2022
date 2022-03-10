@@ -29,7 +29,16 @@ const UsersList = ({ Component, pageProps }) => {
         }
 
         try {
-            await acceptUserIntoSession(sessionId, userId);
+            const rep = await acceptUserIntoSession(sessionId, userId);
+            if (rep["alreadyExist"]) {
+                toastIdRef.current = toast({
+                    title: "Utilisateur déjà associé à la session",
+                    status: "info",
+                    duration: 9000,
+                    isClosable: true,
+                });
+                return;
+            }
 
             toastIdRef.current = toast({
                 title: "Ajout à la session réussi",
