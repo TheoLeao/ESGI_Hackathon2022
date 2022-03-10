@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/answer', [SurveyController::class, 'answer']);
 
     Route::get('/metrics/{session}', [MetricsController::class, 'getSessionMetrics']);
+    Route::get('/metrics', [MetricsController::class, 'getDashboardMetrics']);
 });
 Route::get('/metrics/{session}/export', [MetricsController::class, 'exportSessionMetrics']);
 
