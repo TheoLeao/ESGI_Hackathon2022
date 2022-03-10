@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/metrics/{session}', [MetricsController::class, 'getSessionMetrics']);
 });
-
+Route::get('/metrics/{session}/export', [MetricsController::class, 'exportSessionMetrics']);
 
 Route::apiResource("products", ProductController::class);
 
