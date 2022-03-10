@@ -64,38 +64,3 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::get('/metrics/{session}/export', [MetricsController::class, 'exportSessionMetrics']);
 
 Route::apiResource("products", ProductController::class);
-
-
-    // var myHeaders = new Headers();
-    // myHeaders.append("Authorization", "Bearer 3|CKHql4fj1xPHuvmggN8hHC8FQrK2LXXVI4dwv4JH");
-
-    // var formdata = new FormData();
-    // formdata.append("survey", fileInput.files[0], "DataSBS-TuboVivoV4_vsv.xlsx - Questions - DataSBS-TuboVivoV4_vsv.xlsx - Questions.csv");
-    // formdata.append("product_id", "1");
-
-    // var requestOptions = {
-    //   method: 'POST',
-    //   headers: myHeaders,
-    //   body: formdata,
-    //   redirect: 'follow'
-    // };
-
-    // fetch("http://hackathon.alexis-guay.fr/api/upload-survey", requestOptions)
-    //   .then(response => response.text())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error));
-
-
-    // var myHeaders = new Headers();
-    // myHeaders.append("Authorization", "Bearer 3|CKHql4fj1xPHuvmggN8hHC8FQrK2LXXVI4dwv4JH");
-
-    // var requestOptions = {
-    //   method: 'GET',
-    //   headers: myHeaders,
-    //   redirect: 'follow'
-    // };
-
-    // fetch("http://hackathon.alexis-guay.fr/api/survey/1", requestOptions)
-    //   .then(response => response.text())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error));
