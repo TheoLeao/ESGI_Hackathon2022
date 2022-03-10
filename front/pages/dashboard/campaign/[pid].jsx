@@ -73,7 +73,7 @@ const Campain = ({ Component, pageProps }) => {
                                             <Td>{campaign?.product?.brand}</Td>
                                             <Td>{campaign?.product?.code_product}</Td>
                                             <Td>{campaign?.product?.category}</Td>
-                                            <Td></Td>
+                                            <Td><img style={{maxHeight: '200px'}}src={campaign?.product?.picture}></img></Td>
                                         </Tr>
                                     </Tbody>
                                 </Table>

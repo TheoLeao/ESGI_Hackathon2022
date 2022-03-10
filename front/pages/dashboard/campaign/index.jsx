@@ -76,10 +76,8 @@ const Modal_CreateCampaign = () => {
 
     const processFile = (file) => {
         const reader = new FileReader();
-
         return new Promise((resolve, _) => {
             reader.onloadend = () => {
-                console.log("aaa");
                 resolve(reader.result);
             };
             reader.readAsDataURL(file);
@@ -93,8 +91,6 @@ const Modal_CreateCampaign = () => {
         onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
             const file = document.querySelector('input[name="campaign_product_photo"]').files[0];
-
-            reader.readAsDataURL(file);
             let result = await createCampaign({
                 campaign_name: values.campaign_name,
                 campaign_state: 1,
@@ -119,7 +115,6 @@ const Modal_CreateCampaign = () => {
                     campaign_product_description: result.product.description,
                 })
             );
-
             onClose();
         },
     });
