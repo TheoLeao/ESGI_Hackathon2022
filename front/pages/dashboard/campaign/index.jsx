@@ -82,6 +82,15 @@ const Modal_CreateCampaign = () => {
     )
 }
 const Modal_CreateSession = ({ campaignId }) => {
+    const role = null;
+    if (typeof window !== 'undefined') {
+        role = sessionStorage.getItem("role");
+        if(role == 'tester') {
+            return (
+                ''
+            )
+        }
+    }
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const initialRef = React.useRef()

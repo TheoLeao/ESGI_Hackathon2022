@@ -17,6 +17,15 @@ import DashboardLayout from '../../../src/layouts/DashboardLayout/DashboardLayou
 
 const UsersList = ({ Component, pageProps }) => {
 
+    const role = null;
+    if (typeof window !== 'undefined') {
+        role = sessionStorage.getItem("role");
+        if(role == 'tester') {
+            return (
+                <h1>You don't have the rights ⛔</h1>
+            )
+        }
+    }
 
     const [usersList, setUsersList] = useState([]);
         
