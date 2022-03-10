@@ -6,6 +6,7 @@ import DashboardLayout from "../../../src/layouts/DashboardLayout/DashboardLayou
 import { FormControl, FormLabel, Button } from "@chakra-ui/react";
 import { answer, survey as getSurvey } from "../../../src/api/api";
 import { useRouter } from "next/router";
+import { FiArrowLeft } from "react-icons/fi";
 
 const Survey = ({ Component, pageProps }) => {
     const [survey, setSurvey] = useState([]);
@@ -30,6 +31,9 @@ const Survey = ({ Component, pageProps }) => {
 
     return (
         <>
+            <Button style={{ marginBottom: '10px' }} leftIcon={<FiArrowLeft />} colorScheme='grey' variant='outline' size='xs' onClick={() => router.back()}>
+                Retour
+            </Button>
             <div className={styles.heading}>
                 <Heading as="h3" size="lg">
                     Formulaire
