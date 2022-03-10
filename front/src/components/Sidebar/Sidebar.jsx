@@ -45,8 +45,6 @@ const LinkItems = [
     { name: "Accueil", icon: FiHome, href: "/dashboard/" },
     { name: "Les campagnes", icon: FiBook, href: "/dashboard/campaign/" },
     { name: "Les testeurs", icon: FiUser, href: "/dashboard/usersList" },
-    { name: "Favourites", icon: FiStar, href: "#" },
-    { name: "Settings", icon: FiSettings, href: "#" },
 ];
 
 export default function SidebarWithHeader({ children }) {

@@ -19,7 +19,6 @@ const UsersList = ({ Component, pageProps }) => {
         }
         const { pid } = router.query;
         setRequests(await getRequests(pid));
-        console.log(requests);
     }, [router.isReady]);
 
     const handleAcceptRequest = async (e, userId) => {
@@ -46,6 +45,8 @@ const UsersList = ({ Component, pageProps }) => {
                 duration: 9000,
                 isClosable: true,
             });
+            // TODO better
+            setRequests({ campaign: requests.campaign, users: requests.users?.filter((u) => u.id === userId) });
         } catch {
             toastIdRef.current = toast({
                 title: "Echec de l'enregistrement des données",

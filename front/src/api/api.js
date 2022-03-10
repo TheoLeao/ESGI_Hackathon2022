@@ -339,3 +339,7 @@ export async function getSessionUser(sessionId) {
     const req = await fetch(`${BASE_URL}get-session-user/${sessionId}`, requestOptions);
     return await req.json();
 }
+
+export function exportPdf(sessionId) {
+    return `${BASE_URL}metrics/${sessionId}/export`;
+}
