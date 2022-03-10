@@ -154,7 +154,6 @@ class SessionController extends Controller
         $userSession = new UserSession();
         $userSession->session()->associate($session);
         $userSession->user()->associate(User::find($attr['user_id']));
-        $userSession->save();
         try {
             $userSession->save();
         } catch (Exception $e) {
