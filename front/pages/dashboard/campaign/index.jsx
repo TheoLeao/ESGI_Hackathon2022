@@ -447,7 +447,7 @@ const Campaign = ({ Component, pageProps }) => {
             const rep = await request(campaignId);
             if (rep["alreadyExist"]) {
                 toastIdRef.current = toast({
-                    title: "Candidature réussite",
+                    title: "Vous avez déjà candidaté",
                     status: "info",
                     duration: 9000,
                     isClosable: true,
@@ -456,7 +456,7 @@ const Campaign = ({ Component, pageProps }) => {
             }
 
             toastIdRef.current = toast({
-                title: "Vous avez déjà candidaté",
+                title: "Candidature réussite",
                 status: "success",
                 duration: 9000,
                 isClosable: true,

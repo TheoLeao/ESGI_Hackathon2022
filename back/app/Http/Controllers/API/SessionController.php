@@ -159,6 +159,7 @@ class SessionController extends Controller
             $campaignRequest = CampaignRequest::where('session_id', $session->id)->where('user_id', $attr['user_id'])->first();
             $campaignRequest->delete();
         } catch (QueryException $e) {
+            return response()->json($e);
             $userSession = UserSession::where('user_id', $attr['user_id'])->where('session_id', $session->id)->first();
             return response()->json(array('userSession' => $userSession, 'alreadyExist' => true));
         }
