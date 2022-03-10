@@ -21,6 +21,10 @@ import useQuery from '../../../src/hooks/useQuery';
 
 
 const Campain = ({ Component, pageProps }) => {
+    const role = null;
+    if (typeof window !== 'undefined') {
+        role = sessionStorage.getItem("role");
+    }
     const query = useQuery();
     const [campaign, setCampaigns] = useState([]);
     useEffect(async () => {
@@ -65,6 +69,7 @@ const Campain = ({ Component, pageProps }) => {
                         </Table>
                     </Container>
                 </div>
+                {role != 'tester' &&
                 <div className={`${styles.section} `}>
                     <Heading as='h4' size='md'>Liste des sessions</Heading>
                     <Container maxW='container.lg' className={styles.containerComponent}>
@@ -95,7 +100,7 @@ const Campain = ({ Component, pageProps }) => {
                         </Table>
                     </Container>
                 </div>
-
+                }   
             </div>
 
         </>
