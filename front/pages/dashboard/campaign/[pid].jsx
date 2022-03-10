@@ -12,6 +12,7 @@ import {
     Text,
     Button, Heading, Container, Stack, Badge
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 
@@ -99,6 +100,7 @@ const Campain = ({ Component, pageProps }) => {
                                 <Tr>
                                     <Th>Nom</Th>
                                     <Th>Description</Th>
+                                    <Th>Action</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -106,6 +108,11 @@ const Campain = ({ Component, pageProps }) => {
                                     return <Tr>
                                         <Td>{session.label}</Td>
                                         <Td>{session.description}</Td>
+                                        <Td>
+                                            <Link href={'/dashboard/resultQcm/' + session.id}>
+                                            <Button colorScheme='teal' size='sm'>Statistiques</Button>
+                                            </Link>
+                                        </Td>
                                     </Tr>
                                 })}
                             </Tbody>

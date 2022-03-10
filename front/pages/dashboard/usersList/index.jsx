@@ -19,18 +19,17 @@ const UsersList = ({ Component, pageProps }) => {
 
 
     const [usersList, setUsersList] = useState([]);
-        // function userApi(){
-
+        
         useEffect(() => {
             var myHeaders = new Headers();
-            myHeaders.append("Authorization", "Bearer 2|4xJWQQi9RfNvZLU9s732d5CyATO2YZKxlbdQsDUc");
+            myHeaders.append("Authorization", "Bearer 2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E");
     
             var requestOptions = {
             method: 'GET',
             headers: myHeaders,
             redirect: 'follow'
             };
-    
+            
             fetch("http://hackathon.alexis-guay.fr/api/users", requestOptions)
             .then(response => response.text())
             .then(function(result){
@@ -38,7 +37,7 @@ const UsersList = ({ Component, pageProps }) => {
                setUsersList(JSON.parse(result));
           })
             .catch(error => console.log('error', error));
-        // }
+       
         }, [])
  
             return (
