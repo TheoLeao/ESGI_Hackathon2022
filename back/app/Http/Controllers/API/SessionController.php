@@ -156,7 +156,7 @@ class SessionController extends Controller
         $userSession->user()->associate(User::find($attr['user_id']));
         try {
             $userSession->save();
-            $campaignRequest = CampaignRequest::where('session_id', $session->id)->where('user_id', $attr['user_id']);
+            $campaignRequest = CampaignRequest::where('session_id', $session->id)->where('user_id', $attr['user_id'])->first();
             $campaignRequest->delete();
         } catch (QueryException $e) {
             $userSession = UserSession::where('user_id', $attr['user_id'])->where('session_id', $session->id)->first();
