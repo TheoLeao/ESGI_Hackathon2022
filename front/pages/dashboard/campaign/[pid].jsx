@@ -72,6 +72,9 @@ const Campain = ({ Component, pageProps }) => {
                 {role != 'tester' &&
                 <div className={`${styles.section} `}>
                     <Heading as='h4' size='md'>Liste des sessions</Heading>
+                    <Link href={'/dashboard/requests/' + campaign?.id}>
+                    <Button colorScheme='teal' size='sm' mt={3}>Demandes</Button>
+                    </Link>
                     <Container maxW='container.lg' className={styles.containerComponent}>
                         <Table variant='simple' className={styles.table}>
                             <Thead>
