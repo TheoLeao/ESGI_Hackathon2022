@@ -1,7 +1,7 @@
 const BASE_URL = "http://hackathon.alexis-guay.fr/api/";
 
 const DEV = true;
-const TOKEN = "2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E";
+const TOKEN = "1|b2gefWLpMoJTpwcD8qVVn81lZqN2Vhg9z6bmi5sg";
 
 export async function login(email, password) {
     const body = new FormData();
@@ -115,7 +115,6 @@ export async function getCampaigns() {
 }
 
 export async function getCampaignById(campaignId) {
-    console.log(campaignId);
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -214,13 +213,14 @@ export async function createSession(data) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
-
-    // TODO complete
     const body = new FormData();
     body.append("name", data.name);
     body.append("description", data.description);
     body.append("campaign_id", data.campaign_id);
-    body.append("start", data.date_start);
+    // let timeElapsed = Date.now();
+    // let today = new Date(timeElapsed);
+    // let startDate = today.toLocaleDateString();
+    body.append("start", data.date_end);
     body.append("end", data.date_end);
 
     const requestOptions = {
@@ -230,7 +230,7 @@ export async function createSession(data) {
         headers,
     };
 
-    const req = await fetch(`${BASE_URL}campaigns`, requestOptions);
+    const req = await fetch(`${BASE_URL}sessions`, requestOptions);
     return await req.json();
 }
 

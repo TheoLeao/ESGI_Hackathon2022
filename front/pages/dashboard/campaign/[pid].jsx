@@ -30,12 +30,10 @@ const Campain = ({ Component, pageProps }) => {
         const { pid } = query;
         let campaign_data = await getCampaignById(pid);
         setCampaigns(campaign_data);
-    }, []);
+    }, [query]);
     return (
         <>
             <Heading as='h3' size='lg'>Détail de la campagne  {campaign?.state ? <Badge colorScheme='green'>Ouverte</Badge> : <Badge colorScheme='red'>Fermé</Badge>}</Heading>
-
-
             <div className={styles.content}>
                 <div className={`${styles.section} `}>
                     <Heading as='h4' size='md'>Description de la campagne</Heading>
