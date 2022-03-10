@@ -1,7 +1,7 @@
 const BASE_URL = "http://hackathon.alexis-guay.fr/api/";
 
 const DEV = true;
-const TOKEN = "3|3WAPauiyEbeYGr4FRpZg1hHtagkj1KmsIs4Q81ow";
+const TOKEN = "2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E";
 
 export async function login(email, password) {
     const body = new FormData();
@@ -16,19 +16,29 @@ export async function login(email, password) {
 
     const req = await fetch(`${BASE_URL}login`, requestOptions);
     const rep = await req.json();
-
     const token = rep["token"];
+    const role = rep["role"];
     sessionStorage.setItem("token", token);
+    sessionStorage.setItem("role", role);
     return rep;
 }
 
 export async function register(data) {
     // TODO complete
     const body = new FormData();
+    body.append("street", data.street);
+    body.append("city", data.city);
+    body.append("zipcode", data.zipCode);
+    body.append("country", data.country);
     body.append("name", data.name);
     body.append("password", data.password);
     body.append("email", data.email);
-    body.append("password_confirmation", data.passwordConfirmation);
+    body.append("password_confirmation", data.passwordConfirmation),
+    body.append("phone", data.phone);
+    body.append("birth", data.birth);
+    body.append("size", data.size);
+    body.append("weight", data.weight);
+
 
     const requestOptions = {
         method: "POST",
@@ -40,7 +50,9 @@ export async function register(data) {
     const rep = await req.json();
 
     const token = rep["token"];
+    const role = rep["role"];
     sessionStorage.setItem("token", token);
+    sessionStorage.setItem("role", role);
     return rep;
 }
 
@@ -246,5 +258,35 @@ export async function deleteCampaign(campaignId) {
     };
 
     const req = await fetch(`${BASE_URL}campaigns`, requestOptions);
+    return await req.json();
+}
+
+export async function getRequest(campaignId) {
+    const token = sessionStorage.getItem("token");
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+
+    var requestOptions = {
+        method: "GET",
+        headers,
+        redirect: "follow",
+    };
+
+    const req = await fetch(`${BASE_URL}campaigns/${campaignId}/requests`, requestOptions);
+    return await req.json();
+}
+
+export async function getRequest(campaignId) {
+    const token = sessionStorage.getItem("token");
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+
+    var requestOptions = {
+        method: "POST",
+        headers,
+        redirect: "follow",
+    };
+
+    const req = await fetch(`${BASE_URL}campaigns/${campaignId}/request`, requestOptions);
     return await req.json();
 }

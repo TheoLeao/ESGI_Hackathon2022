@@ -30,14 +30,11 @@ const Modal_CreateCampaign = () => {
         campaign_name: "",
         campaign_description: "",
     };
-    const validationSchema = Yup.object({
-        campaign_name: Yup.string().required('Le nom de la compagne est requis'),
-        campaign_description: Yup.string().required('La description de la campagne est requise')
-    });
+ 
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: initialValues,
-        validationSchema: validationSchema,
+        validationSchema: {},
         onSubmit: (values) => {
             alert(JSON.stringify(values, null, 2));
             dispatch(addCampaign({ id: 1, name: values.campaign_name, description: values.campaign_description, state: 1 }));
