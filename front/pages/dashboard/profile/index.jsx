@@ -22,7 +22,7 @@ const User = ({ Component, pageProps }) => {
  
         useEffect(() => {
             var myHeaders = new Headers();
-            myHeaders.append("Authorization", "Bearer 3|3WAPauiyEbeYGr4FRpZg1hHtagkj1KmsIs4Q81ow");
+            myHeaders.append("Authorization", "Bearer 2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E");
           
 
             var requestOptions = {
