@@ -324,3 +324,17 @@ export async function uploadSurvey(sessionId, file) {
     const req = await fetch(`${BASE_URL}upload-survey`, requestOptions);
     return await req.json();
 }
+
+export async function getSessionUser(sessionId) {
+    const token = sessionStorage.getItem("token");
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+    const requestOptions = {
+        method: "GET",
+        headers,
+        redirect: "follow",
+    };
+
+    const req = await fetch(`${BASE_URL}get-session-user/${sessionId}`, requestOptions);
+    return await req.json();
+}

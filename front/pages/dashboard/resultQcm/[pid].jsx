@@ -1,9 +1,9 @@
 import { Heading, SimpleGrid, Alert, AlertIcon, Select } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Bar, Doughnut } from "react-chartjs-2";
 import { useRouter } from "next/router";
-
 import DashboardLayout from "../../../src/layouts/DashboardLayout/DashboardLayout";
+import { Bar, Doughnut } from "react-chartjs-2";
+import { metricsSession } from "../../../src/api/api";
 
 const ResultQcm = ({ Component, pageProps }) => {
     const router = useRouter();
@@ -16,22 +16,27 @@ const ResultQcm = ({ Component, pageProps }) => {
 
     const [result, setResultList] = useState([]);
 
-    useEffect(() => {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer 2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E");
+    useEffect(async () => {
+        let value = await metricsSession(pid);
+        setResultList(value);
+        console.log(value);
 
-        var requestOptions = {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow",
-        };
+        // var myHeaders = new Headers();
+        // myHeaders.append("Authorization", "Bearer 2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E");
 
-        fetch("http://hackathon.alexis-guay.fr/api/metrics/" + pid, requestOptions)
-            .then((response) => response.text())
-            .then(function (result) {
-                setResultList(JSON.parse(result));
-            })
-            .catch((error) => console.log("error", error));
+        // var requestOptions = {
+        // method: 'GET',
+        // headers: myHeaders,
+        // redirect: 'follow'
+        // };
+
+        // fetch("http://hackathon.alexis-guay.fr/api/metrics/" + pid, requestOptions)
+        // .then(response => response.text())
+        // .then(function(result){
+        //     setResultList(JSON.parse(result));
+
+        //  })
+        // .catch(error => console.log('error', error));
     }, []);
 
     function dataLabel(stats) {
@@ -67,10 +72,10 @@ const ResultQcm = ({ Component, pageProps }) => {
                     onChange={(e) => {
                         setValue(e.target.value);
                     }}
+                    placeholder="Sélectionner le type de graphique"
                     bg={"white"}
                     color="black"
                     defaultValue="Bar"
-                    placeholder="Sélectionner le type de graphiques"
                 >
                     <option value="Bar">Bar</option>
                     <option value="Doughnut">Doughnut</option>

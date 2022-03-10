@@ -2,6 +2,7 @@
 import {Heading } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
+import {users} from '../../../src/api/api';
 import {
     Table,
     Thead,
@@ -28,25 +29,12 @@ const UsersList = ({ Component, pageProps }) => {
     }
 
     const [usersList, setUsersList] = useState([]);
+
         
-        useEffect(() => {
-            var myHeaders = new Headers();
-            myHeaders.append("Authorization", "Bearer 2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E");
-    
-            var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-            };
-            
-            fetch("http://hackathon.alexis-guay.fr/api/users", requestOptions)
-            .then(response => response.text())
-            .then(function(result){
-                console.log(result)
-               setUsersList(JSON.parse(result));
-          })
-            .catch(error => console.log('error', error));
-       
+        useEffect(async () => {
+
+            let value = await users();
+            setUsersList(value);
         }, [])
  
             return (

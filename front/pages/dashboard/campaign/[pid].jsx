@@ -85,6 +85,9 @@ const Campain = ({ Component, pageProps }) => {
                                             <Link href={'/dashboard/resultQcm/' + session.id}>
                                             <Button colorScheme='teal' size='sm'>Statistiques</Button>
                                             </Link>
+                                            <Link href={'/dashboard/userSession/' + session.id}>
+                                            <Button ml={5} colorScheme='teal' size='sm'>Testeurs</Button>
+                                            </Link>
                                         </Td>
                                     </Tr>
                                 })}
