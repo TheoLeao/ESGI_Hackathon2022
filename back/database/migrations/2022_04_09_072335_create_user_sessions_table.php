@@ -18,6 +18,7 @@ class CreateUserSessionsTable extends Migration
             $table->timestamps();
             $table->foreignId('session_id')->nullable()->constrained();
             $table->foreignId('user_id')->nullable()->constrained();
+            $table->unique(['user_id', 'session_id'], 'unique_session_peer_user');
         });
     }
 
