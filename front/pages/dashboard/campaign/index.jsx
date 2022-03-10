@@ -183,7 +183,6 @@ const Modal_CreateCampaign = () => {
                                             name="campaign_product_name"
                                             onChange={formik.handleChange}
                                             value={formik.values.campaign_product_name}
-                                            ref={initialRef}
                                             placeholder="Nom du produit"
                                         />
                                         {formik.errors.campaign_product_name ? (
@@ -201,7 +200,6 @@ const Modal_CreateCampaign = () => {
                                             name="campaign_product_brand"
                                             onChange={formik.handleChange}
                                             value={formik.values.campaign_product_brand}
-                                            ref={initialRef}
                                             placeholder="Marque du produit"
                                         />
                                         {formik.errors.campaign_product_brand ? (
@@ -222,7 +220,7 @@ const Modal_CreateCampaign = () => {
                                             name="campaign_product_code"
                                             onChange={formik.handleChange}
                                             value={formik.values.campaign_product_code}
-                                            ref={initialRef}
+                                      
                                             placeholder="Code du produit"
                                         />
                                         {formik.errors.campaign_product_code ? (
@@ -239,8 +237,6 @@ const Modal_CreateCampaign = () => {
                                             id="campaign_product_category"
                                             name="campaign_product_category"
                                             onChange={formik.handleChange}
-                                            value={formik.values.campaign_product_category}
-                                            ref={initialRef}
                                             placeholder="Catégorie du produit"
                                         />
                                         {formik.errors.campaign_product_category ? (
