@@ -1,4 +1,4 @@
-import { Heading, SimpleGrid, Alert, AlertIcon, Select, Button } from "@chakra-ui/react";
+import { Heading, SimpleGrid, Alert, AlertIcon, Select, Button, useToast } from "@chakra-ui/react";
 import { useEffect, useState, queryKey } from "react";
 import styles from "./index.module.scss";
 import { Chart as ChartJS } from "chart.js/auto";
@@ -21,7 +21,7 @@ const ResultQcm = ({ Component, pageProps }) => {
     const [result, setResultList] = useState([]);
     const [sessionId, setSessionId] = useState(undefined);
     const [value, setValue] = useState("Bar");
-
+    const toast = useToast()
     useEffect(async () => {
         if (!query) {
             return;
@@ -94,7 +94,15 @@ const ResultQcm = ({ Component, pageProps }) => {
                             </Select>
 
                             {sessionId && (
-                                <Button colorScheme="pink" as="a" href={exportPdf(sessionId)}>
+                                <Button colorScheme="pink" as="a" href={exportPdf(sessionId)} onClick={() => {
+                                    toast({
+                                        title: 'Le téléchargement a été inité.',
+                                        description: "Le fichier est en cours de génération, merci de patienter.",
+                                        status: 'success',
+                                        duration: 9000,
+                                        isClosable: true,
+                                      })
+                                }}>
                                     Exporter en PDF
                                 </Button>
                             )}
