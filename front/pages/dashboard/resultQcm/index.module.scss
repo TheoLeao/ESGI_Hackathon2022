@@ -8,3 +8,12 @@
     display: flex;
     justify-content: space-between;
 }
+
+.fadeinContent{
+    animation: fadeIn linear 1s;
+}
+.loader{
+    position: absolute;
+    top: 50%; right: 50%;
+    transform: translate(50%,-50%);
+}
