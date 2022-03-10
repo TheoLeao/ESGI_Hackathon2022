@@ -122,17 +122,6 @@ class SessionController extends Controller
         return response()->json($res);
     }
 
-    public function getUserSessions(User $user)
-    {
-        $res = [];
-        $usersSessions = $user->userSession()->get();
-
-        $res['id'] = $user->id;
-        $res['sessions'] = $usersSessions;
-
-        return response()->json($res);
-    }
-
     public function getSessionsWithUsersById(Session $session)
     {
         $res = [];
@@ -163,7 +152,7 @@ class SessionController extends Controller
         $user = auth()->user();
 
 
-        return response()->json(UserSession::where('user_id', $user->id)->where('campaign_id', $campaign->id)->first()->session());
+        return response()->json(UserSession::join('sessions')->where('user_id', $user->id)->where('campaign_id', $campaign->id)->first()->session());
     }
 
     public function acceptUser(Request $request, Session $session)
@@ -177,7 +166,7 @@ class SessionController extends Controller
         $userSession->user()->associate(User::find($attr['user_id']));
         try {
             $userSession->save();
-            $campaignRequest = CampaignRequest::join('sessions', 'campaign_requests.session_id', '=', 'sessions.id')->where('sessions.campaign_id', $session->campaign_id)->where('campaign_requests.user_id', $attr['user_id'])->first();
+            $campaignRequest = CampaignRequest::where('campaign_id', $session->campaign_id)->where('user_id', $attr['user_id'])->first();
             $campaignRequest->delete();
         } catch (QueryException $e) {
             $userSession = UserSession::where('user_id', $attr['user_id'])->where('session_id', $session->id)->first();
