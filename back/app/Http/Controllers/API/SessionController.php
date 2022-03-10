@@ -102,7 +102,7 @@ class SessionController extends Controller
         $res = [];
         foreach (Session::all() as $session) {
             $campaign = $session->campaign()->first();
-            $usersSessions = $session->userSession()->get();
+            $usersSessions = $session->userSessions()->get();
 
             $res['id-' . $session->id] = $session->id;
             $res['campaign-' . $session->id] = $campaign->id;
@@ -126,7 +126,7 @@ class SessionController extends Controller
     {
         $res = [];
         $campaign = $session->campaign()->first();
-        $usersSessions = $session->userSession()->get();
+        $usersSessions = $session->userSessions()->get();
 
         $res['id'] = $session->id;
         $res['campaign'] = $campaign->id;
