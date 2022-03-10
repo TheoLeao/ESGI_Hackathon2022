@@ -38,6 +38,7 @@ import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import Logo from '../Logo/Logo';
 import theme from '../../theme/theme';
+import { useRouter } from 'next/router';
 
 const LinkItems = [
   { name: 'Accueil', icon: FiHome, href: '/dashboard/' },
@@ -138,6 +139,15 @@ const NavItem = ({ icon, children,href, ...rest }) => {
 
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const token = null;
+  const router = useRouter()
+    if (typeof window !== 'undefined') {
+        token = sessionStorage.getItem("token");
+        if(token == null) {
+          router.push('/login');
+        }
+    }
+    
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
