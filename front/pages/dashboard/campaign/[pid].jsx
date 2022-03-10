@@ -121,33 +121,7 @@ const Campain = ({ Component, pageProps }) => {
                             </Link>
                         }
 
-                        <div className={`${styles.section} `}>
-                            <Heading as='h4' size='md'>Liste des sessions</Heading>
-                            <Container maxW='container.lg' className={styles.containerComponent}>
-                                <Table variant='simple' className={styles.table}>
-                                    <Thead>
-                                        <Tr>
-                                            <Th>Nom</Th>
-                                            <Th>Description</Th>
-                                            <Th>Action</Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {campaign?.sessions?.map((session) => {
-                                            return <Tr>
-                                                <Td>{session.name}</Td>
-                                                <Td>{session.description}</Td>
-                                                <Td>
-                                                    <Link href={'/dashboard/resultQcm/' + session.id}>
-                                                        <Button colorScheme='teal' size='sm'>Statistiques</Button>
-                                                    </Link>
-                                                </Td>
-                                            </Tr>
-                                        })}
-                                    </Tbody>
-                                </Table>
-                            </Container>
-                        </div>
+             
                     </div>
 
 
