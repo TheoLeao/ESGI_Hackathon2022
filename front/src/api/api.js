@@ -1,6 +1,6 @@
 const BASE_URL = "http://hackathon.alexis-guay.fr/api/";
 
-const DEV = true;
+const DEV = false;
 const TOKEN = "2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E";
 
 export async function login(email, password) {
