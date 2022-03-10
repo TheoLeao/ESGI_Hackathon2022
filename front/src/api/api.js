@@ -260,7 +260,6 @@ export async function deleteCampaign(campaignId) {
     return await req.json();
 }
 
-<<<<<<< HEAD
 export async function requests(campaignId) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
@@ -307,7 +306,8 @@ export async function acceptUserIntoSession(sessionId, userId) {
     };
 
     const req = await fetch(`${BASE_URL}sessions/${sessionId}/accept-user`, requestOptions);
-=======
+    return await req.json();
+}
 export async function uploadSurvey(sessionId, file) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
@@ -322,6 +322,5 @@ export async function uploadSurvey(sessionId, file) {
         redirect: "follow",
     };
     const req = await fetch(`${BASE_URL}upload-survey`, requestOptions);
->>>>>>> file upload (non-functional)
     return await req.json();
 }
