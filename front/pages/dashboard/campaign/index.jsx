@@ -47,7 +47,7 @@ import {
 } from "../../../src/store/features/campaign/campaignSlice";
 import Lottie from "react-lottie";
 import loader from "../../../src/lotties/loader.json";
-import { getCampaigns, createCampaign, createSession } from "../../../src/api/api";
+import { getCampaigns, createCampaign, createSession, uploadSurvey } from "../../../src/api/api";
 import { Form } from "react-bootstrap";
 
 const Modal_CreateCampaign = () => {
@@ -281,6 +281,7 @@ const Modal_CreateSession = ({ campaignId }) => {
         session_name: "",
         session_description: "",
         session_endDate: "",
+        session_file: undefined,
     };
 
     const validationSchema = Yup.object({
@@ -288,6 +289,7 @@ const Modal_CreateSession = ({ campaignId }) => {
         session_description: Yup.string().required("La description de la session est requise"),
         session_endDate: Yup.string().required("La date de fin de session est requise"),
     });
+
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: initialValues,
@@ -301,10 +303,12 @@ const Modal_CreateSession = ({ campaignId }) => {
                 campaign_id: campaignId,
                 date_end: values.session_endDate,
             });
-            console.log(result);
+            console.log(values.session_file_uri);
+            let result_file = await uploadSurvey(result.id, values.session_file_uri);
+
             dispatch(
                 createSessionCampaign({
-                    id: 1,
+                    id: result.id,
                     label: values.session_name,
                     description: values.session_description,
                     idCampaign: campaignId,
@@ -371,6 +375,18 @@ const Modal_CreateSession = ({ campaignId }) => {
                                 {formik.errors.session_endDate ? (
                                     <Text fontSize="sm" color={theme.colors.danger.normal}>
                                         {formik.errors.session_endDate}
+                                    </Text>
+                                ) : null}
+                            </FormControl>
+                            <FormControl mt={4}>
+                                <FormLabel>Fichier de question</FormLabel>
+
+                                {/* <Form.Control className={styles.inputDate} type="file" id="session_file_uri" name="session_file_uri" onChange={(event) => {
+                    setFieldValue("session_file_uri", event.currentTarget.files[0]);
+                  }}  /> */}
+                                {formik.errors.session_file_uri ? (
+                                    <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                        {formik.errors.session_file_uri}
                                     </Text>
                                 ) : null}
                             </FormControl>
