@@ -1,0 +1,24 @@
+.autocomplete {
+    position: relative;
+}
+
+.autocompleteResult {
+    position: absolute;
+    z-index: 10;
+    background-color: #ffffff;
+    width: 100%;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    margin-top: 3px;
+
+    > div {
+        cursor: pointer;
+        height: 46px;
+        line-height: 46px;
+        padding-left: 18px;
+
+        &:hover {
+            background-color: #efefef;
+        }
+    }
+}

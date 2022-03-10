@@ -32,6 +32,8 @@ class AuthenticationController extends Controller
             'city' => $attr['city'],
             'zipcode' => $attr['zipcode'],
             'country' => $attr['country'],
+            'latitude' => $attr['latitude'],
+            'longitude' => $attr['longitude'],
         ]);
 
         /** @var User $user */
