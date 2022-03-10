@@ -151,10 +151,9 @@ class SessionController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        $userSession = UserSession::join('sessions', 'sessions.id', '=', 'user_sessions.session_id')->where('user_id', $user->id)->where('campaign_id', $campaign->id)->first();
+        $session = UserSession::join('sessions', 'sessions.id', '=', 'user_sessions.session_id')->where('user_id', $user->id)->where('campaign_id', $campaign->id)->first();
 
-
-        return response()->json($userSession);
+        return response()->json($session);
     }
 
     public function acceptUser(Request $request, Session $session)
