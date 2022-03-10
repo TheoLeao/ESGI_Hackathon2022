@@ -122,6 +122,16 @@ class SessionController extends Controller
         return response()->json($res);
     }
 
+    public function getUserSessions(User $user) {
+        $res = [];
+        $usersSessions = $user->userSession()->get();
+
+        $res['id'] = $user->id;
+        $res['sessions'] = $usersSessions;
+
+        return response()->json($res);
+    }
+
     public function getSessionsWithUsersById(Session $session)
     {
         $res = [];

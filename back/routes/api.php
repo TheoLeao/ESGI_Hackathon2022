@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/sessions-user/{campaign}', [SessionController::class, 'getSessionOfUser']);
     Route::get('/get-session-user/{session}', [SessionController::class, 'getSessionsWithUsersById']);
     Route::post('/sessions/{session}/accept-user', [SessionController::class, 'acceptUser']);
+    Route::get('/get-user-sessions/{user}', [SessionController::class, 'getUserSessions']);
 
     Route::get('/survey/{session}', [SurveyController::class, 'show']);
     Route::post('/upload-survey', [SurveyController::class, 'store']);

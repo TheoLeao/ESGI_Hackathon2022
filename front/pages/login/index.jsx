@@ -48,7 +48,7 @@ const Login = () => {
                 <Stack align={"center"}>
                     <Heading fontSize={"4xl"}>Sign in to your account</Heading>
                     <Text fontSize={"lg"} color={"gray.600"}>
-                        to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+                        Welcome back !
                     </Text>
                 </Stack>
                 <Box rounded={"lg"} bg={useColorModeValue("white", "gray.700")} boxShadow={"lg"} p={8}>
@@ -86,6 +86,14 @@ const Login = () => {
                             >
                                 Sign in
                             </Button>
+                        </Stack>
+                        <Stack pt={6}>
+                            <Text align={"center"}>
+                                No account ?{" "}
+                                <Link color={"blue.400"} href={"/register"}>
+                                    Register
+                                </Link>
+                            </Text>
                         </Stack>
                     </Stack>
                 </Box>
