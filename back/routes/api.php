@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post("campaigns/{campaign}/request", [CampaignController::class, 'request']);
 
     Route::get('/get-sessions-users', [SessionController::class, 'getSessionsWithUsers']);
+    Route::get('/sessions-user/{campaign}', [SessionController::class, 'getSessionOfUser']);
     Route::get('/get-session-user/{session}', [SessionController::class, 'getSessionsWithUsersById']);
     Route::post('/sessions/{session}/accept-user', [SessionController::class, 'acceptUser']);
 

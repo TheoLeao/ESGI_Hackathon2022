@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Campaign;
 use App\Models\CampaignRequest;
 use App\Models\Session;
 use App\Models\User;
@@ -143,6 +144,15 @@ class SessionController extends Controller
         }
 
         return response()->json($res);
+    }
+
+    public function getSessionOfUser(Campaign $campaign)
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+
+        return response()->json(UserSession::where('user_id', $user->id)->where('campaign_id', $campaign->id)->first()->session());
     }
 
     public function acceptUser(Request $request, Session $session)

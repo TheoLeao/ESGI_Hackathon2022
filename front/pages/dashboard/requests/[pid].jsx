@@ -46,7 +46,7 @@ const UsersList = ({ Component, pageProps }) => {
                 isClosable: true,
             });
             // TODO better
-            setRequests({ campaign: requests.campaign, users: requests.users?.filter((u) => u.id === userId) });
+            setRequests({ campaign: requests.campaign, users: requests.users?.filter((u) => u.id !== userId) });
         } catch {
             toastIdRef.current = toast({
                 title: "Echec de l'enregistrement des données",
