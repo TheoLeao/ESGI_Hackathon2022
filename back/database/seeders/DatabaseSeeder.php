@@ -26,7 +26,20 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin123',
             'password' => bcrypt('admin123'),
             'email' => 'admin123@gmail.com',
-            'role' => 'admin'
+            'role' => 'admin',
+            'birth' => Date::now(),
+            'size' => rand(150, 200),
+            'weight' => rand(70, 100),
+        ]);
+
+        User::create([
+            'name' => 'Testeur 1',
+            'password' => bcrypt('admin123'),
+            'email' => 'tester1@gmail.com',
+            'role' => 'tester',
+            'birth' => Date::now(),
+            'size' => rand(150, 200),
+            'weight' => rand(70, 100),
         ]);
 
         /** @var User $user */
@@ -42,10 +55,10 @@ class DatabaseSeeder extends Seeder
 
         $address = Address::create(
             [
-                'street' => Str::random(10),
-                'city' => Str::random(10),
-                'zipcode' => Str::random(10),
-                'country' => Str::random(10),
+                'street' => '56 rue du pont',
+                'city' => 'Lyon',
+                'zipcode' => '69000',
+                'country' => 'France',
                 'latitude' => rand(0, 50),
                 'longitude' => rand(0, 50),
             ]
@@ -56,18 +69,18 @@ class DatabaseSeeder extends Seeder
 
         /** @var Product $product */
         $product = Product::create([
-            'name' => Str::random(10),
-            'description' => Str::random(10),
-            'brand' => Str::random(10),
-            'code_product' => Str::random(10),
-            'category' => Str::random(10),
+            'name' => 'Crème main',
+            'description' => 'Crème pour les mains fragiles',
+            'brand' => 'Loreal',
+            'code_product' => 'FR4853',
+            'category' => 'cream',
         ]);
 
         /** @var Campaign $campaign */
         $campaign = new Campaign([
-            'name' => Str::random(10),
-            'state' => Str::random(10),
-            'description' => Str::random(10),
+            'name' => 'Campagne de test',
+            'state' => 'En cours',
+            'description' => 'Campagne test de la crème',
         ]);
 
         $campaign->product()->associate($product);
@@ -75,8 +88,8 @@ class DatabaseSeeder extends Seeder
 
         /** @var Session $session */
         $session = new Session([
-            'name' => Str::random(10),
-            'description' => Str::random(10),
+            'name' => 'Session 1',
+            'description' => 'Session de test',
             'start' => Date::now(),
             'end' => Date::now()
         ]);
