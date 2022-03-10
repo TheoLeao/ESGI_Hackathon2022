@@ -281,13 +281,14 @@ const Modal_CreateSession = ({ campaignId }) => {
         session_name: "",
         session_description: "",
         session_endDate: "",
-        session_file: undefined,
+        file: [],
     };
 
     const validationSchema = Yup.object({
         session_name: Yup.string().required("Le nom de la session est requis"),
         session_description: Yup.string().required("La description de la session est requise"),
         session_endDate: Yup.string().required("La date de fin de session est requise"),
+        file: Yup.mixed().required("Fichier requis"),
     });
 
     const dispatch = useDispatch();
@@ -303,9 +304,8 @@ const Modal_CreateSession = ({ campaignId }) => {
                 campaign_id: campaignId,
                 date_end: values.session_endDate,
             });
-            console.log(values.session_file_uri);
-            let result_file = await uploadSurvey(result.id, values.session_file_uri);
-
+            const file = document.querySelector('input[name="file"]').files[0];
+            const result_file = await uploadSurvey(result.id, file);
             dispatch(
                 createSessionCampaign({
                     id: result.id,
@@ -381,12 +381,18 @@ const Modal_CreateSession = ({ campaignId }) => {
                             <FormControl mt={4}>
                                 <FormLabel>Fichier de question</FormLabel>
 
-                                {/* <Form.Control className={styles.inputDate} type="file" id="session_file_uri" name="session_file_uri" onChange={(event) => {
-                    setFieldValue("session_file_uri", event.currentTarget.files[0]);
-                  }}  /> */}
-                                {formik.errors.session_file_uri ? (
+                                <Form.Control
+                                    className={styles.inputDate}
+                                    type="file"
+                                    id="file"
+                                    name="file"
+                                    onChange={(event) => {
+                                        formik.setFieldValue("file", event.currentTarget.files[0]);
+                                    }}
+                                />
+                                {formik.errors.file ? (
                                     <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                        {formik.errors.session_file_uri}
+                                        {formik.errors.file}
                                     </Text>
                                 ) : null}
                             </FormControl>
