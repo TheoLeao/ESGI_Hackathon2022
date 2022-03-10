@@ -11,6 +11,7 @@ class Session extends Model
 
     protected $fillable = [
         'name',
+        'description',
         'campaign_id',
         'start',
         'end'
