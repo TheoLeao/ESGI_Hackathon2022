@@ -7,8 +7,10 @@ import useQuery from '../../../src/hooks/useQuery';
 import DashboardLayout from '../../../src/layouts/DashboardLayout/DashboardLayout';
 import loader from "../../../src/lotties/loader.json";
 import styles from './index.module.scss';
-
+import { FiArrowLeft } from "react-icons/fi";
+import { useRouter } from 'next/router';
 const Campain = ({ Component, pageProps }) => {
+    const router = useRouter();
     const role = null;
     if (typeof window !== "undefined") {
         role = sessionStorage.getItem("role");
@@ -48,6 +50,9 @@ const Campain = ({ Component, pageProps }) => {
 
                     />
                 </div> : <div className={styles.fadeinContent}>
+                    <Button style={{marginBottom: '10px'}} leftIcon={<FiArrowLeft />} colorScheme='grey' variant='outline' size='xs' onClick={() => router.back()}>
+                        Retour
+                    </Button>
                     <Heading as='h3' size='lg'>Détail de la campagne  {campaign?.state ? <Badge colorScheme='green'>Ouverte</Badge> : <Badge colorScheme='red'>Fermé</Badge>}</Heading>
                     <div className={styles.content}>
                         <div className={`${styles.section} `}>
