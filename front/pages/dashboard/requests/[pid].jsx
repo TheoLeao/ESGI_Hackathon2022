@@ -72,7 +72,7 @@ const UsersList = ({ Component, pageProps }) => {
                                 <Th>Action</Th>
                             </Tr>
                         </Thead>
-                        <Tbody>
+                        {requests.users?.length > 0 ? <Tbody>
                             {requests.users?.map((user) => {
                                 return (
                                     <Tr key={user}>
@@ -93,7 +93,8 @@ const UsersList = ({ Component, pageProps }) => {
                                     </Tr>
                                 );
                             })}
-                        </Tbody>
+                        </Tbody> : <div className={styles.message}>Aucune demande pour cette campagne 😅</div>}
+                        
                     </Table>
                 </>
             )}
