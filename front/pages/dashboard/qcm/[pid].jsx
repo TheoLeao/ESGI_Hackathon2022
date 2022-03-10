@@ -73,19 +73,25 @@ const Survey = ({ Component, pageProps }) => {
                                     const question = survey[i];
                                     const name = "question_" + question.id;
                                     return (
-                                        <FormControl>
-                                            <FormLabel>{question.question}</FormLabel>
-                                            <RadioGroup name={name} defaultValue={question.userResponse?.response_id.toString()}>
-                                                {question.responses &&
-                                                    question.responses.map((response) => {
-                                                        return (
-                                                            <Radio colorScheme="red" value={response.id.toString()}>
-                                                                {response.response}
-                                                            </Radio>
-                                                        );
-                                                    })}
-                                            </RadioGroup>
-                                        </FormControl>
+                                        <div className={styles.group}>
+                                            <FormControl>
+                                                <FormLabel>{question.question}</FormLabel>
+                                                <RadioGroup className={styles.list} name={name} defaultValue={question.userResponse?.response_id.toString()}>
+                                                    {question.responses &&
+                                                        question.responses.map((response) => {
+                                                            return (
+                                                                <div className={styles.radioItem}>
+                                                                    <Radio colorScheme="red" value={response.id.toString()}>
+                                                                        {response.response}
+                                                                    </Radio>
+                                                                </div>
+
+                                                            );
+                                                        })}
+                                                </RadioGroup>
+                                            </FormControl>
+                                        </div>
+
                                     );
                                 })}
 

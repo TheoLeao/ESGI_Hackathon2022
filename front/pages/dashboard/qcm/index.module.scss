@@ -1,9 +1,10 @@
-@import '../../../styles/utils/animations.module.scss';
+@import "../../../styles/utils/animations.module.scss";
 
 .table {
     background-color: white;
     border-radius: 15px;
     margin-top: 20px;
+    padding: 20px;
 }
 .containerComponent {
     background-color: white;
@@ -20,19 +21,29 @@
         width: 100%;
     }
 }
-.section{
+.section {
     margin-top: 25px;
 }
-.heading{
+.heading {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
-.loader{
+.loader {
     position: absolute;
-    top: 50%; right: 50%;
-    transform: translate(50%,-50%);
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
 }
-.fadeinContent{
+.fadeinContent {
     animation: fadeIn linear 1s;
+}
+.group {
+    margin-bottom: 20px;
+    .list {
+        display: flex;
+        .radioItem {
+            margin-right: 25px;
+        }
+    }
 }
