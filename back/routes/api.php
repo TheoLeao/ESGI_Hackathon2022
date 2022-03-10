@@ -47,7 +47,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("user-responses", UserResponseController::class);
     Route::apiResource("addresses", AddressController::class);
     Route::apiResource("users-sessions", UserSessionController::class);
-    Route::apiResource("campaign", CampaignController::class);
+    Route::apiResource("campaigns", CampaignController::class);
+    Route::get("campaigns/{campaign}/requests", [CampaignController::class, 'requests']);
+    Route::post("campaigns/{campaign}/request", [CampaignController::class, 'request']);
 
     Route::get('/get-sessions-users', [SessionController::class, 'getSessionsWithUsers']);
     Route::get('/get-session-user/{session}', [SessionController::class, 'getSessionsWithUsersById']);

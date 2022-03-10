@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\CampaignRequest;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -16,18 +18,7 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $res = [];
-        foreach (Campaign::all() as $campaign) {
-            $product = $campaign->product()->get();
-            $sessions = $campaign->sessions()->get();
-            $res['id-' . $campaign->id] = $campaign->id;
-            $res['name-' . $campaign->id] = $campaign->name;
-            $res['description-' . $campaign->id] = $campaign->description;
-            $res['product-' . $campaign->id] = $product;
-            $res['sessions-' . $campaign->id] = $sessions;
-        }
-
-        return response()->json($res);
+        return response()->json(Campaign::with('product', 'sessions')->get());
     }
 
     /**
@@ -68,15 +59,7 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        $product = $campaign->product()->get();
-        $sessions = $campaign->sessions()->get();
-        $res = [];
-        $res['id'] = $campaign->id;
-        $res['name'] = $campaign->name;
-        $res['description'] = $campaign->description;
-        $res['product'] = $product;
-        $res['sessions'] = $sessions;
-        return response()->json($res);
+        return response()->json(Campaign::with('product', 'sessions')->where('id', '=', $campaign->id)->first());
     }
 
     /**
@@ -119,5 +102,27 @@ class CampaignController extends Controller
 
         // On retourne la réponse JSON
         return response()->json();
+    }
+
+    public function requests(Campaign $campaign)
+    {
+        // return response()->json($campaign->requests()->get()->toArray());
+        $users = array_map(function ($req) {
+            return User::find($req['user_id']);
+        }, $campaign->requests()->get()->toArray());
+        return response()->json(["campaign" => Campaign::with('product', 'sessions')->where('id', '=', $campaign->id)->first(), "users" => $users]);
+    }
+
+    public function request(Campaign $campaign)
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $request = new CampaignRequest();
+        $request->user()->associate($user);
+        $request->campaign()->associate($campaign);
+        $request->save();
+
+        return response()->json($request);
     }
 }

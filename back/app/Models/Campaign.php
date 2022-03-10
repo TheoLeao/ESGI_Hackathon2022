@@ -28,6 +28,6 @@ class Campaign extends Model
 
     public function requests()
     {
-        return $this->belongsToMany(CampaignRequest::class);
+        return $this->hasMany(CampaignRequest::class);
     }
 }

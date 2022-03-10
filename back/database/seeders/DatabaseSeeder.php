@@ -76,6 +76,7 @@ class DatabaseSeeder extends Seeder
         /** @var Session $session */
         $session = new Session([
             'name' => Str::random(10),
+            'description' => Str::random(10),
             'start' => Date::now(),
             'end' => Date::now()
         ]);
