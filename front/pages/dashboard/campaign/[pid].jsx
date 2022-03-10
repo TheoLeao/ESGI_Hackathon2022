@@ -1,27 +1,10 @@
 import styles from "./index.module.scss";
 import DashboardLayout from "../../../src/layouts/DashboardLayout/DashboardLayout";
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    Text,
-    Button,
-    Heading,
-    Container,
-    Stack,
-    Badge,
-} from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, Button, Heading, Container, Badge } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getCampaignById } from "../../../src/api/api";
 import useQuery from "../../../src/hooks/useQuery";
+import { getCampaignById, me, getSessionUser2 } from "../../../src/api/api";
 
 const Campain = ({ Component, pageProps }) => {
     const role = null;
@@ -30,6 +13,7 @@ const Campain = ({ Component, pageProps }) => {
     }
     const query = useQuery();
     const [campaign, setCampaigns] = useState([]);
+    const [userSession, setUserSession] = useState([]);
     useEffect(async () => {
         if (!query) {
             return;
@@ -37,7 +21,14 @@ const Campain = ({ Component, pageProps }) => {
         const { pid } = query;
         let campaign_data = await getCampaignById(pid);
         setCampaigns(campaign_data);
+
+        let userInfo = await me();
+
+        let userSession = await getSessionUser2(pid);
+        setUserSession(userSession);
+        console.log(userSession.id);
     }, [query]);
+
     return (
         <>
             <Heading as="h3" size="lg">
@@ -124,6 +115,20 @@ const Campain = ({ Component, pageProps }) => {
                             </Table>
                         </Container>
                     </div>
+                )}
+                {/* })}
+                            </Tbody>
+                        </Table>
+                    </Container>
+                </div>
+            } */}
+
+                {role != "admin" && userSession.id != null && (
+                    <Link href={"/dashboard/qcm/" + userSession.session_id}>
+                        <Button ml={5} mt={20} maxW="200" colorScheme="teal" size="sm">
+                            Accéder au questionnaire
+                        </Button>
+                    </Link>
                 )}
             </div>
         </>
