@@ -37,6 +37,8 @@ export async function register(data) {
     body.append("birth", data.birth);
     body.append("size", data.size);
     body.append("weight", data.weight);
+    body.append("latitude", data.latitude);
+    body.append("longitude", data.longitude);
 
     const requestOptions = {
         method: "POST",

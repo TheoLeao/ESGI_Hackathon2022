@@ -14,27 +14,58 @@ import {
     useColorModeValue,
     Link,
 } from "@chakra-ui/react";
-import { useEffect, useMemo } from "react";
-import { useFormik, Formik } from "formik";
+import { useFormik } from "formik";
 import { register } from "../../src/api/api";
-import { Select } from '@chakra-ui/react'
 import * as Yup from "yup";
 import React, { useState } from "react";
 import theme from "../../src/theme/theme";
 import { useRouter } from "next/router";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import countryList from 'react-select-country-list';
+import styles from "./index.module.scss";
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [focusAutocompleting, setFocusAutocompleting] = useState(false);
+    const [hoverAutocompleting, setHoverAutocompleting] = useState(false);
+    const [addresses, setAddresses] = useState([]);
     const router = useRouter();
-    const options = useMemo(() => countryList().getLabels(), [])
 
-    const geoApi = 'https://api-adresse.data.gouv.fr/search/?';
+    const debounce = (func, wait) => {
+        let timeout;
 
-    const changeHandler = value => {
-        setValue(value)
-    }
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    };
+
+    const geoApi = "https://api-adresse.data.gouv.fr/search/?";
+
+    const autocomplete = debounce(async (e) => {
+        const addressCandidate = e.target.value;
+        if (addressCandidate.length < 2) {
+            return;
+        }
+        const req = await fetch(`${geoApi}q=${addressCandidate}`);
+        const rep = await req.json();
+        setAddresses(rep.features);
+    }, 500);
+
+    const choiceAdress = (address) => {
+        document.getElementById("autocomplete").value = address.properties.label;
+        formik.setFieldValue("street", address.properties.name);
+        formik.setFieldValue("city", address.properties.city);
+        formik.setFieldValue("zipCode", address.properties.postcode);
+        formik.setFieldValue("country", "France");
+        formik.setFieldValue("latitude", address.geometry?.coordinates?.[0]);
+        formik.setFieldValue("longitude", address.geometry?.coordinates?.[1]);
+        console.log(formik.values);
+    };
 
     const initialValues = {
         email: "",
@@ -50,13 +81,15 @@ const Register = () => {
         size: Yup.string().required("Size is required"),
         weight: Yup.string().required("Weight is required"),
         street: Yup.string().required("Street is required"),
-        city: Yup.string().required("City is required"),
-        zipCode: Yup.string().required("Zipcode is required"),
-        country: Yup.string().required("Country is required"),
+        city: Yup.string(),
+        zipCode: Yup.string(),
+        country: Yup.string(),
+        latitude: Yup.string(),
+        longitude: Yup.string(),
     });
     const formik = useFormik({
-        initialValues: initialValues,
-        validationSchema: validationSchema,
+        initialValues,
+        validationSchema,
         onSubmit: async (values) => {
             let value = await register(values);
             if (sessionStorage["token"] != null && value != null) {
@@ -166,6 +199,30 @@ const Register = () => {
                                 </FormControl>
                             </Box>
                         </HStack>
+                        <FormControl id="street" isRequired>
+                            <div className={styles.autocomplete}>
+                                <FormLabel>Street</FormLabel>
+                                <Input
+                                    type="text"
+                                    id="autocomplete"
+                                    autoComplete="none"
+                                    onChange={autocomplete}
+                                    onFocus={() => setFocusAutocompleting(true)}
+                                    onBlur={() => setFocusAutocompleting(false)}
+                                />
+                                {(focusAutocompleting || hoverAutocompleting) && (
+                                    <div
+                                        className={styles.autocompleteResult}
+                                        onMouseEnter={() => setHoverAutocompleting(true)}
+                                        onMouseLeave={() => setHoverAutocompleting(false)}
+                                    >
+                                        {addresses.map((a) => {
+                                            return <div onClick={(e) => choiceAdress(a)}>{a.properties.label}</div>;
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        </FormControl>
                         <HStack>
                             <Box>
                                 <FormControl id="size" isRequired>
@@ -190,53 +247,7 @@ const Register = () => {
                                 </FormControl>
                             </Box>
                         </HStack>
-                        <FormControl id="street" isRequired>
-                            <FormLabel>Street</FormLabel>
-                            <Input type="text" onChange={formik.handleChange} value={formik.values.street} />
-                            {formik.errors.street ? (
-                                <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                    {formik.errors.street}
-                                </Text>
-                            ) : null}
-                        </FormControl>
-                        <HStack>
-                            <Box>
-                                <FormControl id="city" isRequired>
-                                    <FormLabel>City</FormLabel>
-                                    <Input type="text" onChange={formik.handleChange} value={formik.values.city} />
-                                    {formik.errors.city ? (
-                                        <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                            {formik.errors.city}
-                                        </Text>
-                                    ) : null}
-                                </FormControl>
-                            </Box>
-                            <Box>
-                                <FormControl id="zipCode" isRequired>
-                                    <FormLabel>Zip code</FormLabel>
-                                    <Input type="text" onChange={formik.handleChange} value={formik.values.zipCode} />
-                                    {formik.errors.zipCode ? (
-                                        <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                            {formik.errors.zipCode}
-                                        </Text>
-                                    ) : null}
-                                </FormControl>
-                            </Box>
-                        </HStack>
-                        <FormControl id="country" isRequired>
-                            <FormLabel>Country</FormLabel>
-                            <Select onChange={formik.handleChange} value={formik.values.country} placeholder="Select country">
-                            {options.map((options) => {
-                                return <option value={options}>{options}</option>;
-                            })} 
-                            </Select>
-                            {/* <Input type="text" onChange={formik.handleChange} value={formik.values.country} /> */}
-                            {formik.errors.country ? (
-                                <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                    {formik.errors.country}
-                                </Text>
-                            ) : null}
-                        </FormControl>
+
                         <Stack spacing={10} pt={2}>
                             <Button
                                 loadingText="Submitting"
