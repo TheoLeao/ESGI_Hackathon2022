@@ -73,12 +73,28 @@ const Modal_CreateCampaign = () => {
         campaign_product_category: Yup.string().required("La catégorie du produit est requise"),
         campaign_product_description: Yup.string().required("La description du produit est requise"),
     });
+
+    const processFile = (file) => {
+        const reader = new FileReader();
+
+        return new Promise((resolve, _) => {
+            reader.onloadend = () => {
+                console.log("aaa");
+                resolve(reader.result);
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
+            const file = document.querySelector('input[name="campaign_product_photo"]').files[0];
+
+            reader.readAsDataURL(file);
             let result = await createCampaign({
                 campaign_name: values.campaign_name,
                 campaign_state: 1,
@@ -87,7 +103,7 @@ const Modal_CreateCampaign = () => {
                 product_brand: values.campaign_product_brand,
                 product_code: values.campaign_product_code,
                 product_category: values.campaign_product_category,
-                product_picture: "",
+                product_picture: await processFile(file),
                 product_description: values.campaign_product_description,
             });
             dispatch(
@@ -240,21 +256,45 @@ const Modal_CreateCampaign = () => {
                                     </FormControl>
                                 </div>
                             </div>
-                            <FormControl>
-                                <FormLabel>Produit - Description</FormLabel>
-                                <Textarea
-                                    id="campaign_product_description"
-                                    name="campaign_product_description"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.campaign_product_description}
-                                    placeholder="Description de la campagne"
-                                />
-                                {formik.errors.campaign_product_description ? (
-                                    <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                        {formik.errors.campaign_product_description}
-                                    </Text>
-                                ) : null}
-                            </FormControl>
+                            <div className={styles.line}>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Produit - Description</FormLabel>
+                                        <Textarea
+                                            id="campaign_product_description"
+                                            name="campaign_product_description"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.campaign_product_description}
+                                            placeholder="Description de la campagne"
+                                        />
+                                        {formik.errors.campaign_product_description ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_product_description}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Produit - Photo</FormLabel>
+
+                                        <Form.Control
+                                            className={styles.inputDate}
+                                            type="file"
+                                            id="campaign_product_photo"
+                                            name="campaign_product_photo"
+                                            onChange={(event) => {
+                                                formik.setFieldValue("file", event.currentTarget.files[0]);
+                                            }}
+                                        />
+                                        {formik.errors.campaign_product_photo ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_product_photo}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
+                            </div>
                         </ModalBody>
 
                         <ModalFooter>

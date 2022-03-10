@@ -1,16 +1,16 @@
 import { Badge, Button, Container, Heading, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { getCampaignById, getSessionUser, users, me, getSessionUser2 } from '../../../src/api/api';
+import Lottie from "react-lottie";
+import { getCampaignById, getSessionUser2, me } from '../../../src/api/api';
 import useQuery from '../../../src/hooks/useQuery';
 import DashboardLayout from '../../../src/layouts/DashboardLayout/DashboardLayout';
-import styles from './index.module.scss';
-import Lottie from "react-lottie";
 import loader from "../../../src/lotties/loader.json";
+import styles from './index.module.scss';
 
 const Campain = ({ Component, pageProps }) => {
     const role = null;
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
         role = sessionStorage.getItem("role");
     }
     const [isDataLoading, setIsDataLoading] = useState(true);
@@ -29,7 +29,6 @@ const Campain = ({ Component, pageProps }) => {
         setUserSession(userSession);
         setIsDataLoading(false)
     }, [query]);
-
 
     return (
         <>
@@ -158,13 +157,11 @@ const Campain = ({ Component, pageProps }) => {
                 }
             </div>
         </>
-
-
-    )
-}
+    );
+};
 
 Campain.getLayout = function getLayout(Campain) {
-    return <DashboardLayout>{Campain}</DashboardLayout>
-}
+    return <DashboardLayout>{Campain}</DashboardLayout>;
+};
 
 export default Campain;
