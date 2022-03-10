@@ -18,6 +18,7 @@ class CreateCampaignRequestsTable extends Migration
             $table->timestamps();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('campaign_id')->constrained();
+            $table->unique(['user_id', 'campaign_id'], 'unique_campaign_request_peer_user');
         });
     }
 

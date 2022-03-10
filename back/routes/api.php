@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/get-sessions-users', [SessionController::class, 'getSessionsWithUsers']);
     Route::get('/get-session-user/{session}', [SessionController::class, 'getSessionsWithUsersById']);
+    Route::post('/sessions/{session}/accept-user', [SessionController::class, 'acceptUser']);
 
     Route::get('/survey/{session}', [SurveyController::class, 'show']);
     Route::post('/upload-survey', [SurveyController::class, 'store']);
@@ -60,7 +61,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/metrics/{session}', [MetricsController::class, 'getSessionMetrics']);
 });
-
+Route::get('/metrics/{session}/export', [MetricsController::class, 'exportSessionMetrics']);
 
 Route::apiResource("products", ProductController::class);
 

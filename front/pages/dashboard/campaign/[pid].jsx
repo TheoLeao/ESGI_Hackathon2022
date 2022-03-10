@@ -19,10 +19,6 @@ import { useSelector } from 'react-redux';
 const Campain = ({ Component, pageProps }) => {
     const router = useRouter()
     const { pid } = router.query;
-    const role = null;
-    if (typeof window !== 'undefined') {
-        role = sessionStorage.getItem("role");
-    }
     // let campain = {
     //     "id": 1,
     //     "name": "Campagne de test sur les crêmes pour la peau",
@@ -96,8 +92,7 @@ const Campain = ({ Component, pageProps }) => {
                         </Table>
                     </Container>
                 </div>
-                { role != 'tester' &&
-                    <div className={`${styles.section} `}>
+                <div className={`${styles.section} `}>
                     <Heading as='h4' size='md'>Liste des sessions ouvertes</Heading>
                     <Container maxW='container.lg' className={styles.containerComponent}>
                         <Table variant='simple' className={styles.table}>
@@ -124,7 +119,7 @@ const Campain = ({ Component, pageProps }) => {
                         </Table>
                     </Container>
                 </div>
-                }
+
             </div>
 
         </>

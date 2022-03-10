@@ -1,36 +1,23 @@
 import styles from "./index.module.scss";
-import { Checkbox, Radio, RadioGroup } from "@chakra-ui/react";
+import { Radio, RadioGroup } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "../../../src/layouts/DashboardLayout/DashboardLayout";
-import { Stack, VStack, FormControl, FormLabel, Button } from "@chakra-ui/react";
+import { FormControl, FormLabel, Button } from "@chakra-ui/react";
 import { answer, survey as getSurvey } from "../../../src/api/api";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { useRouter } from "next/router";
 
 const Survey = ({ Component, pageProps }) => {
     const [survey, setSurvey] = useState([]);
-    const [initialValues, setInitialesValues] = useState([]);
-    const [validationSchema, setValidationSchema] = useState([]);
-    // const [formik, setFormik] = useState(undefined);
+    const router = useRouter();
 
     useEffect(async () => {
-        const survey = await getSurvey(1);
-        let initialValues = {};
-        const validationSchema = Yup.object({});
-
-        for (const [index, value] of Object.entries(survey)) {
-            initialValues["question_" + value.id] = value.userResponse?.response_id;
-            const newValidationSchema = Yup.object({
-                ["question_" + value.id]: Yup.string().required("La réponse est obligatoire"),
-            });
-            validationSchema.concat(newValidationSchema);
+        if (false === router.isReady) {
+            return;
         }
-
-        setInitialesValues(initialValues);
-        setValidationSchema(validationSchema);
-        setSurvey(survey);
-    }, []);
+        const { pid } = router.query;
+        setSurvey(await getSurvey(pid));
+    }, [router.isReady]);
 
     const handleSubmit = async () => {
         const checkboxes = document.querySelectorAll("input:checked");
@@ -38,7 +25,6 @@ const Survey = ({ Component, pageProps }) => {
         for (const c of checkboxes) {
             data[c.name] = c.value;
         }
-        console.log(data);
         await answer(1, data);
     };
 
@@ -60,7 +46,6 @@ const Survey = ({ Component, pageProps }) => {
                                 <RadioGroup name={name} defaultValue={question.userResponse?.response_id.toString()}>
                                     {question.responses &&
                                         question.responses.map((response) => {
-                                            console.log(response);
                                             return (
                                                 <Radio colorScheme="red" value={response.id.toString()}>
                                                     {response.response}

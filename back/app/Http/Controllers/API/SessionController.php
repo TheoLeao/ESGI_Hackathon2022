@@ -5,8 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Session;
 use App\Models\User;
+use App\Models\UserSession;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SessionController extends Controller
 {
@@ -94,22 +95,23 @@ class SessionController extends Controller
         return response()->json();
     }
 
-    public function getSessionsWithUsers() {
+    public function getSessionsWithUsers()
+    {
         $res = [];
         foreach (Session::all() as $session) {
             $campaign = $session->campaign()->first();
             $usersSessions = $session->userSession()->get();
-            
+
             $res['id-' . $session->id] = $session->id;
             $res['campaign-' . $session->id] = $campaign->id;
             $res['name-' . $session->id] = $session->name;
             $res['description-' . $session->id] = $session->description;
 
-            foreach($usersSessions as $userSession) {
-                if($userSession->session_id == $session->id) {
-                    foreach(User::all() as $user) {
-                        if($userSession->user_id == $user->id) {
-                            $res['users-' . $session->id]['user-'. $user->id] = $user;
+            foreach ($usersSessions as $userSession) {
+                if ($userSession->session_id == $session->id) {
+                    foreach (User::all() as $user) {
+                        if ($userSession->user_id == $user->id) {
+                            $res['users-' . $session->id]['user-' . $user->id] = $user;
                         }
                     }
                 }
@@ -118,26 +120,46 @@ class SessionController extends Controller
         return response()->json($res);
     }
 
-    public function getSessionsWithUsersById(Session $session) {
+    public function getSessionsWithUsersById(Session $session)
+    {
         $res = [];
         $campaign = $session->campaign()->first();
         $usersSessions = $session->userSession()->get();
-        
+
         $res['id'] = $session->id;
         $res['campaign'] = $campaign->id;
         $res['name'] = $session->name;
         $res['description'] = $session->description;
 
-        foreach($usersSessions as $userSession) {
-            if($userSession->session_id == $session->id) {
-                foreach(User::all() as $user) {
-                    if($userSession->user_id == $user->id) {
-                        $res['users']['user-'. $user->id] = $user;
+        foreach ($usersSessions as $userSession) {
+            if ($userSession->session_id == $session->id) {
+                foreach (User::all() as $user) {
+                    if ($userSession->user_id == $user->id) {
+                        $res['users']['user-' . $user->id] = $user;
                     }
                 }
             }
         }
-        
+
         return response()->json($res);
+    }
+
+    public function acceptUser(Request $request, Session $session)
+    {
+        $attr = $request->validate([
+            'user_id' => 'required',
+        ]);
+
+        $userSession = new UserSession();
+        $userSession->session()->associate($session);
+        $userSession->user()->associate(User::find($attr['user_id']));
+        try {
+            $userSession->save();
+        } catch (QueryException $e) {
+            $userSession = UserSession::where('user_id', $attr['user_id'])->where('session_id', $session->id)->first();
+            return response()->json(array('userSession' => $userSession, 'alreadyExist' => true));
+        }
+
+        return response()->json($userSession);
     }
 }
