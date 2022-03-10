@@ -340,7 +340,6 @@ export async function getSessionUser(sessionId) {
     return await req.json();
 }
 
-
 export async function getSessionUser2(campaignId) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
@@ -357,4 +356,18 @@ export async function getSessionUser2(campaignId) {
 
 export function exportPdf(sessionId) {
     return `${BASE_URL}metrics/${sessionId}/export`;
+}
+
+export async function metrics() {
+    const token = sessionStorage.getItem("token");
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+    const requestOptions = {
+        method: "GET",
+        headers,
+        redirect: "follow",
+    };
+
+    const req = await fetch(`${BASE_URL}metrics`, requestOptions);
+    return await req.json();
 }

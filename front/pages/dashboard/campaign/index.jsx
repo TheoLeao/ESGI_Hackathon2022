@@ -93,8 +93,6 @@ const Modal_CreateCampaign = () => {
         onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
             const file = document.querySelector('input[name="campaign_product_photo"]').files[0];
-
-            reader.readAsDataURL(file);
             let result = await createCampaign({
                 campaign_name: values.campaign_name,
                 campaign_state: 1,
