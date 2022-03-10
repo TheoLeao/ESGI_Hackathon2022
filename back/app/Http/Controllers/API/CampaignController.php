@@ -7,7 +7,6 @@ use App\Models\Campaign;
 use App\Models\CampaignRequest;
 use App\Models\Product;
 use App\Models\User;
-use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -124,7 +123,7 @@ class CampaignController extends Controller
         $request->campaign()->associate($campaign);
         try {
             $request->save();
-        } catch (Exception $e) {
+        } catch (QueryException $e) {
             $request = Request::where('user_id', $user->id)->where('campaign_id', $campaign->id)->first();
         }
 

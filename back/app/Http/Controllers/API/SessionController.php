@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Session;
 use App\Models\User;
 use App\Models\UserSession;
-use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -156,7 +155,7 @@ class SessionController extends Controller
         $userSession->user()->associate(User::find($attr['user_id']));
         try {
             $userSession->save();
-        } catch (Exception $e) {
+        } catch (QueryException $e) {
             $userSession = UserSession::where('user_id', $attr['user_id'])->where('session_id', $session->id)->first();
         }
 
