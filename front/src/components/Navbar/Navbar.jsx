@@ -75,16 +75,17 @@ import theme from '../../theme/theme';
               fontSize={'sm'}
               fontWeight={400}
               variant={'link'}
-              href={'#'}>
+              href={'/login'}>
               Sign In
             </Button>
             <Button
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
+              as={'a'}
               fontWeight={600}
               color={'white'}
               bg={'pink.400'}
-              href={'#'}
+              href={'/register'}
               _hover={{
                 bg: 'pink.300',
               }}>
