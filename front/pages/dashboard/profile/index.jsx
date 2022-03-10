@@ -2,6 +2,8 @@
 import {Heading } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
+import {user} from '../../../src/api/api';
+import {me} from '../../../src/api/api';
 import {
     Table,
     Thead,
@@ -17,59 +19,46 @@ import DashboardLayout from '../../../src/layouts/DashboardLayout/DashboardLayou
 
 const User = ({ Component, pageProps }) => {
 
-
-        const [user, setUsersList] = useState([]);
+        const [infoUser, setUsersList] = useState([]);
  
-        useEffect(() => {
-            var myHeaders = new Headers();
-            myHeaders.append("Authorization", "Bearer 2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E");
-          
+        useEffect(async () => {
+            let id = await me();
+            let value = await user(id.id);
+            setUsersList(value);
 
-            var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-            };
-
-            fetch("http://hackathon.alexis-guay.fr/api/users/2", requestOptions)
-            .then(response => response.text())
-            .then(function(result){
-                console.log(result);
-               setUsersList(JSON.parse(result));
-             })
-            .catch(error => console.log('error', error));
         }, [])
   
-     
             return (
                <>
+               {console.log("dqdqs")}
+               {console.log(infoUser)}
                <div className={`${styles.info} `}>
-                 <Heading mb={10}> {user.name} Profile</Heading>
+                 <Heading mb={10}> {infoUser.name} Profile</Heading>
                 <Table variant='simple' className={styles.table}>
                 <Tbody>
                     <Tr>
                         <Td>name</Td>
-                        <Td>{user.name}</Td>
+                        <Td>{infoUser.name}</Td>
                     </Tr>
                     <Tr>
                         <Td>phone</Td>
-                        <Td>{user.phone}</Td>
+                        <Td>{infoUser.phone}</Td>
                     </Tr>
                     <Tr>
                         <Td>email</Td>
-                        <Td>{user.email}</Td>
+                        <Td>{infoUser.email}</Td>
                     </Tr>
                     <Tr>
                         <Td>birth</Td>
-                        <Td>{user.birth}</Td>
+                        <Td>{infoUser.birth}</Td>
                     </Tr>
                     <Tr>
                         <Td>size</Td>
-                        <Td>{user.size}</Td>
+                        <Td>{infoUser.size}</Td>
                     </Tr>
                     <Tr>
                         <Td>weight</Td>
-                        <Td>{user.weight}</Td>
+                        <Td>{infoUser.weight}</Td>
                     </Tr>
                 </Tbody>
             </Table>
@@ -81,19 +70,19 @@ const User = ({ Component, pageProps }) => {
                 <Tbody>
                      <Tr>
                         <Td>street</Td>
-                        <Td>{user?.address?.street}</Td>
+                        <Td>{infoUser?.address?.street}</Td>
                     </Tr>
                     <Tr>
                         <Td>city</Td>
-                        <Td>{user?.address?.city}</Td>
+                        <Td>{infoUser?.address?.city}</Td>
                     </Tr>
                     <Tr>
                         <Td>zipcode</Td>
-                        <Td>{user?.address?.zipcode}</Td>
+                        <Td>{infoUser?.address?.zipcode}</Td>
                     </Tr>
                     <Tr>
                         <Td>country</Td>
-                        <Td>{user?.address?.country}</Td>
+                        <Td>{infoUser?.address?.country}</Td>
                     </Tr>
                 </Tbody>
             </Table> 
