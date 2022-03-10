@@ -123,108 +123,123 @@ const Modal_CreateCampaign = () => {
                                 La campagne
                             </Heading>
                             <div className={styles.line}>
-                                <FormControl>
-                                    <FormLabel>Nom de la campagne</FormLabel>
-                                    <Input
-                                        id="campaign_name"
-                                        name="campaign_name"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.campaign_name}
-                                        ref={initialRef}
-                                        placeholder="Nom de la campagne"
-                                    />
-                                    {formik.errors.campaign_name ? (
-                                        <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                            {formik.errors.campaign_name}
-                                        </Text>
-                                    ) : null}
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Description de la campagne</FormLabel>
-                                    <Textarea
-                                        id="campaign_description"
-                                        name="campaign_description"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.campaign_description}
-                                        placeholder="Description de la campagne"
-                                    />
-                                    {formik.errors.campaign_description ? (
-                                        <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                            {formik.errors.campaign_description}
-                                        </Text>
-                                    ) : null}
-                                </FormControl>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Nom de la campagne</FormLabel>
+                                        <Input
+                                            id="campaign_name"
+                                            name="campaign_name"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.campaign_name}
+                                            ref={initialRef}
+                                            placeholder="Nom de la campagne"
+                                        />
+                                        {formik.errors.campaign_name ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_name}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Description de la campagne</FormLabel>
+                                        <Textarea
+                                            id="campaign_description"
+                                            name="campaign_description"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.campaign_description}
+                                            placeholder="Description de la campagne"
+                                        />
+                                        {formik.errors.campaign_description ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_description}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
+
                             </div>
+
                             <Heading as="h4" size="md" style={{ marginBottom: "15px" }}>
                                 Le produit
                             </Heading>
                             <div className={styles.line}>
-                                <FormControl>
-                                    <FormLabel>Produit - Nom</FormLabel>
-                                    <Input
-                                        id="campaign_product_name"
-                                        name="campaign_product_name"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.campaign_product_name}
-                                        ref={initialRef}
-                                        placeholder="Nom du produit"
-                                    />
-                                    {formik.errors.campaign_product_name ? (
-                                        <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                            {formik.errors.campaign_product_name}
-                                        </Text>
-                                    ) : null}
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Produit - Marque</FormLabel>
-                                    <Input
-                                        id="campaign_product_brand"
-                                        name="campaign_product_brand"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.campaign_product_brand}
-                                        ref={initialRef}
-                                        placeholder="Marque du produit"
-                                    />
-                                    {formik.errors.campaign_product_brand ? (
-                                        <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                            {formik.errors.campaign_product_brand}
-                                        </Text>
-                                    ) : null}
-                                </FormControl>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Produit - Nom</FormLabel>
+                                        <Input
+                                            id="campaign_product_name"
+                                            name="campaign_product_name"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.campaign_product_name}
+                                            ref={initialRef}
+                                            placeholder="Nom du produit"
+                                        />
+                                        {formik.errors.campaign_product_name ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_product_name}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Produit - Marque</FormLabel>
+                                        <Input
+                                            id="campaign_product_brand"
+                                            name="campaign_product_brand"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.campaign_product_brand}
+                                            ref={initialRef}
+                                            placeholder="Marque du produit"
+                                        />
+                                        {formik.errors.campaign_product_brand ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_product_brand}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
                             </div>
+
                             <div className={styles.line}>
-                                <FormControl>
-                                    <FormLabel>Produit - Code</FormLabel>
-                                    <Input
-                                        id="campaign_product_code"
-                                        name="campaign_product_code"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.campaign_product_code}
-                                        ref={initialRef}
-                                        placeholder="Code du produit"
-                                    />
-                                    {formik.errors.campaign_product_code ? (
-                                        <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                            {formik.errors.campaign_product_code}
-                                        </Text>
-                                    ) : null}
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Produit - Catégorie</FormLabel>
-                                    <Input
-                                        id="campaign_product_category"
-                                        name="campaign_product_category"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.campaign_product_category}
-                                        ref={initialRef}
-                                        placeholder="Catégorie du produit"
-                                    />
-                                    {formik.errors.campaign_product_category ? (
-                                        <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                            {formik.errors.campaign_product_category}
-                                        </Text>
-                                    ) : null}
-                                </FormControl>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Produit - Code</FormLabel>
+                                        <Input
+                                            id="campaign_product_code"
+                                            name="campaign_product_code"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.campaign_product_code}
+                                            ref={initialRef}
+                                            placeholder="Code du produit"
+                                        />
+                                        {formik.errors.campaign_product_code ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_product_code}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Produit - Catégorie</FormLabel>
+                                        <Input
+                                            id="campaign_product_category"
+                                            name="campaign_product_category"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.campaign_product_category}
+                                            ref={initialRef}
+                                            placeholder="Catégorie du produit"
+                                        />
+                                        {formik.errors.campaign_product_category ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_product_category}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
                             </div>
                             <FormControl>
                                 <FormLabel>Produit - Description</FormLabel>
@@ -277,7 +292,7 @@ const Modal_CreateSession = ({ campaignId }) => {
     const role = null;
     if (typeof window !== 'undefined') {
         role = sessionStorage.getItem("role");
-        if(role == 'tester') {
+        if (role == 'tester') {
             return (
                 ''
             )
