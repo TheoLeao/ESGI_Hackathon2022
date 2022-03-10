@@ -1,7 +1,7 @@
 const BASE_URL = "http://hackathon.alexis-guay.fr/api/";
 
-const DEV = false;
-const TOKEN = "2|IUuy8Vm6xScPCPFKH8df4bvuXNu5Ra9mZhExKQ1E";
+const DEV = true;
+const TOKEN = "1|b2gefWLpMoJTpwcD8qVVn81lZqN2Vhg9z6bmi5sg";
 
 export async function login(email, password) {
     const body = new FormData();
@@ -99,7 +99,7 @@ export async function me() {
     return await req.json();
 }
 
-export async function campaigns() {
+export async function getCampaigns() {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -114,7 +114,7 @@ export async function campaigns() {
     return await req.json();
 }
 
-export async function campaign(campaignId) {
+export async function getCampaignById(campaignId) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -213,13 +213,14 @@ export async function createSession(data) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
-
-    // TODO complete
     const body = new FormData();
     body.append("name", data.name);
     body.append("description", data.description);
     body.append("campaign_id", data.campaign_id);
-    body.append("start", data.date_start);
+    // let timeElapsed = Date.now();
+    // let today = new Date(timeElapsed);
+    // let startDate = today.toLocaleDateString();
+    body.append("start", data.date_end);
     body.append("end", data.date_end);
 
     const requestOptions = {
@@ -229,7 +230,7 @@ export async function createSession(data) {
         headers,
     };
 
-    const req = await fetch(`${BASE_URL}campaigns`, requestOptions);
+    const req = await fetch(`${BASE_URL}sessions`, requestOptions);
     return await req.json();
 }
 
@@ -305,5 +306,21 @@ export async function acceptUserIntoSession(sessionId, userId) {
     };
 
     const req = await fetch(`${BASE_URL}sessions/${sessionId}/accept-user`, requestOptions);
+    return await req.json();
+}
+export async function uploadSurvey(sessionId, file) {
+    const token = sessionStorage.getItem("token");
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+    const body = new FormData();
+    body.append("survey", file);
+    body.append("session_id", sessionId);
+    const requestOptions = {
+        method: "POST",
+        headers,
+        body,
+        redirect: "follow",
+    };
+    const req = await fetch(`${BASE_URL}upload-survey`, requestOptions);
     return await req.json();
 }

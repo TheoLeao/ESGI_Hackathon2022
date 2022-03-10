@@ -26,3 +26,31 @@
     justify-content: space-between;
     width: 100%;
 }
+.line{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    input{
+        width: 80%;
+        margin-bottom: 20px;
+        min-width: 265px;
+    }
+}
+.inputDate{
+    padding: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+    min-width: 0px;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border: 1px solid;
+    border-color: inherit;
+    background: inherit;
+    border-radius: 8px;
+    min-height: 40px;
+    font-size: 1rem;
+    padding-left: 15px;
+    &:hover{
+        border-color: #CBD5E0
+    }
+}
