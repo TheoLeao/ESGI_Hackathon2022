@@ -261,7 +261,7 @@ export async function deleteCampaign(campaignId) {
     return await req.json();
 }
 
-export async function getRequest(campaignId) {
+export async function request(campaignId) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
@@ -276,7 +276,7 @@ export async function getRequest(campaignId) {
     return await req.json();
 }
 
-export async function getRequest(campaignId) {
+export async function requests(campaignId) {
     const token = sessionStorage.getItem("token");
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
