@@ -1,7 +1,3 @@
-<head>
-    <title>Export Résultats QCM</title>
-</head>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="container">
     <h1>Résultats</h1>
     <p>Utilisateurs : {{$data['totalUsers']}}</p>

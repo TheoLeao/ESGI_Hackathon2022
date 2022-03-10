@@ -53,4 +53,9 @@ class MetricsController extends Controller
         }
         return ['totalUsers' =>  $countUsers, 'metrics' => $res];
     }
+
+    public function getDashboardMetrics()
+    {
+        return;
+    }
 }
