@@ -41,13 +41,15 @@ export default function CallToActionWithAnnotation() {
                         alignSelf={'center'}
                         position={'relative'}>
                         <Button
+                            as={'a'}
                             colorScheme={'green'}
                             bg={theme.colors.primary.normal}
                             rounded={'full'}
                             px={6}
                             _hover={{
                                 bg: theme.colors.primary.hover,
-                            }}>
+                            }}
+                            href={'/register'}>
                             Become a tester
                         </Button>
                         <Button variant={'link'} colorScheme={'blue'} size={'sm'}>

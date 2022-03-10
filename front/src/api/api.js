@@ -16,19 +16,29 @@ export async function login(email, password) {
 
     const req = await fetch(`${BASE_URL}login`, requestOptions);
     const rep = await req.json();
-
     const token = rep["token"];
+    const role = rep["role"];
     sessionStorage.setItem("token", token);
+    sessionStorage.setItem("role", role);
     return rep;
 }
 
 export async function register(data) {
     // TODO complete
     const body = new FormData();
+    body.append("street", data.street);
+    body.append("city", data.city);
+    body.append("zipcode", data.zipCode);
+    body.append("country", data.country);
     body.append("name", data.name);
     body.append("password", data.password);
     body.append("email", data.email);
-    body.append("password_confirmation", data.passwordConfirmation);
+    body.append("password_confirmation", data.passwordConfirmation),
+    body.append("phone", data.phone);
+    body.append("birth", data.birth);
+    body.append("size", data.size);
+    body.append("weight", data.weight);
+
 
     const requestOptions = {
         method: "POST",
@@ -40,7 +50,9 @@ export async function register(data) {
     const rep = await req.json();
 
     const token = rep["token"];
+    const role = rep["role"];
     sessionStorage.setItem("token", token);
+    sessionStorage.setItem("role", role);
     return rep;
 }
 
