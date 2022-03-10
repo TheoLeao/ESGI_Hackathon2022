@@ -271,23 +271,6 @@ const Modal_CreateCampaign = () => {
     );
 };
 
-// const DateInput = () => {
-//     const [value, setValue] = React.useState(null);
-
-//     return (
-//         <LocalizationProvider dateAdapter={AdapterDateFns}>
-//             <DatePicker
-//                 label="Basic example"
-//                 value={value}
-//                 onChange={(newValue) => {
-//                     setValue(newValue);
-//                 }}
-//                 renderInput={(params) => <TextField {...params} />}
-//             />
-//         </LocalizationProvider>
-//     );
-// }
-
 const Modal_CreateSession = ({ campaignId }) => {
     const role = null;
     if (typeof window !== 'undefined') {
@@ -436,63 +419,70 @@ const Modal_CreateSession = ({ campaignId }) => {
 };
 
 const Campaign = ({ Component, pageProps }) => {
+    const [isDataLoading, setIsDataLoading] = useState(true);
     const dispatch = useDispatch();
     useEffect(async () => {
         let campaingns_data = await getCampaigns();
         dispatch(initCampaigns(campaingns_data));
+        setIsDataLoading(false)
     }, []);
     const campaigns = useSelector((state) => state.campaigns);
 
     return (
         <>
-            {/* { <Lottie
-                options={{
-                    loop: true,
-                    autoplay: true,
-                    animationData: loader,
-                    rendererSettings: {
-                        preserveAspectRatio: "xMidYMid slice"
-                    }
-                }}
-                height={200}
-                width={200}
-            />} */}
-            <div className={styles.heading}>
-                <Heading as="h3" size="lg">
-                    Les campagnes
-                </Heading>
-                <Modal_CreateCampaign></Modal_CreateCampaign>
-            </div>
-            <Table variant="simple" className={styles.table}>
-                <Thead>
-                    <Tr>
-                        <Th>Nom</Th>
-                        <Th>Action</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {campaigns.map((campaign) => {
-                        return (
+            <div className={styles.container}>
+                {isDataLoading ? <div className={styles.loader}>
+                    <Lottie
+                        options={{
+                            loop: true,
+                            autoplay: true,
+                            animationData: loader,
+                            rendererSettings: {
+                                preserveAspectRatio: "xMidYMid slice"
+                            }
+                        }}
+                        height={200}
+                        width={200}
+
+                    /></div> : <div className={styles.fadeinContent}><div className={styles.heading}>
+                        <Heading as="h3" size="lg">
+                            Les campagnes
+                        </Heading>
+                        <Modal_CreateCampaign></Modal_CreateCampaign>
+                    </div>
+                    <Table variant="simple" className={styles.table}>
+                        <Thead>
                             <Tr>
-                                <Td>{campaign.name}</Td>
-                                <Td>
-                                    <Stack spacing={2} direction="row" align="center">
-                                        <Button colorScheme="teal" size="sm">
-                                            Postuler
-                                        </Button>
-                                        <Link href={"/dashboard/campaign/" + campaign.id}>
-                                            <Button colorScheme="teal" size="sm">
-                                                Voir
-                                            </Button>
-                                        </Link>
-                                        <Modal_CreateSession campaignId={campaign.id}></Modal_CreateSession>
-                                    </Stack>
-                                </Td>
+                                <Th>Nom</Th>
+                                <Th>Action</Th>
                             </Tr>
-                        );
-                    })}
-                </Tbody>
-            </Table>
+                        </Thead>
+                        <Tbody>
+                            {campaigns.map((campaign) => {
+                                return (
+                                    <Tr>
+                                        <Td>{campaign.name}</Td>
+                                        <Td>
+                                            <Stack spacing={2} direction="row" align="center">
+                                                <Button colorScheme="teal" size="sm">
+                                                    Postuler
+                                                </Button>
+                                                <Link href={"/dashboard/campaign/" + campaign.id}>
+                                                    <Button colorScheme="teal" size="sm">
+                                                        Voir
+                                                    </Button>
+                                                </Link>
+                                                <Modal_CreateSession campaignId={campaign.id}></Modal_CreateSession>
+                                            </Stack>
+                                        </Td>
+                                    </Tr>
+                                );
+                            })}
+                        </Tbody>
+                    </Table></div>}
+            </div>
+
+
         </>
     );
 };
