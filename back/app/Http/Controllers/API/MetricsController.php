@@ -39,7 +39,7 @@ class MetricsController extends Controller
 
     private function retrieveSessionMetrics(Session $session)
     {
-        $countUsers = $session->userSession()->count();
+        $countUsers = $session->userSessions()->count();
 
         $questions = $session->questions()->get();
         $res = [];
@@ -52,5 +52,10 @@ class MetricsController extends Controller
             }
         }
         return ['totalUsers' =>  $countUsers, 'metrics' => $res];
+    }
+
+    public function getDashboardMetrics()
+    {
+        return;
     }
 }

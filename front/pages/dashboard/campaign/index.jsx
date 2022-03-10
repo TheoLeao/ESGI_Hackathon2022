@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "./index.module.scss";
-import { Container } from "@chakra-ui/react";
+import { Container, useToast } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DashboardLayout from "../../../src/layouts/DashboardLayout/DashboardLayout";
 import {
     Table,
@@ -47,7 +47,7 @@ import {
 } from "../../../src/store/features/campaign/campaignSlice";
 import Lottie from "react-lottie";
 import loader from "../../../src/lotties/loader.json";
-import { getCampaigns, createCampaign, createSession, uploadSurvey } from "../../../src/api/api";
+import { getCampaigns, createCampaign, createSession, uploadSurvey, request } from "../../../src/api/api";
 import { Form } from "react-bootstrap";
 
 const Modal_CreateCampaign = () => {
@@ -158,7 +158,6 @@ const Modal_CreateCampaign = () => {
                                         ) : null}
                                     </FormControl>
                                 </div>
-
                             </div>
 
                             <Heading as="h4" size="md" style={{ marginBottom: "15px" }}>
@@ -273,12 +272,10 @@ const Modal_CreateCampaign = () => {
 
 const Modal_CreateSession = ({ campaignId }) => {
     const role = null;
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
         role = sessionStorage.getItem("role");
-        if (role == 'tester') {
-            return (
-                ''
-            )
+        if (role == "tester") {
+            return "";
         }
     }
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -421,12 +418,44 @@ const Modal_CreateSession = ({ campaignId }) => {
 const Campaign = ({ Component, pageProps }) => {
     const [isDataLoading, setIsDataLoading] = useState(true);
     const dispatch = useDispatch();
+    const toast = useToast();
+    const toastIdRef = useRef();
     useEffect(async () => {
         let campaingns_data = await getCampaigns();
         dispatch(initCampaigns(campaingns_data));
         setIsDataLoading(false)
     }, []);
     const campaigns = useSelector((state) => state.campaigns);
+
+    async function handlePostuler(campaignId) {
+        try {
+            const rep = await request(campaignId);
+            if (rep["alreadyExist"]) {
+                toastIdRef.current = toast({
+                    title: "Vous avez déjà candidaté",
+                    status: "info",
+                    duration: 9000,
+                    isClosable: true,
+                });
+                return;
+            }
+
+            toastIdRef.current = toast({
+                title: "Candidature réussite",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            });
+        } catch (e) {
+            console.log(e);
+            toastIdRef.current = toast({
+                title: "Echec de l'enregistrement des données",
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            });
+        }
+    }
 
     return (
         <>
@@ -463,17 +492,25 @@ const Campaign = ({ Component, pageProps }) => {
                                     <Tr>
                                         <Td>{campaign.name}</Td>
                                         <Td>
-                                            <Stack spacing={2} direction="row" align="center">
-                                                <Button colorScheme="teal" size="sm">
-                                                    Postuler
-                                                </Button>
-                                                <Link href={"/dashboard/campaign/" + campaign.id}>
-                                                    <Button colorScheme="teal" size="sm">
-                                                        Voir
+
+                                            <Td>
+                                                <Stack spacing={2} direction="row" align="center">
+                                                    <Button
+                                                        colorScheme="teal"
+                                                        size="sm"
+                                                        onClick={() => handlePostuler(campaign.id)}
+                                                    >
+                                                        Postuler
                                                     </Button>
-                                                </Link>
-                                                <Modal_CreateSession campaignId={campaign.id}></Modal_CreateSession>
-                                            </Stack>
+                                                    <Link href={"/dashboard/campaign/" + campaign.id}>
+                                                        <Button colorScheme="teal" size="sm">
+                                                            Voir
+                                                        </Button>
+
+                                                    </Link>
+                                                    <Modal_CreateSession campaignId={campaign.id}></Modal_CreateSession>
+                                                </Stack>
+                                            </Td>
                                         </Td>
                                     </Tr>
                                 );

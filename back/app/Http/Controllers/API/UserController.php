@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         // On récupère tous les utilisateurs
-        $users = User::has('userSession')->get();
+        $users = User::has('userSessions')->get();
 
         // On retourne les informations des utilisateurs en JSON
         return response()->json($users);
