@@ -14,19 +14,28 @@ import {
     useColorModeValue,
     Link,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useFormik, Formik } from "formik";
 import { register } from "../../src/api/api";
+import { Select } from '@chakra-ui/react'
 import * as Yup from "yup";
 import React, { useState } from "react";
 import theme from "../../src/theme/theme";
 import { useRouter } from "next/router";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import countryList from 'react-select-country-list';
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
-    const initialRef = React.useRef();
+    const options = useMemo(() => countryList().getLabels(), [])
+
+    const geoApi = 'https://api-adresse.data.gouv.fr/search/?';
+
+    const changeHandler = value => {
+        setValue(value)
+    }
+
     const initialValues = {
         email: "",
         password: "",
@@ -216,7 +225,12 @@ const Register = () => {
                         </HStack>
                         <FormControl id="country" isRequired>
                             <FormLabel>Country</FormLabel>
-                            <Input type="text" onChange={formik.handleChange} value={formik.values.country} />
+                            <Select onChange={formik.handleChange} value={formik.values.country} placeholder="Select country">
+                            {options.map((options) => {
+                                return <option value={options}>{options}</option>;
+                            })} 
+                            </Select>
+                            {/* <Input type="text" onChange={formik.handleChange} value={formik.values.country} /> */}
                             {formik.errors.country ? (
                                 <Text fontSize="sm" color={theme.colors.danger.normal}>
                                     {formik.errors.country}
