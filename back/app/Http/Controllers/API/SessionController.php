@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\CampaignRequest;
 use App\Models\Session;
 use App\Models\User;
 use App\Models\UserSession;
@@ -155,6 +156,8 @@ class SessionController extends Controller
         $userSession->user()->associate(User::find($attr['user_id']));
         try {
             $userSession->save();
+            $campaignRequest = CampaignRequest::where('session_id', $session->id)->where('user_id', $attr['user_id']);
+            $campaignRequest->delete();
         } catch (QueryException $e) {
             $userSession = UserSession::where('user_id', $attr['user_id'])->where('session_id', $session->id)->first();
             return response()->json(array('userSession' => $userSession, 'alreadyExist' => true));

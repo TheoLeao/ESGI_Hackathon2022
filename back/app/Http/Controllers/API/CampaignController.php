@@ -7,6 +7,7 @@ use App\Models\Campaign;
 use App\Models\CampaignRequest;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\UserSession;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -124,7 +125,7 @@ class CampaignController extends Controller
         try {
             $request->save();
         } catch (QueryException $e) {
-            $request = Request::where('user_id', $user->id)->where('campaign_id', $campaign->id)->first();
+            $request = CampaignRequest::where('user_id', $user->id)->where('campaign_id', $campaign->id)->first();
             return response()->json(array('request' => $request, 'alreadyExist' => true));
         }
 
