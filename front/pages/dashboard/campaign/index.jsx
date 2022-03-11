@@ -89,7 +89,6 @@ const Modal_CreateCampaign = () => {
         initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-            alert(JSON.stringify(values, null, 2));
             const file = document.querySelector('input[name="campaign_product_photo"]').files[0];
             let result = await createCampaign({
                 campaign_name: values.campaign_name,
@@ -331,7 +330,6 @@ const Modal_CreateSession = ({ campaignId }) => {
         initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-            alert(JSON.stringify(values, null, 2));
 
             let result = await createSession({
                 name: values.session_name,
@@ -482,7 +480,6 @@ const Campaign = ({ Component, pageProps }) => {
                 isClosable: true,
             });
         } catch (e) {
-            console.log(e);
             toastIdRef.current = toast({
                 title: "Echec de l'enregistrement des données",
                 status: "error",
