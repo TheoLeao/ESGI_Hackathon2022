@@ -40,6 +40,7 @@ import { ReactText } from "react";
 import Logo from "../Logo/Logo";
 import theme from "../../theme/theme";
 import { useRouter } from "next/router";
+import NextLink from "next/link";
 
 const LinkItems = [
     { name: "Accueil", icon: FiHome, href: "/dashboard/" },
@@ -76,7 +77,7 @@ export default function SidebarWithHeader({ children }) {
 
 const SidebarContent = ({ onClose, ...rest }) => {
     const role = null;
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
         role = sessionStorage.getItem("role");
     }
     return (
@@ -97,14 +98,18 @@ const SidebarContent = ({ onClose, ...rest }) => {
                 <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
             </Flex>
             {LinkItems.map((link) => {
-                if (role == 'tester' && link.name == 'Les campagnes')
-                return <NavItem key={link.name} icon={link.icon} href={link.href}>
-                        {link.name}
-                    </NavItem>
-                else if (role == 'admin')
-                return <NavItem key={link.name} icon={link.icon} href={link.href}>
-                        {link.name}
-                    </NavItem>
+                if (role == "tester" && link.name == "Les campagnes")
+                    return (
+                        <NavItem key={link.name} icon={link.icon} href={link.href}>
+                            {link.name}
+                        </NavItem>
+                    );
+                else if (role == "admin")
+                    return (
+                        <NavItem key={link.name} icon={link.icon} href={link.href}>
+                            {link.name}
+                        </NavItem>
+                    );
             })}
         </Box>
     );
@@ -112,33 +117,35 @@ const SidebarContent = ({ onClose, ...rest }) => {
 
 const NavItem = ({ icon, children, href, ...rest }) => {
     return (
-        <Link href={href} style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
-            <Flex
-                align="center"
-                p="4"
-                mx="4"
-                borderRadius="lg"
-                role="group"
-                cursor="pointer"
-                _hover={{
-                    bg: theme.colors.primary.normal,
-                    color: "white",
-                }}
-                {...rest}
-            >
-                {icon && (
-                    <Icon
-                        mr="4"
-                        fontSize="16"
-                        _groupHover={{
-                            color: "white",
-                        }}
-                        as={icon}
-                    />
-                )}
-                {children}
-            </Flex>
-        </Link>
+        <NextLink href={href} passHref>
+            <Link style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
+                <Flex
+                    align="center"
+                    p="4"
+                    mx="4"
+                    borderRadius="lg"
+                    role="group"
+                    cursor="pointer"
+                    _hover={{
+                        bg: theme.colors.primary.normal,
+                        color: "white",
+                    }}
+                    {...rest}
+                >
+                    {icon && (
+                        <Icon
+                            mr="4"
+                            fontSize="16"
+                            _groupHover={{
+                                color: "white",
+                            }}
+                            as={icon}
+                        />
+                    )}
+                    {children}
+                </Flex>
+            </Link>
+        </NextLink>
     );
 };
 
@@ -207,9 +214,11 @@ const MobileNav = ({ onOpen, ...rest }) => {
                             bg={useColorModeValue("white", "gray.900")}
                             borderColor={useColorModeValue("gray.200", "gray.700")}
                         >
-                            <Link href="/dashboard/profile">
-                                <MenuItem>Profile</MenuItem>
-                            </Link>
+                            <NextLink href="/dashboard/profile" passHref>
+                                <Link>
+                                    <MenuItem>Profile</MenuItem>
+                                </Link>
+                            </NextLink>
                             <MenuDivider />
                             <Link href="/login">
                                 <MenuItem>Sign out</MenuItem>
