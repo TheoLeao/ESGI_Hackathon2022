@@ -11,6 +11,7 @@ use App\Models\Session;
 use App\Models\User;
 use App\Models\UserSession;
 use App\Models\UserResponse;
+use DateTime;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -30,8 +31,10 @@ class MasseDataSeeder extends Seeder
                 'name' => Str::random(),
                 'password' => bcrypt(Str::random()),
                 'email' => Str::random() . '@gmail.com',
-                'role' => 'tester',
+                'role' => 'admin',
             ]);
+            $user->create_at = $this->randomDateInRange((new DateTime())->modify('-1 year'), new DateTime());
+            $user->save();
 
 
             DB::table('user_responses')->insert(
@@ -58,5 +61,13 @@ class MasseDataSeeder extends Seeder
                 ]
             );
         }
+    }
+
+    private function randomDateInRange(DateTime $start, DateTime $end)
+    {
+        $randomTimestamp = mt_rand($start->getTimestamp(), $end->getTimestamp());
+        $randomDate = new DateTime();
+        $randomDate->setTimestamp($randomTimestamp);
+        return $randomDate;
     }
 }
