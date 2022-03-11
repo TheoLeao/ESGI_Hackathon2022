@@ -13,6 +13,15 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearSca
 ChartJS.register(ArcElement, Tooltip, Legend, Tooltip, CategoryScale, LinearScale, BarElement);
 
 const ResultQcm = ({ Component, pageProps }) => {
+    const role = null;
+    if (typeof window !== 'undefined') {
+        role = sessionStorage.getItem("role");
+        if (role == 'tester') {
+            return (
+                <h1>Vous n'avez pas l'accès ⛔</h1>
+            )
+        }
+    }
     const [isDataLoading, setIsDataLoading] = useState(true);
     const [haveResult, setHaveResult] = useState(true);
     const query = useQuery();
