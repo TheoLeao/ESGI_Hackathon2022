@@ -5,9 +5,12 @@ namespace Database\Seeders;
 use App\Models\Address;
 use App\Models\Campaign;
 use App\Models\Product;
+use App\Models\Question;
+use App\Models\Response;
 use App\Models\Session;
 use App\Models\User;
 use App\Models\UserSession;
+use App\Models\UserResponse;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
@@ -36,6 +39,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Testeur 1',
             'password' => bcrypt('admin123'),
             'email' => 'tester1@gmail.com',
+            'role' => 'tester',
+            'birth' => Date::now(),
+            'size' => rand(150, 200),
+            'weight' => rand(70, 100),
+        ]);
+        
+        User::create([
+            'name' => 'Testeur 2',
+            'password' => bcrypt('admin123'),
+            'email' => 'tester2@gmail.com',
             'role' => 'tester',
             'birth' => Date::now(),
             'size' => rand(150, 200),
@@ -100,5 +113,47 @@ class DatabaseSeeder extends Seeder
         $userSession->user()->associate($user);
         $userSession->session()->associate($session);
         $userSession->save();
+
+        /** @var Question $question */
+        $question1 = new Question([
+            'question' => 'Comment avez-vous trouvé le produit ?'
+        ]);
+        $question1->session()->associate($session);
+        $question1->save();
+
+        /** @var Question $question */
+        $question2 = new Question([
+            'question' => 'Avez-vous eu des boutons suite à son utilisation ?'
+        ]);
+        $question2->session()->associate($session);
+        $question2->save();
+
+        /** @var Response $response */
+        $response1 = new Response([
+            'response' => 'Bien',
+            'value' => '4'
+        ]);
+        $response1->question()->associate($question1);
+        $response1->save();
+
+        /** @var Response $response */
+        $response2 = new Response([
+            'response' => 'non',
+            'value' => '8'
+        ]);
+        $response2->question()->associate($question2);
+        $response2->save();
+
+        $userResponse = new UserResponse();
+        $userResponse->user()->associate($user);
+        $userResponse->question()->associate($question1);
+        $userResponse->response()->associate($response1);
+        $userResponse->save();
+
+        $userResponse = new UserResponse();
+        $userResponse->user()->associate($user);
+        $userResponse->question()->associate($question2);
+        $userResponse->response()->associate($response2);
+        $userResponse->save();
     }
 }
