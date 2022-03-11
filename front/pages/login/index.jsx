@@ -36,8 +36,10 @@ const Login = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             await login(values.email, values.password);
-            if (sessionStorage["token"] != null) {
+            if (sessionStorage["token"] != null && sessionStorage["role"] == "admin") {
                 router.push("/dashboard");
+            } else if (sessionStorage["token"] != null && sessionStorage["role"] == "tester") {
+                router.push("/dashboard/campaign");
             }
         },
     });
@@ -74,7 +76,6 @@ const Login = () => {
                         <Stack spacing={10}>
                             <Stack direction={{ base: "column", sm: "row" }} align={"start"} justify={"space-between"}>
                                 <Checkbox>Remember me</Checkbox>
-                                <Link color={"blue.400"}>Forgot password?</Link>
                             </Stack>
                             <Button
                                 bg={"blue.400"}

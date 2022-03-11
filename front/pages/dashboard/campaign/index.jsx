@@ -447,6 +447,10 @@ const Modal_CreateSession = ({ campaignId }) => {
 };
 
 const Campaign = ({ Component, pageProps }) => {
+    const role = null
+    if (typeof window !== 'undefined') {
+        role = sessionStorage.getItem("role");
+    }
     const [isDataLoading, setIsDataLoading] = useState(true);
     const dispatch = useDispatch();
     const toast = useToast();
@@ -526,13 +530,13 @@ const Campaign = ({ Component, pageProps }) => {
 
                                             <Td>
                                                 <Stack spacing={2} direction="row" align="center">
-                                                    <Button
+                                                    {role == 'tester' && <Button
                                                         colorScheme="teal"
                                                         size="sm"
                                                         onClick={() => handlePostuler(campaign.id)}
                                                     >
                                                         Postuler
-                                                    </Button>
+                                                    </Button>}
                                                     <Link href={"/dashboard/campaign/" + campaign.id}>
                                                         <Button colorScheme="teal" size="sm">
                                                             Voir
