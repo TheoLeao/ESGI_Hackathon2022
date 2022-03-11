@@ -74,8 +74,11 @@ git clone https://github.com/TheoLeao/ESGI_Hackathon2022
 cd ESGI_Hackathon2022
 cd front
 yarn
+yarn install
 yarn dev
+# front use hosted api but u can run back and to use it in front go to api.api.js and change BASE_URL with yours
 cd back
+composer install
 php artisan migrate:fresh
 php artisan db:seed
 php artisan serve
