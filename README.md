@@ -2,7 +2,7 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
 
-Encadré par: [Audray Hossepian](https://audreyhossepian.fr/) (ça mérite bien quelques points supplémentaires, non ? 🤔)
+Encadré par: [Audray Hossepian](https://audreyhossepian.fr/) (ça mérite bien quelques points supplémentaires, non ? 🤔) //pour ces magnifiques readme, oui, mais pour la faute d'orthographe sur mon prénom............ 😒
 
 **Présentation du commanditaire:**
 
