@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             'size' => rand(150, 200),
             'weight' => rand(70, 100),
         ]);
-        
+
         User::create([
             'name' => 'Testeur 2',
             'password' => bcrypt('admin123'),
@@ -128,6 +128,13 @@ class DatabaseSeeder extends Seeder
         $question2->session()->associate($session);
         $question2->save();
 
+        /** @var Question $question */
+        $question3 = new Question([
+            'question' => 'Avez-vous ressenti des brûlures ?'
+        ]);
+        $question3->session()->associate($session);
+        $question3->save();
+
         /** @var Response $response */
         $response1 = new Response([
             'response' => 'Bien',
@@ -144,6 +151,14 @@ class DatabaseSeeder extends Seeder
         $response2->question()->associate($question2);
         $response2->save();
 
+        /** @var Response $response */
+        $response3 = new Response([
+            'response' => 'oui',
+            'value' => '12'
+        ]);
+        $response3->question()->associate($question3);
+        $response3->save();
+
         $userResponse = new UserResponse();
         $userResponse->user()->associate($user);
         $userResponse->question()->associate($question1);
@@ -154,6 +169,12 @@ class DatabaseSeeder extends Seeder
         $userResponse->user()->associate($user);
         $userResponse->question()->associate($question2);
         $userResponse->response()->associate($response2);
+        $userResponse->save();
+
+        $userResponse = new UserResponse();
+        $userResponse->user()->associate($user);
+        $userResponse->question()->associate($question3);
+        $userResponse->response()->associate($response3);
         $userResponse->save();
     }
 }
