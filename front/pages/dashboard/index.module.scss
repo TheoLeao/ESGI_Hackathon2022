@@ -1,17 +1,27 @@
+@import '../../styles/utils/animations.module.scss';
 .container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
-.users {
+.statGroup {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    margin-bottom: 40px;
+    .content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 20px;
+    }
 }
 
-.sessions {
+.fadeinContent{
+    animation: fadeIn linear 1s;
 }
-
-.campaigns {
-}
-
-.userSessions {
+.loader{
+    position: absolute;
+    top: 50%; right: 50%;
+    transform: translate(50%,-50%);
 }

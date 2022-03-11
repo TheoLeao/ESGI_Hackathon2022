@@ -15,10 +15,13 @@ import {
     Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import Lottie from "react-lottie";
+import loader from "../../src/lotties/loader.json";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const Index = ({ Component, pageProps }) => {
+    const [isDataLoading, setIsDataLoading] = useState(true);
     const role = null;
     if (typeof window !== 'undefined') {
         role = sessionStorage.getItem("role");
@@ -40,115 +43,137 @@ const Index = ({ Component, pageProps }) => {
             return;
         }
         setMetrics(await getMetrics());
+        setIsDataLoading(false)
     }, [router.isReady]);
     return (
         <>
-            <Heading as="h3" size="lg">
-                Les statistiques
-            </Heading>
             <div className={styles.container}>
-                <div className={styles.users}>
-                    <Heading as="h5" size="md">
-                        Evolution du nombre de testeurs
+                {isDataLoading ? <div className={styles.loader}><Lottie
+                    options={{
+                        loop: true,
+                        autoplay: true,
+                        animationData: loader,
+                        rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                        }
+                    }}
+                    height={200}
+                    width={200}
+
+                /></div> : <div className={styles.fadeinContent}>
+
+                    <Heading as="h3" size="lg" style={{ marginBottom: '20px' }}>
+                        Les statistiques
                     </Heading>
-                    <Line
-                        width={600}
-                        height={400}
-                        options={{
-                            responsive: false,
-                            maintainAspectRatio: false,
-                        }}
-                        data={{
-                            labels: [...Object.keys(metrics.users)],
-                            datasets: [
-                                {
-                                    label: "Evolution",
-                                    data: [...Object.values(metrics.users)],
-                                    backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-                                    borderColor: ["rgba(255, 99, 132, 1)"],
-                                    borderWidth: 1,
-                                },
-                            ],
-                        }}
-                    />
-                </div>
-                <div className={styles.sessions}>
-                    <Heading as="h5" size="md">
-                        Progression du nombre de sessions
-                    </Heading>
-                    <Line
-                        width={600}
-                        height={400}
-                        options={{
-                            responsive: false,
-                            maintainAspectRatio: false,
-                        }}
-                        data={{
-                            labels: [...Object.keys(metrics.sessions)],
-                            datasets: [
-                                {
-                                    label: "Evolution",
-                                    data: [...Object.values(metrics.sessions)],
-                                    backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-                                    borderColor: ["rgba(255, 99, 132, 1)"],
-                                    borderWidth: 1,
-                                },
-                            ],
-                        }}
-                    />
-                </div>
-                <div className={styles.campaigns}>
-                    <Heading as="h5" size="md">
-                        Evolution du nombre de campagne
-                    </Heading>
-                    <Line
-                        width={600}
-                        height={400}
-                        options={{
-                            responsive: false,
-                            maintainAspectRatio: false,
-                        }}
-                        data={{
-                            labels: [...Object.keys(metrics.campaigns)],
-                            datasets: [
-                                {
-                                    label: "Evolution",
-                                    data: [...Object.values(metrics.campaigns)],
-                                    backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-                                    borderColor: ["rgba(255, 99, 132, 1)"],
-                                    borderWidth: 1,
-                                },
-                            ],
-                        }}
-                    />
-                </div>
-                <div className={styles.userSessions}>
-                    <Heading as="h5" size="md">
-                        Evolution du nombre de de testeurs
-                        <br />
-                        ayant réalisé une session dans le mois
-                    </Heading>
-                    <Line
-                        width={600}
-                        height={400}
-                        // options={{
-                        //     responsive: false,
-                        //     maintainAspectRatio: false,
-                        // }}
-                        data={{
-                            labels: [...Object.keys(metrics.userSessions)],
-                            datasets: [
-                                {
-                                    label: "Evolution",
-                                    data: [...Object.values(metrics.userSessions)],
-                                    backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-                                    borderColor: ["rgba(255, 99, 132, 1)"],
-                                    borderWidth: 1,
-                                },
-                            ],
-                        }}
-                    />
-                </div>
+                    <div className={styles.container}>
+
+                        <div className={styles.statGroup}>
+                            <Heading as="h5" size="sm" style={{ marginBottom: '20px' }}>
+                                Evolution du nombre de testeurs
+                            </Heading>
+
+                            <div className={styles.content}>
+                                <Line
+                                    options={{
+                                        responsive: true,
+                                        maintainAspectRatio: true,
+                                    }}
+                                    data={{
+                                        labels: [...Object.keys(metrics.users)],
+                                        datasets: [
+                                            {
+                                                label: "Evolution",
+                                                data: [...Object.values(metrics.users)],
+                                                backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+                                                borderColor: ["rgba(255, 99, 132, 1)"],
+                                                borderWidth: 1,
+                                            },
+                                        ],
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                        <div className={styles.statGroup}>
+                            <Heading as="h5" size="sm" style={{ marginBottom: '20px' }}>
+                                Progression du nombre de sessions
+                            </Heading>
+                            <div className={styles.content}>
+                                <Line
+                                    options={{
+                                        responsive: true,
+                                        maintainAspectRatio: true,
+                                    }}
+                                    data={{
+                                        labels: [...Object.keys(metrics.sessions)],
+                                        datasets: [
+                                            {
+                                                label: "Evolution",
+                                                data: [...Object.values(metrics.sessions)],
+                                                backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+                                                borderColor: ["rgba(255, 99, 132, 1)"],
+                                                borderWidth: 1,
+                                            },
+                                        ],
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                        <div className={styles.statGroup}>
+                            <Heading as="h5" size="sm" style={{ marginBottom: '20px' }}>
+                                Evolution du nombre de campagne
+                            </Heading>
+                            <div className={styles.content}>
+                                <Line
+                                    options={{
+                                        responsive: true,
+                                        maintainAspectRatio: true,
+                                    }}
+                                    data={{
+                                        labels: [...Object.keys(metrics.campaigns)],
+                                        datasets: [
+                                            {
+                                                label: "Evolution",
+                                                data: [...Object.values(metrics.campaigns)],
+                                                backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+                                                borderColor: ["rgba(255, 99, 132, 1)"],
+                                                borderWidth: 1,
+                                            },
+                                        ],
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.statGroup}>
+                            <Heading as="h5" size="sm" style={{ marginBottom: '20px' }}>
+                                Evolution du nombre de de testeurs
+                                <br />
+                                ayant réalisé une session dans le mois
+                            </Heading>
+                            <div className={styles.content}>
+                                <Line
+                                    options={{
+                                        responsive: true,
+                                        maintainAspectRatio: true,
+                                    }}
+                                    data={{
+                                        labels: [...Object.keys(metrics.userSessions)],
+                                        datasets: [
+                                            {
+                                                label: "Evolution",
+                                                data: [...Object.values(metrics.userSessions)],
+                                                backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+                                                borderColor: ["rgba(255, 99, 132, 1)"],
+                                                borderWidth: 1,
+                                            },
+                                        ],
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>}
             </div>
         </>
     );
