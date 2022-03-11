@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'street',
+        'city',
+        'zipcode',
+        'country',
+        'latitude',
+        'longitude',
+    ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

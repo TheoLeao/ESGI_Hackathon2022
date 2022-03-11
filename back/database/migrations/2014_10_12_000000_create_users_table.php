@@ -22,8 +22,9 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->string('phone', 20)->nullable();
-            $table->integer('age')->nullable();
-            $table->float('size')->nullable();
+            $table->string('role', 20)->nullable();
+            $table->date('birth')->nullable();
+            $table->integer('size')->nullable();
             $table->float('weight')->nullable();
             $table->foreignId('address_id')->nullable()->constrained();
         });

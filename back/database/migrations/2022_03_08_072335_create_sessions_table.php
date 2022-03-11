@@ -16,8 +16,9 @@ class CreateSessionsTable extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('product_id')->constrained();
+            $table->string('name');
+            $table->string('description');
+            $table->foreignId('campaign_id')->nullable()->constrained();
             $table->date('start');
             $table->date('end');
         });

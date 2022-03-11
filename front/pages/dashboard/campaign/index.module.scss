@@ -1,0 +1,81 @@
+@import '../../../styles/utils/animations.module.scss';
+.table {
+    background-color: white;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+.containerComponent {
+    background-color: white;
+    border-radius: 15px;
+    margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    .descriptionSection {
+        width: 100%;
+    }
+}
+.section {
+    margin-top: 25px;
+}
+.heading {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+.group{
+    margin-bottom: 15px;
+}
+.line{
+    display: flex;
+    justify-content: space-between;
+     flex-wrap: wrap;
+    .group{
+        width: 45%;
+        min-width: 250px;
+
+    }
+}
+
+.inputDate {
+    padding: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+    min-width: 0px;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border: 1px solid;
+    border-color: inherit;
+    background: inherit;
+    border-radius: 8px;
+    min-height: 40px;
+    font-size: 1rem;
+    padding-left: 15px;
+    &:hover {
+        border-color: #cbd5e0;
+    }
+}
+
+
+.fadeinContent{
+    animation: fadeIn linear 1s;
+}
+.loader{
+    position: absolute;
+    top: 50%; right: 50%;
+    transform: translate(50%,-50%);
+}
+.message{
+    padding-top: 20px;
+    width: 100%;
+}
+.boutonQuestionnaire{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

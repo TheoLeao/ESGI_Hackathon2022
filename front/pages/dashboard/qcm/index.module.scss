@@ -1,0 +1,49 @@
+@import "../../../styles/utils/animations.module.scss";
+
+.table {
+    background-color: white;
+    border-radius: 15px;
+    margin-top: 20px;
+    padding: 20px;
+}
+.containerComponent {
+    background-color: white;
+    border-radius: 15px;
+    margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    .descriptionSection {
+        width: 100%;
+    }
+}
+.section {
+    margin-top: 25px;
+}
+.heading {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.loader {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+}
+.fadeinContent {
+    animation: fadeIn linear 1s;
+}
+.group {
+    margin-bottom: 20px;
+    .list {
+        display: flex;
+        .radioItem {
+            margin-right: 25px;
+        }
+    }
+}
