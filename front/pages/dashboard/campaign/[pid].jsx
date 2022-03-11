@@ -84,23 +84,23 @@ const Campain = ({ Component, pageProps }) => {
 
                     />
                 </div> : <div className={styles.fadeinContent}>
-                    <Button style={{marginBottom: '10px'}} leftIcon={<FiArrowLeft />} colorScheme='grey' variant='outline' size='xs' onClick={() => router.back()}>
+                    <Button style={{ marginBottom: '10px' }} leftIcon={<FiArrowLeft />} colorScheme='grey' variant='outline' size='xs' onClick={() => router.back()}>
                         Retour
                     </Button>
-                    <Heading as='h3' size='lg'>Détail de la campagne  {campaign?.state ? <Badge colorScheme='green'>Ouverte</Badge> : <Badge colorScheme='red'>Fermé</Badge>}</Heading>
+                    <div className={styles.heading}>
+                        <Heading as='h3' size='lg'>Détail de la campagne  {campaign?.state ? <Badge colorScheme='green'>Ouverte</Badge> : <Badge colorScheme='red'>Fermé</Badge>}</Heading>
+                        {role == 'tester' && <Button
+                            colorScheme="teal"
+                            size="sm"
+                            onClick={() => handlePostuler(campaign.id)}
+                        >Postuler à cette campagne</Button>}
+                    </div>
                     <div className={styles.content}>
                         <div className={`${styles.section} `}>
                             <Heading as='h4' size='md'>Description de la campagne</Heading>
                             <Container maxW='container.lg' className={styles.containerComponent}>
                                 {campaign?.description}
                             </Container>
-                        </div>
-                        <div className={`${styles.section} `}>
-                        {role == 'tester' && <Button
-                            colorScheme="teal"
-                            size="sm"
-                            onClick={() => handlePostuler(campaign.id)}
-                            >Postuler</Button>}
                         </div>
                         <div className={`${styles.section} `}>
                             <Heading as='h4' size='md'>Produit: {campaign?.product?.name}</Heading>
@@ -148,13 +148,13 @@ const Campain = ({ Component, pageProps }) => {
                                                         <Td>{session.description}</Td>
                                                         <Td>
                                                             <Link href={'/dashboard/resultQcm/' + session.id}>
-                                                                <Button colorScheme='teal' size='sm'>Statistiques</Button>
+                                                                <Button colorScheme='teal' size='xs'>Voir les statistiques</Button>
                                                             </Link>
                                                             <Link href={'/dashboard/userSession/' + session.id}>
-                                                                <Button ml={5} colorScheme='teal' size='sm'>Testeurs</Button>
+                                                                <Button ml={5} colorScheme='teal' size='xs'>Voir les testeurs</Button>
                                                             </Link>
                                                             <Link href={'/dashboard/qcm/' + session.id}>
-                                                                <Button ml={5} colorScheme='teal' size='sm'>Accéder au questionnaire</Button>
+                                                                <Button ml={5} colorScheme='teal' size='xs'>Accéder au questionnaire</Button>
                                                             </Link>
                                                         </Td>
                                                     </Tr>
@@ -167,18 +167,14 @@ const Campain = ({ Component, pageProps }) => {
                             </div>
                         }
 
-                        {role != 'admin' && userSession.id != null &&
-                            <Link href={'/dashboard/qcm/' + userSession.session_id}>
-                                <Button ml={5} mt={20} maxW='200' colorScheme='teal' size='sm'>Accéder au questionnaire</Button>
-                            </Link>
-                        }
 
 
                     </div>
-
-
-
-
+                    {role != 'admin' && userSession.id != null &&
+                        <Link href={'/dashboard/qcm/' + userSession.session_id}>
+                            <Button style={{margin: '20px 0px'}} maxW='200' colorScheme='teal' size='sm'>Accéder au questionnaire</Button>
+                        </Link>
+                    }
                 </div>
                 }
             </div>
