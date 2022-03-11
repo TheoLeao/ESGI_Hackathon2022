@@ -91,7 +91,7 @@ const Campain = ({ Component, pageProps }) => {
                     <div className={styles.content}>
                         <div className={`${styles.section} `}>
                             <Heading as='h4' size='md'>Description de la campagne</Heading>
-                            <Container maxW='container.lg' className={styles.containerComponent}>
+                            <Container maxW='container' className={styles.containerComponent}>
                                 {campaign?.description}
                             </Container>
                         </div>
@@ -104,7 +104,7 @@ const Campain = ({ Component, pageProps }) => {
                         </div>
                         <div className={`${styles.section} `}>
                             <Heading as='h4' size='md'>Produit: {campaign?.product?.name}</Heading>
-                            <Container maxW='container.lg' className={styles.containerComponent}>
+                            
                                 <Table variant='simple' className={styles.table}>
                                     <Thead>
                                         <Tr>
@@ -123,7 +123,7 @@ const Campain = ({ Component, pageProps }) => {
                                         </Tr>
                                     </Tbody>
                                 </Table>
-                            </Container>
+                            
                         </div>
                         {role != 'tester' &&
                             <div className={`${styles.section} `}>
@@ -131,7 +131,7 @@ const Campain = ({ Component, pageProps }) => {
                                 <Link href={'/dashboard/requests/' + campaign?.id}>
                                     <Button colorScheme='teal' size='sm' mt={3}>Demandes</Button>
                                 </Link>
-                                <Container maxW='container.lg' className={styles.containerComponent}>
+                                <Container maxW='container' className={styles.containerComponent}>
                                     <Table variant='simple' className={styles.table}>
                                         <Thead>
                                             <Tr>
