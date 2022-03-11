@@ -75,6 +75,10 @@ export default function SidebarWithHeader({ children }) {
 }
 
 const SidebarContent = ({ onClose, ...rest }) => {
+    const role = null;
+    if (typeof window !== 'undefined') {
+        role = sessionStorage.getItem("role");
+    }
     return (
         <Box
             transition="3s ease"
@@ -92,11 +96,12 @@ const SidebarContent = ({ onClose, ...rest }) => {
                 </Text>
                 <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
             </Flex>
-            {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon} href={link.href}>
-                    {link.name}
-                </NavItem>
-            ))}
+            {LinkItems.map((link) => {
+                if (role == 'tester' && link.name == 'Les testeurs' || role == 'tester' && link.name == 'Accueil') {return;}
+                return <NavItem key={link.name} icon={link.icon} href={link.href}>
+                        {link.name}
+                    </NavItem>
+            })}
         </Box>
     );
 };

@@ -52,9 +52,7 @@ const userSession = ({ Component, pageProps }) => {
                 </Thead>
                 <Tbody>
                     {Object.keys(usersList.users || []).map((user) => {
-                        {console.log(usersList)}
                         return <Tr key={user}>
-                            {console.log(usersList.users[user].name)}
                             <Td>{usersList.users[user].id}</Td>
                             <Td>{usersList.users[user].name}</Td>
                             <Td>{usersList.users[user].phone}</Td>

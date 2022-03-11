@@ -22,7 +22,7 @@ const UsersList = ({ Component, pageProps }) => {
         role = sessionStorage.getItem("role");
         if (role == 'tester') {
             return (
-                <h1>You don't have the rights ⛔</h1>
+                <h1>Vous n'avez pas l'accès ⛔</h1>
             )
         }
     }
@@ -34,7 +34,6 @@ const UsersList = ({ Component, pageProps }) => {
         let value = await users();
         setUsersList(value);
         setIsDataLoading(false);
-        console.log(isDataLoading);
     }, [])
 
     return (

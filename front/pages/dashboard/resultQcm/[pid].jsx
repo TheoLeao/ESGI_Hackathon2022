@@ -52,7 +52,6 @@ const ResultQcm = ({ Component, pageProps }) => {
     }
 
     function logValue() {
-        console.log(value);
         return value;
     }
 

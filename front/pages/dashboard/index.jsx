@@ -19,6 +19,15 @@ import { Line } from "react-chartjs-2";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const Index = ({ Component, pageProps }) => {
+    const role = null;
+    if (typeof window !== 'undefined') {
+        role = sessionStorage.getItem("role");
+        if (role == 'tester') {
+            return (
+                <h1>Vous n'avez pas l'accès ⛔</h1>
+            )
+        }
+    }
     const [metrics, setMetrics] = useState({
         users: [],
         sessions: [],
