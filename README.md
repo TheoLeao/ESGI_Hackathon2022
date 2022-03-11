@@ -1,6 +1,8 @@
 # Hackathon 2022
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)  [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
 
+Encadré par: [Audray Hossepian](https://audreyhossepian.fr/) (ça mérite bien quelques points supplémentaires, non ? 🤔)
+
 **Présentation du commanditaire:** 
 Wired Beauty propose la vente de produits permettant de synchroniser des données avec l’application mobile. Toutes ces données recueillies permettent de générer des rapports quant à l’efficacité du soin.
 
