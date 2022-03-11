@@ -74,7 +74,6 @@ const Login = () => {
                         <Stack spacing={10}>
                             <Stack direction={{ base: "column", sm: "row" }} align={"start"} justify={"space-between"}>
                                 <Checkbox>Remember me</Checkbox>
-                                <Link color={"blue.400"}>Forgot password?</Link>
                             </Stack>
                             <Button
                                 bg={"blue.400"}
