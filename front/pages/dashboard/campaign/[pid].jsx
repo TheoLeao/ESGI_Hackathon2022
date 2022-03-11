@@ -104,33 +104,35 @@ const Campain = ({ Component, pageProps }) => {
                         </div>
                         <div className={`${styles.section} `}>
                             <Heading as='h4' size='md'>Produit: {campaign?.product?.name}</Heading>
-                            
-                                <Table variant='simple' className={styles.table}>
-                                    <Thead>
-                                        <Tr>
-                                            <Th>Marque</Th>
-                                            <Th>Code</Th>
-                                            <Th>Catégorie</Th>
-                                            <Th>Photo</Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        <Tr>
-                                            <Td>{campaign?.product?.brand}</Td>
-                                            <Td>{campaign?.product?.code_product}</Td>
-                                            <Td>{campaign?.product?.category}</Td>
-                                            <Td><img style={{ maxHeight: '200px' }} src={campaign?.product?.picture}></img></Td>
-                                        </Tr>
-                                    </Tbody>
-                                </Table>
-                            
+
+                            <Table variant='simple' className={styles.table}>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Marque</Th>
+                                        <Th>Code</Th>
+                                        <Th>Catégorie</Th>
+                                        <Th>Photo</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    <Tr>
+                                        <Td>{campaign?.product?.brand}</Td>
+                                        <Td>{campaign?.product?.code_product}</Td>
+                                        <Td>{campaign?.product?.category}</Td>
+                                        <Td><img style={{ maxHeight: '200px' }} src={campaign?.product?.picture}></img></Td>
+                                    </Tr>
+                                </Tbody>
+                            </Table>
+
                         </div>
                         {role != 'tester' &&
                             <div className={`${styles.section} `}>
-                                <Heading as='h4' size='md'>Liste des sessions</Heading>
-                                <Link href={'/dashboard/requests/' + campaign?.id}>
-                                    <Button colorScheme='teal' size='sm' mt={3}>Demandes</Button>
-                                </Link>
+                                <div className={styles.heading}>
+                                    <Heading as='h4' size='md'>Liste des sessions</Heading><Link href={'/dashboard/requests/' + campaign?.id}>
+                                        <Button colorScheme='teal' size='sm' mt={3}>Voir les demandes en attente</Button>
+                                    </Link></div>
+
+
                                 <Container maxW='container' className={styles.containerComponent}>
                                     <Table variant='simple' className={styles.table}>
                                         <Thead>
@@ -172,7 +174,7 @@ const Campain = ({ Component, pageProps }) => {
                     </div>
                     {role != 'admin' && userSession.id != null &&
                         <Link href={'/dashboard/qcm/' + userSession.session_id}>
-                            <Button style={{margin: '20px 0px'}} maxW='200' colorScheme='teal' size='sm'>Accéder au questionnaire</Button>
+                            <Button style={{ margin: '20px 0px' }} maxW='200' colorScheme='teal' size='sm'>Accéder au questionnaire</Button>
                         </Link>
                     }
                 </div>
