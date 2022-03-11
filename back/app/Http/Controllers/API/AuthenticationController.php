@@ -25,8 +25,8 @@ class AuthenticationController extends Controller
             'birth' => 'required|date',
             'size' => 'required|integer',
             'weight' => 'required',
-            'latitude' => 'float',
-            'longitude' => 'float',
+            'latitude' => 'numeric',
+            'longitude' => 'numeric',
         ]);
 
         $address = Address::create([
