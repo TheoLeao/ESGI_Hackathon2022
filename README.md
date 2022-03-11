@@ -5,6 +5,7 @@
 Encadré par: [Audray Hossepian](https://audreyhossepian.fr/) (ça mérite bien quelques points supplémentaires, non ? 🤔)
 
 **Présentation du commanditaire:**
+
 Wired Beauty propose la vente de produits permettant de synchroniser des données avec l’application mobile. Toutes ces données recueillies permettent de générer des rapports quant à l’efficacité du soin.
 
 **Objectif du site internet:**
@@ -13,6 +14,7 @@ Wired Beauty propose la vente de produits permettant de synchroniser des donnée
 -   vendre des rapports de données aux grands groupes cosmétiques.
 
 **Fonctionnalités attendues:**
+
 Administration:
 
 -   [x] Gérer la liste des campagnes de tests et produits à tester
