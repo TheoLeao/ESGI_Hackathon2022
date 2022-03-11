@@ -1,3 +1,4 @@
+@import '../../../styles/utils/animations.module.scss';
 .table {
     background-color: white;
     border-radius: 15px;
@@ -57,4 +58,18 @@
     &:hover {
         border-color: #cbd5e0;
     }
+}
+
+
+.fadeinContent{
+    animation: fadeIn linear 1s;
+}
+.loader{
+    position: absolute;
+    top: 50%; right: 50%;
+    transform: translate(50%,-50%);
+}
+.message{
+    padding-top: 20px;
+    width: 100%;
 }

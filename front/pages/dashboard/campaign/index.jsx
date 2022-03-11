@@ -73,12 +73,24 @@ const Modal_CreateCampaign = () => {
         campaign_product_category: Yup.string().required("La catégorie du produit est requise"),
         campaign_product_description: Yup.string().required("La description du produit est requise"),
     });
+
+    const processFile = (file) => {
+        const reader = new FileReader();
+        return new Promise((resolve, _) => {
+            reader.onloadend = () => {
+                resolve(reader.result);
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
+            const file = document.querySelector('input[name="campaign_product_photo"]').files[0];
             let result = await createCampaign({
                 campaign_name: values.campaign_name,
                 campaign_state: 1,
@@ -87,7 +99,7 @@ const Modal_CreateCampaign = () => {
                 product_brand: values.campaign_product_brand,
                 product_code: values.campaign_product_code,
                 product_category: values.campaign_product_category,
-                product_picture: "",
+                product_picture: await processFile(file),
                 product_description: values.campaign_product_description,
             });
             dispatch(
@@ -103,7 +115,6 @@ const Modal_CreateCampaign = () => {
                     campaign_product_description: result.product.description,
                 })
             );
-
             onClose();
         },
     });
@@ -172,7 +183,6 @@ const Modal_CreateCampaign = () => {
                                             name="campaign_product_name"
                                             onChange={formik.handleChange}
                                             value={formik.values.campaign_product_name}
-                                            ref={initialRef}
                                             placeholder="Nom du produit"
                                         />
                                         {formik.errors.campaign_product_name ? (
@@ -190,7 +200,6 @@ const Modal_CreateCampaign = () => {
                                             name="campaign_product_brand"
                                             onChange={formik.handleChange}
                                             value={formik.values.campaign_product_brand}
-                                            ref={initialRef}
                                             placeholder="Marque du produit"
                                         />
                                         {formik.errors.campaign_product_brand ? (
@@ -211,7 +220,7 @@ const Modal_CreateCampaign = () => {
                                             name="campaign_product_code"
                                             onChange={formik.handleChange}
                                             value={formik.values.campaign_product_code}
-                                            ref={initialRef}
+                                      
                                             placeholder="Code du produit"
                                         />
                                         {formik.errors.campaign_product_code ? (
@@ -228,8 +237,6 @@ const Modal_CreateCampaign = () => {
                                             id="campaign_product_category"
                                             name="campaign_product_category"
                                             onChange={formik.handleChange}
-                                            value={formik.values.campaign_product_category}
-                                            ref={initialRef}
                                             placeholder="Catégorie du produit"
                                         />
                                         {formik.errors.campaign_product_category ? (
@@ -240,21 +247,45 @@ const Modal_CreateCampaign = () => {
                                     </FormControl>
                                 </div>
                             </div>
-                            <FormControl>
-                                <FormLabel>Produit - Description</FormLabel>
-                                <Textarea
-                                    id="campaign_product_description"
-                                    name="campaign_product_description"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.campaign_product_description}
-                                    placeholder="Description de la campagne"
-                                />
-                                {formik.errors.campaign_product_description ? (
-                                    <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                        {formik.errors.campaign_product_description}
-                                    </Text>
-                                ) : null}
-                            </FormControl>
+                            <div className={styles.line}>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Produit - Description</FormLabel>
+                                        <Textarea
+                                            id="campaign_product_description"
+                                            name="campaign_product_description"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.campaign_product_description}
+                                            placeholder="Description de la campagne"
+                                        />
+                                        {formik.errors.campaign_product_description ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_product_description}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
+                                <div className={styles.group}>
+                                    <FormControl>
+                                        <FormLabel>Produit - Photo</FormLabel>
+
+                                        <Form.Control
+                                            className={styles.inputDate}
+                                            type="file"
+                                            id="campaign_product_photo"
+                                            name="campaign_product_photo"
+                                            onChange={(event) => {
+                                                formik.setFieldValue("file", event.currentTarget.files[0]);
+                                            }}
+                                        />
+                                        {formik.errors.campaign_product_photo ? (
+                                            <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                                {formik.errors.campaign_product_photo}
+                                            </Text>
+                                        ) : null}
+                                    </FormControl>
+                                </div>
+                            </div>
                         </ModalBody>
 
                         <ModalFooter>
@@ -269,23 +300,6 @@ const Modal_CreateCampaign = () => {
         </>
     );
 };
-
-// const DateInput = () => {
-//     const [value, setValue] = React.useState(null);
-
-//     return (
-//         <LocalizationProvider dateAdapter={AdapterDateFns}>
-//             <DatePicker
-//                 label="Basic example"
-//                 value={value}
-//                 onChange={(newValue) => {
-//                     setValue(newValue);
-//                 }}
-//                 renderInput={(params) => <TextField {...params} />}
-//             />
-//         </LocalizationProvider>
-//     );
-// }
 
 const Modal_CreateSession = ({ campaignId }) => {
     const role = null;
@@ -433,12 +447,14 @@ const Modal_CreateSession = ({ campaignId }) => {
 };
 
 const Campaign = ({ Component, pageProps }) => {
+    const [isDataLoading, setIsDataLoading] = useState(true);
     const dispatch = useDispatch();
     const toast = useToast();
     const toastIdRef = useRef();
     useEffect(async () => {
         let campaingns_data = await getCampaigns();
         dispatch(initCampaigns(campaingns_data));
+        setIsDataLoading(false)
     }, []);
     const campaigns = useSelector((state) => state.campaigns);
 
@@ -474,58 +490,67 @@ const Campaign = ({ Component, pageProps }) => {
 
     return (
         <>
-            {/* { <Lottie
-                options={{
-                    loop: true,
-                    autoplay: true,
-                    animationData: loader,
-                    rendererSettings: {
-                        preserveAspectRatio: "xMidYMid slice"
-                    }
-                }}
-                height={200}
-                width={200}
-            />} */}
-            <div className={styles.heading}>
-                <Heading as="h3" size="lg">
-                    Les campagnes
-                </Heading>
-                <Modal_CreateCampaign></Modal_CreateCampaign>
-            </div>
-            <Table variant="simple" className={styles.table}>
-                <Thead>
-                    <Tr>
-                        <Th>Nom</Th>
-                        <Th>Action</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {campaigns.map((campaign) => {
-                        return (
+            <div className={styles.container}>
+                {isDataLoading ? <div className={styles.loader}>
+                    <Lottie
+                        options={{
+                            loop: true,
+                            autoplay: true,
+                            animationData: loader,
+                            rendererSettings: {
+                                preserveAspectRatio: "xMidYMid slice"
+                            }
+                        }}
+                        height={200}
+                        width={200}
+
+                    /></div> : <div className={styles.fadeinContent}><div className={styles.heading}>
+                        <Heading as="h3" size="lg">
+                            Les campagnes
+                        </Heading>
+                        <Modal_CreateCampaign></Modal_CreateCampaign>
+                    </div>
+                    <Table variant="simple" className={styles.table}>
+                        <Thead>
                             <Tr>
-                                <Td>{campaign.name}</Td>
-                                <Td>
-                                    <Stack spacing={2} direction="row" align="center">
-                                        <Button
-                                            colorScheme="teal"
-                                            size="sm"
-                                            onClick={() => handlePostuler(campaign.id)}
-                                        >
-                                            Postuler
-                                        </Button>
-                                        <Link href={"/dashboard/campaign/" + campaign.id}>
-                                            <Button colorScheme="teal" size="sm">
-                                                Voir
-                                            </Button>
-                                        </Link>
-                                        <Modal_CreateSession campaignId={campaign.id}></Modal_CreateSession>
-                                    </Stack>
-                                </Td>
+                                <Th>Nom</Th>
+                                <Th>Action</Th>
                             </Tr>
-                        );
-                    })}
-                </Tbody>
-            </Table>
+                        </Thead>
+                        <Tbody>
+                            {campaigns.map((campaign) => {
+                                return (
+                                    <Tr>
+                                        <Td>{campaign.name}</Td>
+                                        <Td>
+
+                                            <Td>
+                                                <Stack spacing={2} direction="row" align="center">
+                                                    <Button
+                                                        colorScheme="teal"
+                                                        size="sm"
+                                                        onClick={() => handlePostuler(campaign.id)}
+                                                    >
+                                                        Postuler
+                                                    </Button>
+                                                    <Link href={"/dashboard/campaign/" + campaign.id}>
+                                                        <Button colorScheme="teal" size="sm">
+                                                            Voir
+                                                        </Button>
+
+                                                    </Link>
+                                                    <Modal_CreateSession campaignId={campaign.id}></Modal_CreateSession>
+                                                </Stack>
+                                            </Td>
+                                        </Td>
+                                    </Tr>
+                                );
+                            })}
+                        </Tbody>
+                    </Table></div>}
+            </div>
+
+
         </>
     );
 };

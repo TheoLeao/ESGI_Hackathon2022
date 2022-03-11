@@ -17,7 +17,7 @@ class Session extends Model
         'end'
     ];
 
-    public function userSession()
+    public function userSessions()
     {
         return $this->hasMany(UserSession::class);
     }

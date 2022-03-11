@@ -37,6 +37,8 @@ export async function register(data) {
     body.append("birth", data.birth);
     body.append("size", data.size);
     body.append("weight", data.weight);
+    body.append("latitude", data.latitude);
+    body.append("longitude", data.longitude);
 
     const requestOptions = {
         method: "POST",
@@ -340,6 +342,34 @@ export async function getSessionUser(sessionId) {
     return await req.json();
 }
 
+export async function getSessionUser2(campaignId) {
+    const token = sessionStorage.getItem("token");
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+    const requestOptions = {
+        method: "GET",
+        headers,
+        redirect: "follow",
+    };
+
+    const req = await fetch(`${BASE_URL}sessions-user/${campaignId}`, requestOptions);
+    return await req.json();
+}
+
 export function exportPdf(sessionId) {
     return `${BASE_URL}metrics/${sessionId}/export`;
+}
+
+export async function metrics() {
+    const token = sessionStorage.getItem("token");
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
+    const requestOptions = {
+        method: "GET",
+        headers,
+        redirect: "follow",
+    };
+
+    const req = await fetch(`${BASE_URL}metrics`, requestOptions);
+    return await req.json();
 }

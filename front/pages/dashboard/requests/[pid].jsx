@@ -6,12 +6,16 @@ import { acceptUserIntoSession, requests as getRequests } from "../../../src/api
 
 import DashboardLayout from "../../../src/layouts/DashboardLayout/DashboardLayout";
 import { useRouter } from "next/router";
+import loader from "../../../src/lotties/loader.json";
+import Lottie from "react-lottie";
+
 
 const UsersList = ({ Component, pageProps }) => {
     const [requests, setRequests] = useState([]);
     const toast = useToast();
     const router = useRouter();
     const toastIdRef = useRef();
+    const [isDataLoading, setIsDataLoading] = useState(true);
 
     useEffect(async () => {
         if (false === router.isReady) {
@@ -19,6 +23,7 @@ const UsersList = ({ Component, pageProps }) => {
         }
         const { pid } = router.query;
         setRequests(await getRequests(pid));
+        setIsDataLoading(false)
     }, [router.isReady]);
 
     const handleAcceptRequest = async (e, userId) => {
@@ -46,7 +51,7 @@ const UsersList = ({ Component, pageProps }) => {
                 isClosable: true,
             });
             // TODO better
-            setRequests({ campaign: requests.campaign, users: requests.users?.filter((u) => u.id === userId) });
+            setRequests({ campaign: requests.campaign, users: requests.users?.filter((u) => u.id !== userId) });
         } catch {
             toastIdRef.current = toast({
                 title: "Echec de l'enregistrement des données",
@@ -59,44 +64,64 @@ const UsersList = ({ Component, pageProps }) => {
 
     return (
         <>
-            {requests && (
-                <>
-                    <Heading mb={10}>Liste des demandes</Heading>
-                    <Table variant="simple" className={styles.table}>
-                        <Thead>
-                            <Tr>
-                                <Th>Id</Th>
-                                <Th>Name</Th>
-                                <Th>Tel</Th>
-                                <Th>Mail</Th>
-                                <Th>Action</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {requests.users?.map((user) => {
-                                return (
-                                    <Tr key={user}>
-                                        <Td>{user.id}</Td>
-                                        <Td>{user.name}</Td>
-                                        <Td>{user.phone}</Td>
-                                        <Td>{user.email}</Td>
-                                        <Td>
-                                            <Select
-                                                onChange={(e) => handleAcceptRequest(e, user.id)}
-                                                placeholder="Select session"
-                                            >
-                                                {requests.campaign?.sessions?.map((s) => {
-                                                    return <option value={s.id}>{s.name}</option>;
-                                                })}
-                                            </Select>
-                                        </Td>
+            <div className={styles.container}>
+                {isDataLoading ? <div className={styles.loader}>
+                    <Lottie
+                        options={{
+                            loop: true,
+                            autoplay: true,
+                            animationData: loader,
+                            rendererSettings: {
+                                preserveAspectRatio: "xMidYMid slice"
+                            }
+                        }}
+                        height={200}
+                        width={200}
+
+                    />
+                </div> : <div className={styles.fadeinContent}>
+                    {requests && (
+                        <>
+                            <Heading mb={10}>Liste des demandes</Heading>
+                            <Table variant="simple" className={styles.table}>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Id</Th>
+                                        <Th>Name</Th>
+                                        <Th>Tel</Th>
+                                        <Th>Mail</Th>
+                                        <Th>Action</Th>
                                     </Tr>
-                                );
-                            })}
-                        </Tbody>
-                    </Table>
-                </>
-            )}
+                                </Thead>
+                                {requests.users?.length > 0 ? <Tbody>
+                                    {requests.users?.map((user) => {
+                                        return (
+                                            <Tr key={user}>
+                                                <Td>{user.id}</Td>
+                                                <Td>{user.name}</Td>
+                                                <Td>{user.phone}</Td>
+                                                <Td>{user.email}</Td>
+                                                <Td>
+                                                    <Select
+                                                        onChange={(e) => handleAcceptRequest(e, user.id)}
+                                                        placeholder="Select session"
+                                                    >
+                                                        {requests.campaign?.sessions?.map((s) => {
+                                                            return <option value={s.id}>{s.name}</option>;
+                                                        })}
+                                                    </Select>
+                                                </Td>
+                                            </Tr>
+                                        );
+                                    })}
+                                </Tbody> : <div className={styles.message}>Aucune demande pour cette campagne 😅</div>}
+
+                            </Table>
+                        </>
+                    )}
+                </div>}
+            </div>
+
         </>
     );
 };

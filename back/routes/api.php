@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post("campaigns/{campaign}/request", [CampaignController::class, 'request']);
 
     Route::get('/get-sessions-users', [SessionController::class, 'getSessionsWithUsers']);
+    Route::get('/sessions-user/{campaign}', [SessionController::class, 'getSessionOfUser']);
     Route::get('/get-session-user/{session}', [SessionController::class, 'getSessionsWithUsersById']);
     Route::post('/sessions/{session}/accept-user', [SessionController::class, 'acceptUser']);
     Route::get('/get-user-sessions/{user}', [SessionController::class, 'getUserSessions']);
@@ -61,6 +62,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/answer', [SurveyController::class, 'answer']);
 
     Route::get('/metrics/{session}', [MetricsController::class, 'getSessionMetrics']);
+    Route::get('/metrics', [MetricsController::class, 'getDashboardMetrics']);
 });
 Route::get('/metrics/{session}/export', [MetricsController::class, 'exportSessionMetrics']);
 

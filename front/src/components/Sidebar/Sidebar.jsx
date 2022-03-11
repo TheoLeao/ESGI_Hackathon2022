@@ -142,11 +142,10 @@ const MobileNav = ({ onOpen, ...rest }) => {
             router.push("/login");
         }
     }
-
-    const [infoUser, setUsersList] = useState([]);
+    const [infoUser, setinfoUser] = useState([]);
 
     useEffect(async () => {
-        setUsersList(await me());
+        setinfoUser(await me());
     }, []);
 
     return (
