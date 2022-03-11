@@ -8,7 +8,6 @@ const MyApp = ({ Component, pageProps }) => {
   return <Provider store={store}><ChakraProvider>{getLayout(
     <Component {...pageProps} />
   )}</ChakraProvider></Provider>;
-
 }
 
 export default MyApp
