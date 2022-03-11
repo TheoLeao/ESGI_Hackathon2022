@@ -15,9 +15,9 @@ class AuthenticationController extends Controller
 
         $attr = $request->validate([
             'street' => 'required|string|max:100',
-            'city' => 'required|string|max:100',
-            'zipcode' => 'required|string|max:10',
-            'country' => 'required|string|max:100',
+            'city' => 'string|max:100',
+            'zipcode' => 'string|max:10',
+            'country' => 'string|max:100',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
@@ -25,6 +25,8 @@ class AuthenticationController extends Controller
             'birth' => 'required|date',
             'size' => 'required|integer',
             'weight' => 'required',
+            'latitude' => 'float',
+            'longitude' => 'float',
         ]);
 
         $address = Address::create([
