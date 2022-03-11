@@ -97,7 +97,11 @@ const SidebarContent = ({ onClose, ...rest }) => {
                 <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
             </Flex>
             {LinkItems.map((link) => {
-                if (role == 'tester' && link.name == 'Les testeurs' || role == 'tester' && link.name == 'Accueil') {return;}
+                if (role == 'tester' && link.name == 'Les campagnes')
+                return <NavItem key={link.name} icon={link.icon} href={link.href}>
+                        {link.name}
+                    </NavItem>
+                else if (role == 'admin')
                 return <NavItem key={link.name} icon={link.icon} href={link.href}>
                         {link.name}
                     </NavItem>

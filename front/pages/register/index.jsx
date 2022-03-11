@@ -91,8 +91,10 @@ const Register = () => {
         validationSchema,
         onSubmit: async (values) => {
             let value = await register(values);
-            if (sessionStorage["token"] != null && value != null) {
+            if (sessionStorage["token"] != null && sessionStorage["role"] == "admin") {
                 router.push("/dashboard");
+            } else if (sessionStorage["token"] != null && sessionStorage["role"] == "tester") {
+                router.push("/dashboard/campaign");
             }
         },
     });
