@@ -1,14 +1,15 @@
-import { Badge, Button, Container, Heading, Table, Tbody, Td, Th, Thead, Tr, Text } from '@chakra-ui/react';
+import { Badge, Button, Container, Heading, Table, Tbody, Td, Th, Thead, Tr, Text, useToast } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Lottie from "react-lottie";
-import { getCampaignById, getSessionUser2, me } from '../../../src/api/api';
+import { getCampaignById, getSessionUser2, me, request } from '../../../src/api/api';
 import useQuery from '../../../src/hooks/useQuery';
 import DashboardLayout from '../../../src/layouts/DashboardLayout/DashboardLayout';
 import loader from "../../../src/lotties/loader.json";
 import styles from './index.module.scss';
 import { FiArrowLeft } from "react-icons/fi";
 import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from "react-redux";
 const Campain = ({ Component, pageProps }) => {
     const router = useRouter();
     const role = null;
@@ -19,6 +20,9 @@ const Campain = ({ Component, pageProps }) => {
     const query = useQuery();
     const [campaign, setCampaigns] = useState([]);
     const [userSession, setUserSession] = useState([]);
+    const toast = useToast();
+    const toastIdRef = useRef();
+    const campaigns = useSelector((state) => state.campaigns);
     useEffect(async () => {
         if (!query) {
             return;
@@ -31,6 +35,36 @@ const Campain = ({ Component, pageProps }) => {
         setUserSession(userSession);
         setIsDataLoading(false)
     }, [query]);
+
+    async function handlePostuler(campaignId) {
+        console.log(campaignId)
+        try {
+            const rep = await request(campaignId);
+            if (rep["alreadyExist"]) {
+                toastIdRef.current = toast({
+                    title: "Vous avez déjà candidaté",
+                    status: "info",
+                    duration: 9000,
+                    isClosable: true,
+                });
+                return;
+            }
+
+            toastIdRef.current = toast({
+                title: "Candidature réussite",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            });
+        } catch (e) {
+            toastIdRef.current = toast({
+                title: "Echec de l'enregistrement des données",
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            });
+        }
+    }
 
     return (
         <>
@@ -60,6 +94,13 @@ const Campain = ({ Component, pageProps }) => {
                             <Container maxW='container.lg' className={styles.containerComponent}>
                                 {campaign?.description}
                             </Container>
+                        </div>
+                        <div className={`${styles.section} `}>
+                        {role == 'tester' && <Button
+                            colorScheme="teal"
+                            size="sm"
+                            onClick={() => handlePostuler(campaign.id)}
+                            >Postuler</Button>}
                         </div>
                         <div className={`${styles.section} `}>
                             <Heading as='h4' size='md'>Produit: {campaign?.product?.name}</Heading>
