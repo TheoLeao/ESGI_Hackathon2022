@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Campaign;
 use App\Models\Question;
 use App\Models\Response;
 use App\Models\Session;
@@ -63,6 +64,17 @@ class MetricsController extends Controller
         $month = now()->month;
 
         $users = User::where("created_at", ">", Carbon::now()->subMonths(12))
+            ->orderBy('created_at')
+            ->get()
+            ->groupBy(function ($d) {
+                return Carbon::parse($d->date)->format('F');
+            })
+            ->map
+            ->count();
+
+        $usersResult = [];
+
+        $campaigns = Campaign::where("created_at", ">", Carbon::now()->subMonths(12))
             ->orderBy('created_at')
             ->get()
             ->groupBy(function ($d) {

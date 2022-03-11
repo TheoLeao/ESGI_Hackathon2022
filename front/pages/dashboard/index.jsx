@@ -43,7 +43,7 @@ const Index = ({ Component, pageProps }) => {
                         Evolution du nombre de testeurs
                     </Heading>
                     <Line
-                        width={400}
+                        width={600}
                         height={400}
                         options={{
                             responsive: false,
@@ -68,7 +68,7 @@ const Index = ({ Component, pageProps }) => {
                         Progression du nombre de sessions
                     </Heading>
                     <Line
-                        width={400}
+                        width={600}
                         height={400}
                         options={{
                             responsive: false,
@@ -93,7 +93,7 @@ const Index = ({ Component, pageProps }) => {
                         Evolution du nombre de campagne
                     </Heading>
                     <Line
-                        width={400}
+                        width={600}
                         height={400}
                         options={{
                             responsive: false,
@@ -120,12 +120,12 @@ const Index = ({ Component, pageProps }) => {
                         ayant réalisé une session dans le mois
                     </Heading>
                     <Line
-                        width={400}
+                        width={600}
                         height={400}
-                        options={{
-                            responsive: false,
-                            maintainAspectRatio: false,
-                        }}
+                        // options={{
+                        //     responsive: false,
+                        //     maintainAspectRatio: false,
+                        // }}
                         data={{
                             labels: [...Object.keys(metrics.userSessions)],
                             datasets: [
