@@ -1,0 +1,70 @@
+version: "3.7"
+services:
+  backend:
+    build:
+      args:
+        user: sammy
+        uid: 1000
+      context: ./back/
+      dockerfile: Dockerfile
+    image: hackathon-back
+    container_name: backend
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./back:/var/www
+    networks:
+      - hackathon
+
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: hackathon
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: user
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - hackathon
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./back:/var/www
+      - ./back/nginx-config:/etc/nginx/conf.d/
+    networks:
+      - hackathon
+
+  frontend:
+    container_name: frontend
+    build: ./front
+    ports:
+      - "3000:3000"
+    networks:
+      - hackathon
+    
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db
+    networks:
+      - hackathon
+
+networks:
+  hackathon:
+    driver: bridge
