@@ -79,6 +79,7 @@ yarn dev
 # front use hosted api but u can run back and to use it in front go to api.api.js and change BASE_URL with yours
 cd back
 composer install
+# créer votre .env a partir du .env.example
 php artisan migrate:fresh
 php artisan db:seed
 php artisan serve
