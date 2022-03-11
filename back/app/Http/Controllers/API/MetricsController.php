@@ -85,7 +85,7 @@ class MetricsController extends Controller
 
         $campaignsResult = [];
 
-        $sessions = User::where("created_at", ">", Carbon::now()->subMonths(12))
+        $sessions = Session::where("created_at", ">", Carbon::now()->subMonths(12))
             ->orderBy('created_at')
             ->get()
             ->groupBy(function ($d) {
