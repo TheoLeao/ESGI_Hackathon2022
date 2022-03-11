@@ -1,4 +1,4 @@
-import { Heading, SimpleGrid, Alert, AlertIcon, Select, Button } from "@chakra-ui/react";
+import { Heading, SimpleGrid, Alert, AlertIcon, Select, Button, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import { Bar, Doughnut } from "react-chartjs-2";
@@ -19,6 +19,7 @@ const ResultQcm = ({ Component, pageProps }) => {
     const [result, setResultList] = useState([]);
     const [sessionId, setSessionId] = useState(undefined);
     const [value, setValue] = useState("Bar");
+    const toast = useToast();
     useEffect(async () => {
         if (!query) {
             return;
@@ -51,7 +52,6 @@ const ResultQcm = ({ Component, pageProps }) => {
     }
 
     function logValue() {
-        console.log(value);
         return value;
     }
 
@@ -98,7 +98,21 @@ const ResultQcm = ({ Component, pageProps }) => {
                                         </Select>
 
                                         {sessionId && (
-                                            <Button colorScheme="pink" as="a" href={exportPdf(sessionId)}>
+                                            <Button
+                                                colorScheme="pink"
+                                                as="a"
+                                                href={exportPdf(sessionId)}
+                                                onClick={() => {
+                                                    toast({
+                                                        title: "Le téléchargement a été inité.",
+                                                        description:
+                                                            "Le fichier est en cours de génération, merci de patienter.",
+                                                        status: "success",
+                                                        duration: 4000,
+                                                        isClosable: true,
+                                                    });
+                                                }}
+                                            >
                                                 Exporter en PDF
                                             </Button>
                                         )}

@@ -45,7 +45,6 @@ export const campaignSlice = createSlice({
         createSessionCampaign: (state, action) => {
             let { idCampaign } = action.payload;
             let campaign = state.find((session) => {
-                console.log(session.id, idCampaign);
                 return session.id === idCampaign
             });
             campaign.sessions.push(action.payload);

@@ -51,6 +51,10 @@ import { getCampaigns, createCampaign, createSession, uploadSurvey, request } fr
 import { Form } from "react-bootstrap";
 
 const Modal_CreateCampaign = () => {
+    const role = null;
+    if (typeof window !== 'undefined') {
+        role = sessionStorage.getItem("role");
+    }
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const initialRef = React.useRef();
@@ -89,7 +93,6 @@ const Modal_CreateCampaign = () => {
         initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-            alert(JSON.stringify(values, null, 2));
             const file = document.querySelector('input[name="campaign_product_photo"]').files[0];
             let result = await createCampaign({
                 campaign_name: values.campaign_name,
@@ -120,9 +123,11 @@ const Modal_CreateCampaign = () => {
     });
     return (
         <>
-            <Button onClick={onOpen} colorScheme="teal" size="sm" leftIcon={<FiPlusCircle />}>
-                Créer une campagne
-            </Button>
+            {role == 'admin' &&
+                <Button onClick={onOpen} colorScheme="teal" size="sm" leftIcon={<FiPlusCircle />}>
+                    Créer une campagne
+                </Button>
+            }
             <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} size="full">
                 <ModalOverlay />
                 <ModalContent>
@@ -331,7 +336,6 @@ const Modal_CreateSession = ({ campaignId }) => {
         initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-            alert(JSON.stringify(values, null, 2));
 
             let result = await createSession({
                 name: values.session_name,
@@ -482,7 +486,6 @@ const Campaign = ({ Component, pageProps }) => {
                 isClosable: true,
             });
         } catch (e) {
-            console.log(e);
             toastIdRef.current = toast({
                 title: "Echec de l'enregistrement des données",
                 status: "error",

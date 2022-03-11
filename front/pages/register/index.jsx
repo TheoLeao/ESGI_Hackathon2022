@@ -64,7 +64,6 @@ const Register = () => {
         formik.setFieldValue("country", "France");
         formik.setFieldValue("latitude", address.geometry?.coordinates?.[0]);
         formik.setFieldValue("longitude", address.geometry?.coordinates?.[1]);
-        console.log(formik.values);
     };
 
     const initialValues = {

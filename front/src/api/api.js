@@ -88,7 +88,6 @@ export async function users() {
 
 export async function me() {
     const token = sessionStorage.getItem("token");
-    console.log(token);
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
@@ -243,7 +242,6 @@ export async function deleteCampaign(campaignId) {
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${DEV ? TOKEN : token}`);
 
-    console.log("TODO DELETE", campaignId);
     // TODO complete
     const body = new FormData();
     body.append("name", data.name);
