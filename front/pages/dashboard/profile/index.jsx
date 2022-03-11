@@ -48,31 +48,31 @@ const User = ({ Component, pageProps }) => {
                 />
             </div> : <div className={styles.fadeinContent}>
                 <> <div className={`${styles.info} `}>
-                    <Heading mb={10}> {infoUser.name} Profile</Heading>
+                    <Heading mb={10}> Profile de {infoUser.name}</Heading>
                     <Table variant='simple' className={styles.table}>
                         <Tbody>
                             <Tr>
-                                <Td>name</Td>
+                                <Td>Nom </Td>
                                 <Td>{infoUser.name}</Td>
                             </Tr>
                             <Tr>
-                                <Td>phone</Td>
+                                <Td>Téléphone</Td>
                                 <Td>{infoUser.phone}</Td>
                             </Tr>
                             <Tr>
-                                <Td>email</Td>
+                                <Td>Email</Td>
                                 <Td>{infoUser.email}</Td>
                             </Tr>
                             <Tr>
-                                <Td>birth</Td>
+                                <Td>Date de naissance</Td>
                                 <Td>{infoUser.birth}</Td>
                             </Tr>
                             <Tr>
-                                <Td>size</Td>
+                                <Td>Taille</Td>
                                 <Td>{infoUser.size}</Td>
                             </Tr>
                             <Tr>
-                                <Td>weight</Td>
+                                <Td>Poids</Td>
                                 <Td>{infoUser.weight}</Td>
                             </Tr>
                         </Tbody>
@@ -80,23 +80,23 @@ const User = ({ Component, pageProps }) => {
                 </div>
 
                     <div className={`${styles.address} `}>
-                        <Heading mb={10} mt={28}> Address</Heading>
+                        <Heading mb={10} mt={28}> Adresse</Heading>
                         <Table variant='simple' className={styles.table}>
                             <Tbody>
                                 <Tr>
-                                    <Td>street</Td>
+                                    <Td>Rue</Td>
                                     <Td>{infoUser?.address?.street}</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>city</Td>
+                                    <Td>Ville</Td>
                                     <Td>{infoUser?.address?.city}</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>zipcode</Td>
+                                    <Td>Code postal</Td>
                                     <Td>{infoUser?.address?.zipcode}</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>country</Td>
+                                    <Td>Pays</Td>
                                     <Td>{infoUser?.address?.country}</Td>
                                 </Tr>
                             </Tbody>
