@@ -51,6 +51,10 @@ import { getCampaigns, createCampaign, createSession, uploadSurvey, request } fr
 import { Form } from "react-bootstrap";
 
 const Modal_CreateCampaign = () => {
+    const role = null;
+    if (typeof window !== 'undefined') {
+        role = sessionStorage.getItem("role");
+    }
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const initialRef = React.useRef();
@@ -119,9 +123,11 @@ const Modal_CreateCampaign = () => {
     });
     return (
         <>
-            <Button onClick={onOpen} colorScheme="teal" size="sm" leftIcon={<FiPlusCircle />}>
-                Créer une campagne
-            </Button>
+            {role == 'admin' &&
+                <Button onClick={onOpen} colorScheme="teal" size="sm" leftIcon={<FiPlusCircle />}>
+                    Créer une campagne
+                </Button>
+            }
             <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} size="full">
                 <ModalOverlay />
                 <ModalContent>
