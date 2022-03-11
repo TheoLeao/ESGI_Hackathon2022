@@ -74,9 +74,6 @@ const Login = () => {
                             ) : null}
                         </FormControl>
                         <Stack spacing={10}>
-                            <Stack direction={{ base: "column", sm: "row" }} align={"start"} justify={"space-between"}>
-                                <Checkbox>Remember me</Checkbox>
-                            </Stack>
                             <Button
                                 bg={"blue.400"}
                                 color={"white"}
