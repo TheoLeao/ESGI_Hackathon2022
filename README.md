@@ -69,18 +69,18 @@ yarn dev
 ```markdown
 | Type 	| Lien                                   	| Description                             	| Parametre 	|
 |------	|----------------------------------------	|-----------------------------------------	|-----------	|
-| POST 	| /api/upload-survey                     	| Upload un questionnaire                 	|           	|
-| POST 	| /api/answer                            	| Envoyer une réponse                     	|           	|
-| POST 	| /api/login                             	| S'authentifier                          	|           	|
-| POST 	| /api/sessions/                         	| Créer une session                       	|           	|
-| POST 	| /api/campaigns/{idCampaign}/request    	| Postuler à une campagne                 	|           	|
-| POST 	| /api/sessions/{idSession}/accept-user/ 	| Accepter un utilisateur                 	|           	|
-| GET  	| /api/campaigns/{idCampaign}/requests   	| Retourne les demandes d'une campagne    	|           	|
-| GET  	| /api/campaigns                         	| Retourne l'ensemble des campagnes       	|           	|
-| GET  	| /api/metrics/{idSession}               	| Retourne les statistiques d'une session 	|           	|
-| GET  	| /api/users/                            	| Retourne les testeurs                   	|           	|
-| GET  	| /api/sessions-user/{idSession}         	| Retourne les testeurs de la session     	|           	|
-| GET  	| /api/survey/{idSession}                	| Retourne le questionnaire de la session 	|           	|
+| POST 	| /api/upload-survey                     	| Upload un questionnaire                 	| [TODO]    	|
+| POST 	| /api/answer                            	| Envoyer une réponse                     	| [TODO]    	|
+| POST 	| /api/login                             	| S'authentifier                          	| [TODO]    	|
+| POST 	| /api/sessions/                         	| Créer une session                       	| [TODO]    	|
+| POST 	| /api/campaigns/{idCampaign}/request    	| Postuler à une campagne                 	| [TODO]    	|
+| POST 	| /api/sessions/{idSession}/accept-user/ 	| Accepter un utilisateur                 	| [TODO]    	|
+| GET  	| /api/campaigns/{idCampaign}/requests   	| Retourne les demandes d'une campagne    	| [TODO]    	|
+| GET  	| /api/campaigns                         	| Retourne l'ensemble des campagnes       	| [TODO]    	|
+| GET  	| /api/metrics/{idSession}               	| Retourne les statistiques d'une session 	| [TODO]    	|
+| GET  	| /api/users/                            	| Retourne les testeurs                   	| [TODO]    	|
+| GET  	| /api/sessions-user/{idSession}         	| Retourne les testeurs de la session     	| [TODO]    	|
+| GET  	| /api/survey/{idSession}                	| Retourne le questionnaire de la session 	| [TODO]    	|        	|
 ```
 
 ## Diagramme base de donnée
