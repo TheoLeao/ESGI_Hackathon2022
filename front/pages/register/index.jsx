@@ -98,7 +98,6 @@ const Register = () => {
             }
         },
     });
-
     return (
         <Flex minH={"100vh"} align={"center"} justify={"center"} bg={useColorModeValue("gray.50", "gray.800")}>
             <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
@@ -106,9 +105,7 @@ const Register = () => {
                     <Heading fontSize={"4xl"} textAlign={"center"}>
                         Sign up
                     </Heading>
-                    <Text fontSize={"lg"} color={"gray.600"}>
-                        Become a new tester !
-                    </Text>
+                    <Text fontSize={"lg"} color={"gray.600"}>Become a new tester !</Text>
                 </Stack>
                 <Box rounded={"lg"} bg={useColorModeValue("white", "gray.700")} boxShadow={"lg"} p={8}>
                     <Stack spacing={4}>
@@ -132,49 +129,49 @@ const Register = () => {
                         </FormControl>
                         <FormControl id="password" isRequired>
                             <FormLabel>Password</FormLabel>
-                            <InputGroup>
-                                <Input
-                                    type={showPassword ? "text" : "password"}
-                                    onChange={formik.handleChange}
-                                    value={formik.values.password}
-                                />
-                                {formik.errors.password ? (
-                                    <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                        {formik.errors.password}
-                                    </Text>
-                                ) : null}
-                                <InputRightElement h={"full"}>
-                                    <Button
-                                        variant={"ghost"}
-                                        onClick={() => setShowPassword((showPassword) => !showPassword)}
-                                    >
-                                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
+
+                            <Input
+                                type={showPassword ? "text" : "password"}
+                                onChange={formik.handleChange}
+                                value={formik.values.password}
+                            />
+                            {formik.errors.password ? (
+                                <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                    {formik.errors.password}
+                                </Text>
+                            ) : null}
+                            <InputRightElement h={"full"}>
+                                <Button
+                                    variant={"ghost"}
+                                    onClick={() => setShowPassword((showPassword) => !showPassword)}
+                                >
+                                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                                </Button>
+                            </InputRightElement>
+
                         </FormControl>
                         <FormControl id="passwordConfirmation" isRequired>
                             <FormLabel>Password confirmation</FormLabel>
-                            <InputGroup>
-                                <Input
-                                    type={showPassword ? "text" : "password"}
-                                    onChange={formik.handleChange}
-                                    value={formik.values.passwordConfirmation}
-                                />
-                                {formik.errors.passwordConfirmation ? (
-                                    <Text fontSize="sm" color={theme.colors.danger.normal}>
-                                        {formik.errors.passwordConfirmation}
-                                    </Text>
-                                ) : null}
-                                <InputRightElement h={"full"}>
-                                    <Button
-                                        variant={"ghost"}
-                                        onClick={() => setShowPassword((showPassword) => !showPassword)}
-                                    >
-                                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
+
+                            <Input
+                                type={showPassword ? "text" : "password"}
+                                onChange={formik.handleChange}
+                                value={formik.values.passwordConfirmation}
+                            />
+                            {formik.errors.passwordConfirmation ? (
+                                <Text fontSize="sm" color={theme.colors.danger.normal}>
+                                    {formik.errors.passwordConfirmation}
+                                </Text>
+                            ) : null}
+                            <InputRightElement h={"full"}>
+                                <Button
+                                    variant={"ghost"}
+                                    onClick={() => setShowPassword((showPassword) => !showPassword)}
+                                >
+                                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                                </Button>
+                            </InputRightElement>
+
                         </FormControl>
                         <HStack>
                             <Box>
