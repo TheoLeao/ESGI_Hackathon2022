@@ -33,7 +33,7 @@ class MasseDataSeeder extends Seeder
                 'email' => Str::random() . '@gmail.com',
                 'role' => 'admin',
             ]);
-            $user->create_at = $this->randomDateInRange((new DateTime())->modify('-1 year'), new DateTime());
+            $user->created_at = $this->randomDateInRange((new DateTime())->modify('-1 year'), new DateTime());
             $user->save();
 
 
