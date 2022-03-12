@@ -1,0 +1,9 @@
+{
+    "name": "container-front",
+    "dockerComposeFile": ["../docker-compose.yml"],
+    "service": "frontend",
+    "shutdownAction": "none",
+    "extensions": [""],
+    // Open the sub-folder with the source code
+    "workspaceFolder": "/home/app"
+  }

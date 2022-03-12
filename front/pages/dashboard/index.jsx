@@ -63,7 +63,7 @@ const Index = ({ Component, pageProps }) => {
                 /></div> : <div className={styles.fadeinContent}>
 
                     <Heading as="h3" size="lg" style={{ marginBottom: '20px' }}>
-                        Les statistiques
+                        Les statistiques tests
                     </Heading>
                     <div className={styles.container}>
 

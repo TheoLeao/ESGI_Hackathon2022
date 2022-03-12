@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./back:/var/www
+      - ./back:/workspace:cached
     networks:
       - hackathon
 
@@ -37,8 +37,9 @@ services:
     ports:
       - 8000:80
     volumes:
-      - ./back:/var/www
+      # - ./back:/var/www
       - ./back/nginx-config:/etc/nginx/conf.d/
+      - ./back:/workspace:cached #added for devContainer settings
     networks:
       - hackathon
 
@@ -49,7 +50,7 @@ services:
       - "3000:3000"
     networks:
       - hackathon
-    
+
   phpmyadmin:
     depends_on:
       - db
