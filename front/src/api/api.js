@@ -1,4 +1,4 @@
-const BASE_URL = "http://hackathon.alexis-guay.fr/api/";
+const BASE_URL = "http://localhost:8000/api/";
 
 const DEV = false;
 const TOKEN = "1|b2gefWLpMoJTpwcD8qVVn81lZqN2Vhg9z6bmi5sg";

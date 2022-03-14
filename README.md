@@ -2,7 +2,7 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
 
-Encadré par: [Audray Hossepian](https://audreyhossepian.fr/) (ça mérite bien quelques points supplémentaires, non ? 🤔) //pour ces magnifiques readme, oui, mais pour la faute d'orthographe sur mon prénom............ 😒
+Encadré par: [Audrey Hossepian](https://audreyhossepian.fr/)
 
 **Présentation du commanditaire:**
 
@@ -84,7 +84,37 @@ php artisan migrate:fresh
 php artisan db:seed
 php artisan serve
 ```
+### Démarrer avec Docker
+Il est également possible de lancer ce projet avec Docker. 
+L'environnement Docker est composé de 5 services:
+- frontend: contient l'application frontend react/nextjs
+- backend: contient l'application backend laravel
+- nginx: contient le serveur web pour php
+- mysql: contient le système de gestion de bases de données relationnelles
+- phpmyadmin: contient une application web de gestion pour les systèmes de gestion de base de données MySQL
 
+Le hot reload de NextJS reste opérationnel grâce à un middleware ajouté dans "next.config.js". 
+
+**Pré-requis:**
+
+MacOS:
+- Docker for Mac
+
+Windows: 
+- Docker for Windows
+
+Linux: 
+- Docker
+- Docker compose
+
+
+
+**Lancer l'environnement Docker:**
+- Dans votre .env, modifier la variable DB_HOST par "db" (le nom du container mysql)
+- Lancer la commande suivante à la racine du projet
+    ```
+    docker-compose up --build
+    ```
 ## Diagramme base de données
 
 ![base de données](https://cdn.discordapp.com/attachments/892696708604125205/951763609296470026/mcd.png)
