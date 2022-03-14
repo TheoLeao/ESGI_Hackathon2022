@@ -1,0 +1,6 @@
+# Création d'un docker
+- docker-compose build app
+- docker-compose exec backend composer install
+- docker-compose exec backend php artisan key:generate
+- docker-compose exec backend php artisan migrate
+- docker-compose exec backend php artisan db:seed
