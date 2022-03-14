@@ -107,10 +107,14 @@ Linux:
 - Docker
 - Docker compose
 
-Lancer l'environnement Docker:
-```
-docker-compose up --build
-```
+
+
+**Lancer l'environnement Docker:**
+- Dans votre .env, modifier la variable DB_HOST par "db" (le nom du container mysql)
+- Lancer la commande suivante à la racine du projet
+    ```
+    docker-compose up --build
+    ```
 ## Diagramme base de données
 
 ![base de données](https://cdn.discordapp.com/attachments/892696708604125205/951763609296470026/mcd.png)
