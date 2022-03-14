@@ -24,4 +24,6 @@ RUN mkdir -p /home/$user/.composer && \
 
 WORKDIR /var/www
 
+RUN chown -R www-data:www-data /var/www/
+
 USER $user
